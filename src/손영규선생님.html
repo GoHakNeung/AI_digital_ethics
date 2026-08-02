@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>초등 6학년 디지털·AI 윤리 수호대</title>
+    <style>
+        :root {
+            --primary: #4A90E2;
+            --secondary: #50E3C2;
+            --accent: #FF6B6B;
+            --dark: #2C3E50;
+            --warning: #F39C12;
+            --bg-color: #F0F4F8;
+            --card-bg: #FFFFFF;
+            --text-color: #333333;
+        }
+
+        * { box-sizing: border-box; font-family: 'Pretendard', 'Malgun Gothic', sans-serif; }
+        body { margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color); }
+        
+        header {
+            background: linear-gradient(135deg, var(--dark), var(--primary));
+            color: white; text-align: center; padding: 25px 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .container { max-width: 900px; margin: 20px auto; padding: 0 15px; }
+
+        /* 페이지 전환 */
+        .page { display: none; }
+        .page.active { display: block; animation: fadeIn 0.4s ease-in-out; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 메인 대시보드 카드 */
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-top: 20px; }
+        .theme-card {
+            background: var(--card-bg); border-radius: 15px; padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08); text-align: center; cursor: pointer;
+            transition: all 0.3s ease; border: 3px solid transparent;
+        }
+        .theme-card:hover { transform: translateY(-5px) scale(1.02); border-color: var(--primary); }
+        .theme-card.final-pledge-card {
+            background: linear-gradient(135deg, #FFF9E6, #FFF3CD);
+            border: 3px solid #F1C40F; grid-column: 1 / -1;
+        }
+        .theme-icon { font-size: 38px; margin-bottom: 10px; }
+
+        /* 공통 버튼 */
+        .btn {
+            background-color: var(--primary); color: white; border: none;
+            padding: 12px 24px; border-radius: 25px; font-size: 16px; font-weight: bold;
+            cursor: pointer; transition: 0.2s; margin-top: 15px; display: inline-block;
+        }
+        .btn:hover { background-color: #357ABD; transform: scale(1.03); }
+        .btn-back { background-color: #7F8C8D; margin-right: 10px; }
+        .btn-success { background-color: #27AE60; }
+        .btn-success:hover { background-color: #219150; }
+
+        /* 게임 1: 두더지 잡기 */
+        .mole-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 20px 0; }
+        .mole-hole {
+            height: 110px; background-color: #D7CCC8; border-radius: 15px; display: flex;
+            align-items: center; justify-content: center; font-size: 14px; font-weight: bold;
+            cursor: pointer; user-select: none; text-align: center; padding: 10px;
+            box-shadow: inset 0 5px 10px rgba(0,0,0,0.2); transition: background 0.2s;
+        }
+        .mole-hole.active-fake { background-color: #FF8A80; color: white; animation: pop 0.3s ease; }
+        .mole-hole.active-real { background-color: #81C784; color: white; animation: pop 0.3s ease; }
+        @keyframes pop { 0% { transform: scale(0.8); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
+        /* 게임 2: 데이터 분리수거 */
+        .data-box { background: white; border-radius: 15px; padding: 25px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .data-item { font-size: 19px; font-weight: bold; margin: 20px 0; padding: 20px; background: #E1F5FE; border-radius: 10px; }
+        .choice-btns { display: flex; justify-content: center; gap: 20px; }
+        .btn-trash { background-color: var(--accent); }
+        .btn-collect { background-color: var(--secondary); color: #333; }
+
+        /* 테마 3: 모럴 머신 & 토론 게시판 */
+        .dilemma-card { background: white; padding: 20px; border-radius: 15px; margin-bottom: 25px; border-left: 6px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .moral-option {
+            background: #F8F9FA; border: 2px solid #E9ECEF; padding: 15px; border-radius: 10px;
+            margin: 10px 0; cursor: pointer; text-align: left; transition: 0.2s; font-weight: bold;
+        }
+        .moral-option:hover { border-color: var(--primary); background: #EBF5FB; }
+        .poll-bar-container { background: #E0E0E0; border-radius: 10px; height: 24px; overflow: hidden; margin: 15px 0; display: flex; }
+        .poll-bar-a { background: var(--primary); color: white; font-size: 12px; line-height: 24px; text-align: center; transition: width 0.5s; }
+        .poll-bar-b { background: var(--accent); color: white; font-size: 12px; line-height: 24px; text-align: center; transition: width 0.5s; }
+        
+        .discussion-section { background: #F4F6F7; padding: 15px; border-radius: 10px; margin-top: 15px; }
+        .opinion-input-box { display: flex; gap: 10px; margin-top: 10px; }
+        .opinion-input-box input { flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #CCC; }
+        .opinion-list { max-height: 150px; overflow-y: auto; margin-top: 10px; text-align: left; font-size: 14px; }
+        .opinion-item { background: white; padding: 8px 12px; border-radius: 6px; margin-bottom: 6px; border-left: 3px solid var(--secondary); }
+
+        /* 테마 4: 주체성 퀘스트 */
+        .quest-box { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+        .quest-options { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 20px; }
+        .quest-opt-btn {
+            background: #F8F9FA; border: 2px solid #DCDFE6; padding: 18px; border-radius: 12px;
+            font-size: 15px; font-weight: bold; cursor: pointer; text-align: left; transition: 0.2s;
+        }
+        .quest-opt-btn:hover { border-color: var(--primary); background: #EBF5FB; }
+        
+        /* 가르침 멘트 박스 */
+        .feedback-card {
+            margin-top: 20px; padding: 20px; border-radius: 12px; text-align: left; line-height: 1.6;
+            animation: fadeIn 0.3s;
+        }
+        .feedback-card.wrong { background: #FDEDEC; border: 2px solid var(--accent); color: #78281F; }
+        .feedback-card.correct { background: #EAFAF1; border: 2px solid #27AE60; color: #145A32; }
+        .feedback-title { font-weight: bold; font-size: 17px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+
+        /* 서약서 및 캔버스 */
+        .pledge-box { background: white; padding: 30px; border-radius: 15px; border: 3px solid var(--primary); text-align: center; }
+        .pledge-list { text-align: left; margin: 20px auto; max-width: 650px; line-height: 2; font-size: 15px; }
+        .name-input-group { margin: 20px 0; font-size: 18px; font-weight: bold; }
+        .name-input-group input { padding: 8px 15px; font-size: 16px; border-radius: 8px; border: 2px solid #BDC3C7; width: 200px; }
+        canvas { border: 2px dashed #999; border-radius: 10px; background: #FAFAFA; cursor: crosshair; touch-action: none; }
+
+        .score-board { font-size: 18px; font-weight: bold; color: var(--primary); margin: 10px 0; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🤖 AI 윤리 수호대 : 미래를 여는 6학년</h1>
+        <p>기술의 밝은 면과 어두운 면을 탐구하고 주체적인 AI 리더가 되어보자!</p>
+    </header>
+
+    <div class="container">
+
+        <!-- 메인 대시보드 화면 -->
+        <div id="page-main" class="page active">
+            <h2>🎯 윤리 미션 대시보드</h2>
+            <p>4가지 테마 활동을 즐겁게 체험한 후, 마지막 [디지털·AI 윤리 서약서]를 완성하고 수료증을 다운로드하세요!</p>
+            
+            <div class="card-grid">
+                <div class="theme-card" onclick="showPage('page-theme1')">
+                    <div class="theme-icon">🔍</div>
+                    <h3>1. 진짜와 가짜의 경계</h3>
+                    <p>AI 시대의 팩트체커 되기</p>
+                    <small>🎮 게임: 가짜 두더지 잡기</small>
+                </div>
+                <div class="theme-card" onclick="showPage('page-theme2')">
+                    <div class="theme-icon">⚖️</div>
+                    <h3>2. AI의 눈으로 본 세상</h3>
+                    <p>편견과 차별 넘어보기</p>
+                    <small>🎮 게임: 데이터 탐지 분리수거</small>
+                </div>
+                <div class="theme-card" onclick="showPage('page-theme3')">
+                    <div class="theme-icon">💬</div>
+                    <h3>3. 화면 너머의 사람</h3>
+                    <p>디지털 공감과 학급 토론</p>
+                    <small>⚖️ 활동: 모럴 머신 & 토론장</small>
+                </div>
+                <div class="theme-card" onclick="showPage('page-theme4')">
+                    <div class="theme-icon">👑</div>
+                    <h3>4. 주인공은 나야 나</h3>
+                    <p>AI의 주인으로 살아가기</p>
+                    <small>🎮 게임: AI 주체성 퀘스트</small>
+                </div>
+
+                <!-- 최종 서약하기 진입 카드 -->
+                <div class="theme-card final-pledge-card" onclick="showPage('page-pledge')">
+                    <div class="theme-icon">📜</div>
+                    <h3>[최종 단계] 디지털·AI 윤리 서약하기 & 이미지 저장</h3>
+                    <p>나만의 다짐을 확인하고 서명하여 "AI 윤리 수호자 수료증"을 다운로드받으세요!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 테마 1: 가짜 두더지 잡기 -->
+        <div id="page-theme1" class="page">
+            <button class="btn btn-back" onclick="showPage('page-main')">⬅ 메인으로</button>
+            <h2>🔍 팩트체커 두더지 잡기 게임</h2>
+            <p>화면에 나타나는 문장 중 <strong>[가짜 정보 / 윤리적으로 위험한 행동]</strong>만 클릭해서 물리치세요! (진짜 정보 클릭 시 감점)</p>
+            <div class="score-board">점수: <span id="score-game1">0</span>점 | 남은 시간: <span id="timer-game1">15</span>초</div>
+            <button class="btn" onclick="startGame1()">🔄 게임 다시 시작</button>
+            
+            <div class="mole-grid" id="mole-board">
+                <div class="mole-hole" onclick="clickMole(0)"></div>
+                <div class="mole-hole" onclick="clickMole(1)"></div>
+                <div class="mole-hole" onclick="clickMole(2)"></div>
+                <div class="mole-hole" onclick="clickMole(3)"></div>
+                <div class="mole-hole" onclick="clickMole(4)"></div>
+                <div class="mole-hole" onclick="clickMole(5)"></div>
+            </div>
+        </div>
+
+        <!-- 테마 2: 데이터 분리수거 -->
+        <div id="page-theme2" class="page">
+            <button class="btn btn-back" onclick="showPage('page-main')">⬅ 메인으로</button>
+            <h2>⚖️ AI 편향 데이터 탐지기</h2>
+            <p>AI에게 학습시킬 데이터를 검수하세요. <strong>성별/인종/지역적 편견이 포함된 데이터는 [버리기]</strong>, <strong>공정한 데이터는 [학습하기]</strong>를 선택하세요.</p>
+            <div class="score-board">남은 데이터: <span id="data-count">3</span>개</div>
+            
+            <div class="data-box" id="data-box">
+                <div class="data-item" id="data-text">"데이터 로딩 중..."</div>
+                <div class="choice-btns">
+                    <button class="btn btn-trash" onclick="checkDataChoice(false)">🗑️ 버리기 (편향됨)</button>
+                    <button class="btn btn-collect" onclick="checkDataChoice(true)">📥 학습하기 (공정함)</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 테마 3: 모럴 머신 & 토론장 -->
+        <div id="page-theme3" class="page">
+            <button class="btn btn-back" onclick="showPage('page-main')">⬅ 메인으로</button>
+            <h2>💬 AI 윤리 모럴 머신 & 학급 토론장</h2>
+            <p>정답이 하나가 아닙니다! 나의 대안을 선택한 후, 다른 친구들과 근거를 바탕으로 토론해보세요.</p>
+            
+            <!-- 상황 1 -->
+            <div class="dilemma-card">
+                <h3>[딜레마 1] 자율주행 교실 청소 로봇의 우선순위</h3>
+                <p>AI 청소 로봇이 바닥을 치우던 중 학생의 중요한 '미술 수행평가 작품'을 발견했습니다. 로봇의 배터리는 1% 남아 지금 청소를 마치지 못하면 오늘 청소 목표를 달성하지 못합니다.</p>
+                <div class="moral-option" onclick="voteMoral(1, 'A')">🤖 A. 청소 목표 달성을 위해 작품도 먼지로 처리하고 청소를 완료한다.</div>
+                <div class="moral-option" onclick="voteMoral(1, 'B')">🎨 B. 청소를 실패하더라도 작품 보호 모드를 작동하고 그 자리에서 정지한다.</div>
+                
+                <div id="poll-res-1" style="display:none;">
+                    <h4>📊 학급 실시간 투표 결과</h4>
+                    <div class="poll-bar-container">
+                        <div id="bar-1a" class="poll-bar-a" style="width: 40%;">A선택 (40%)</div>
+                        <div id="bar-1b" class="poll-bar-b" style="width: 60%;">B선택 (60%)</div>
+                    </div>
+                    
+                    <div class="discussion-section">
+                        <strong>🗣️ [하부루타 토론] 다른 친구와 의견 나누기</strong>
+                        <p style="font-size: 13px; color: #555;">"B를 선택한 친구들은 학생의 노력과 가치를 중시했고, A를 선택한 친구들은 로봇 본연의 규칙 강화를 중시했을 수 있어요. 당신의 생각은?"</p>
+                        <div class="opinion-input-box">
+                            <input type="text" id="input-opinion-1" placeholder="내 선택의 이유를 입력하고 공유해보세요!">
+                            <button class="btn" style="margin:0; padding:8px 15px;" onclick="addOpinion(1)">의견 제출</button>
+                        </div>
+                        <div class="opinion-list" id="opinion-list-1">
+                            <div class="opinion-item"><strong>김지은:</strong> "작품은 학생이 몇 시간 동안 노력한 결정체니까 로봇이 멈추는 게 맞아!"</div>
+                            <div class="opinion-item"><strong>이민수:</strong> "로봇에게 예외를 너무 많이 주면 나중에 교실 전체가 난장판이 될 수도 있어."</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 상황 2 -->
+            <div class="dilemma-card">
+                <h3>[딜레마 2] AI 생성 작품의 미술 대회 수상 자격</h3>
+                <p>학교 미술 대회에서 한 학생이 AI에게 명령어를 입력해 만든 멋진 그림으로 1등 상을 받았습니다. 뒤늦게 이 사실이 알려졌을 때 어떤 결정이 바람직할까요?</p>
+                <div class="moral-option" onclick="voteMoral(2, 'A')">🏆 A. AI 사용도 기술을 활용한 창작 능력이므로 수상을 인정한다.</div>
+                <div class="moral-option" onclick="voteMoral(2, 'B')">🚫 B. 직접 손으로 그린 학생들과의 형평성을 위해 수상을 취소하고 'AI 특별상'으로 구분한다.</div>
+                
+                <div id="poll-res-2" style="display:none;">
+                    <h4>📊 학급 실시간 투표 결과</h4>
+                    <div class="poll-bar-container">
+                        <div id="bar-2a" class="poll-bar-a" style="width: 30%;">A선택 (30%)</div>
+                        <div id="bar-2b" class="poll-bar-b" style="width: 70%;">B선택 (70%)</div>
+                    </div>
+                    
+                    <div class="discussion-section">
+                        <strong>🗣️ [하부루타 토론] 다른 친구와 의견 나누기</strong>
+                        <div class="opinion-input-box">
+                            <input type="text" id="input-opinion-2" placeholder="내 선택의 이유를 입력하고 공유해보세요!">
+                            <button class="btn" style="margin:0; padding:8px 15px;" onclick="addOpinion(2)">의견 제출</button>
+                        </div>
+                        <div class="opinion-list" id="opinion-list-2">
+                            <div class="opinion-item"><strong>박현우:</strong> "AI 프롬프트(명령어)를 잘 짜는 것도 새로운 시대의 창의력이라고 생각해."</div>
+                            <div class="opinion-item"><strong>최서연:</strong> "하지만 며칠 동안 물감으로 고생해서 그린 친구들의 노력이 허무해지잖아!"</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 테마 4: 주체성 퀘스트 -->
+        <div id="page-theme4" class="page">
+            <button class="btn btn-back" onclick="showPage('page-main')">⬅ 메인으로</button>
+            <h2>👑 AI 주체성 퀘스트 : 진정한 AI의 주인 되기</h2>
+            <p>다양한 학교 생활 상황에서 AI의 부속품이 아닌 <strong>주체적인 주인</strong>으로 행동하는 선택을 찾아보세요.</p>
+            
+            <div class="quest-box">
+                <div class="score-board">진행 상황: <span id="quest-idx-text">1</span> / 5 퀘스트</div>
+                <h3 id="quest-title" style="margin-top:10px;">퀘스트 불러오는 중...</h3>
+                <div class="quest-options" id="quest-options-box">
+                    <!-- 선택지 버튼 동적 생성 -->
+                </div>
+                
+                <!-- 피드백 & 가르침 멘트 출력 영역 -->
+                <div id="quest-feedback" style="display:none;"></div>
+                
+                <button class="btn" id="btn-next-quest" style="display:none; margin-top:15px;" onclick="nextQuest()">다음 퀘스트로 ➔</button>
+            </div>
+        </div>
+
+        <!-- 최종 서약하기 및 수료증 저장 페이지 -->
+        <div id="page-pledge" class="page">
+            <button class="btn btn-back" onclick="showPage('page-main')">⬅ 메인으로</button>
+            
+            <div class="pledge-box">
+                <h2>📜 디지털·AI 윤리 실천 서약서</h2>
+                <p>모든 윤리 탐구를 마친 당신! AI 기술의 진정한 주인이 될 것을 약속하세요.</p>
+                
+                <div class="name-input-group">
+                    소속 및 이름: <input type="text" id="student-name" placeholder="예: 6학년 1반 홍길동">
+                </div>
+
+                <div class="pledge-list">
+                    <label><input type="checkbox" class="p-check" checked> 1. AI가 만든 정보는 출처와 타당성을 반드시 비판적으로 검증하겠습니다.</label><br>
+                    <label><input type="checkbox" class="p-check" checked> 2. 편향되거나 차별적인 데이터를 사용하지 않고 공정성을 지키겠습니다.</label><br>
+                    <label><input type="checkbox" class="p-check" checked> 3. 익명 공간에서도 타인을 존중하며 디지털 공감 능력을 발휘하겠습니다.</label><br>
+                    <label><input type="checkbox" class="p-check" checked> 4. AI에 과도하게 의존하지 않고, 나의 생각과 창의력을 중심에 두겠습니다.</label>
+                </div>
+
+                <p><strong>✍️ 서명란 (아래 상자에 마우스나 손가락으로 이름을 쓰세요)</strong></p>
+                <canvas id="signature-pad" width="320" height="130"></canvas>
+                <br>
+                <button class="btn btn-back" style="padding: 5px 15px; font-size: 13px;" onclick="clearCanvas()">서명 다시 쓰기</button>
+                <br><br>
+                <button class="btn btn-success" onclick="downloadPledgeCertificate()">📥 서약서 완료 & 이미지(PNG) 저장하기</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // 페이지 전환 및 각 테마 자동 시작 제어
+        function showPage(pageId) {
+            clearInterval(game1Interval);
+            clearInterval(moleInterval);
+
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+
+            if(pageId === 'page-theme1') {
+                startGame1();
+            } else if(pageId === 'page-theme2') {
+                resetGame2();
+            } else if(pageId === 'page-theme4') {
+                resetQuest4();
+            } else if(pageId === 'page-pledge') {
+                setTimeout(initCanvas, 100);
+            }
+        }
+
+        // --- 테마 1: 두더지 잡기 게임 ---
+        let game1Score = 0;
+        let game1Timer = 15;
+        let game1Interval, moleInterval;
+        const moleData = [
+            { text: "딥페이크 합성 영상 공유하기", isFake: true },
+            { text: "공식 뉴스 출처 확인하기", isFake: false },
+            { text: "AI가 만든 가짜 소문 퍼뜨리기", isFake: true },
+            { text: "팩트체크 사이트에서 검증", isFake: false },
+            { text: "AI 작성 글을 내 숙제로 제출", isFake: true },
+            { text: "생성형 AI 출처 밝히고 참고하기", isFake: false }
+        ];
+
+        function startGame1() {
+            game1Score = 0;
+            game1Timer = 15;
+            document.getElementById('score-game1').innerText = game1Score;
+            document.getElementById('timer-game1').innerText = game1Timer;
+            
+            clearInterval(game1Interval);
+            clearInterval(moleInterval);
+
+            showRandomMole();
+
+            game1Interval = setInterval(() => {
+                game1Timer--;
+                document.getElementById('timer-game1').innerText = game1Timer;
+                if(game1Timer <= 0) {
+                    clearInterval(game1Interval);
+                    clearInterval(moleInterval);
+                    alert(`게임 종료! 최종 점수: ${game1Score}점! 팩트체커 미션 성공!`);
+                }
+            }, 1000);
+
+            moleInterval = setInterval(showRandomMole, 1200);
+        }
+
+        function showRandomMole() {
+            const holes = document.querySelectorAll('.mole-hole');
+            holes.forEach(h => { h.innerText = ''; h.className = 'mole-hole'; });
+            
+            const randomHole = Math.floor(Math.random() * 6);
+            const randomData = moleData[Math.floor(Math.random() * moleData.length)];
+            
+            const hole = holes[randomHole];
+            if(hole) {
+                hole.innerText = randomData.text;
+                hole.dataset.isFake = randomData.isFake;
+                hole.classList.add(randomData.isFake ? 'active-fake' : 'active-real');
+            }
+        }
+
+        function clickMole(index) {
+            const holes = document.querySelectorAll('.mole-hole');
+            const hole = holes[index];
+            if(!hole || !hole.innerText) return;
+
+            if(hole.dataset.isFake === "true") {
+                game1Score += 10;
+                alert("👍 가짜 정보 격파 성공! (+10점)");
+            } else {
+                game1Score -= 5;
+                alert("⚠️ 올바른 정보입니다! 함정 조심 (-5점)");
+            }
+            document.getElementById('score-game1').innerText = game1Score;
+            hole.innerText = '';
+            hole.className = 'mole-hole';
+        }
+
+        // --- 테마 2: 데이터 분리수거 ---
+        const dataset = [
+            { text: "남성 의사 데이터만 90% 학습된 의료 AI 데이터", isBiased: true, msg: "성별 편향이 발생할 수 있습니다! 버려야 합니다." },
+            { text: "남녀노소 다양한 인종의 얼굴이 균형 있게 학습된 데이터", isBiased: false, msg: "공정한 AI 학습을 위한 좋은 데이터입니다!" },
+            { text: "특정 지역 학생들에게만 유리하게 설계된 AI 입시 추천 데이터", isBiased: true, msg: "지역적 차별을 야기하므로 버려야 합니다." }
+        ];
+        let currentDataIdx = 0;
+
+        function resetGame2() {
+            currentDataIdx = 0;
+            document.getElementById('data-box').innerHTML = `
+                <div class="data-item" id="data-text">"데이터 로딩 중..."</div>
+                <div class="choice-btns">
+                    <button class="btn btn-trash" onclick="checkDataChoice(false)">🗑️ 버리기 (편향됨)</button>
+                    <button class="btn btn-collect" onclick="checkDataChoice(true)">📥 학습하기 (공정함)</button>
+                </div>
+            `;
+            loadData();
+        }
+
+        function loadData() {
+            if(currentDataIdx >= dataset.length) {
+                document.getElementById('data-box').innerHTML = "<h3>🎉 모든 데이터 검수 완료! AI 공정성 수호 성공!</h3>";
+                return;
+            }
+            document.getElementById('data-text').innerText = dataset[currentDataIdx].text;
+            document.getElementById('data-count').innerText = dataset.length - currentDataIdx;
+        }
+
+        function checkDataChoice(userSaidFair) {
+            const currentItem = dataset[currentDataIdx];
+            const isCorrect = (userSaidFair && !currentItem.isBiased) || (!userSaidFair && currentItem.isBiased);
+            
+            if(isCorrect) {
+                alert("⭕ 정답입니다! " + currentItem.msg);
+            } else {
+                alert("❌ 오답입니다. " + currentItem.msg);
+            }
+            currentDataIdx++;
+            loadData();
+        }
+
+        // --- 테마 3: 모럴 머신 및 학급 토론장 ---
+        function voteMoral(dilemmaNum, option) {
+            const resBox = document.getElementById(`poll-res-${dilemmaNum}`);
+            resBox.style.display = 'block';
+        }
+
+        function addOpinion(dilemmaNum) {
+            const input = document.getElementById(`input-opinion-${dilemmaNum}`);
+            const text = input.value.trim();
+            if(!text) { alert("의견을 입력해주세요!"); return; }
+
+            const list = document.getElementById(`opinion-list-${dilemmaNum}`);
+            const newItem = document.createElement('div');
+            newItem.className = 'opinion-item';
+            newItem.innerHTML = `<strong>나(수호대):</strong> "${text}"`;
+            list.prepend(newItem);
+            input.value = '';
+        }
+
+        // --- 테마 4: 주체성 퀘스트 데이터 & 윤리 선생님의 가르침 ---
+        const questData = [
+            {
+                title: "[상황 1. 독후감 과제] 독서 감상문을 작성해야 할 때 나의 행동은?",
+                opts: [
+                    {
+                        text: "🤖 AI에게 책 제목을 입력하고, 생성해 준 전체 독후감을 그대로 복사해서 제출한다.",
+                        isCorrect: false,
+                        feedbackTitle: "⚠️ 윤리 선생님의 가르침: 뇌의 생각이 멈추게 됩니다!",
+                        feedbackMsg: "AI가 써준 글을 그대로 베끼면 당장은 편할 수 있지만, 나의 '비판적 사고력'과 '글쓰기 창의력' 근육이 퇴화합니다. AI는 도구일 뿐, 생각을 만드는 진짜 주인공은 바로 '나'입니다!"
+                    },
+                    {
+                        text: "💡 AI에게 책의 핵심 인물이나 질문거리를 추천받은 뒤, 글은 내가 직접 느낀 점을 중심으로 작성한다.",
+                        isCorrect: true,
+                        feedbackTitle: "🌟 멋집니다! 진정한 AI 주인의 태도입니다.",
+                        feedbackMsg: "훌륭합니다! AI를 나만의 '아이디어 보조자'로 지혜롭게 활용하고, 최종 생각과 글은 직접 완성하는 주체적인 모습입니다."
+                    }
+                ]
+            },
+            {
+                title: "[상황 2. 어려운 수학/과학 문제] 문제를 풀다가막혔을 때 나의 행동은?",
+                opts: [
+                    {
+                        text: "🤖 풀기 귀찮으니 AI에게 문제 사진을 찍어 올려 정답과 풀이 과정을 그냥 베껴 적는다.",
+                        isCorrect: false,
+                        feedbackTitle: "⚠️ 윤리 선생님의 가르침: 정답보다 중요한 것은 고민하는 과정입니다!",
+                        feedbackMsg: "단순히 정답만 베끼면 시험이나 문제 해결 상황에서 스스로 해낼 수 없게 됩니다. AI에게 '힌트만 알려줘' 또는 '내가 푼 3단계에서 어디가 틀렸는지 짚어줘'라고 요청해 보세요!"
+                    },
+                    {
+                        text: "💡 먼저 내 힘으로 최대한 풀어본 뒤, 내가 푼 과정 중 오류가 있는지 AI에게 점검을 부탁한다.",
+                        isCorrect: true,
+                        feedbackTitle: "🌟 훌륭한 주도적 학습 방식입니다!",
+                        feedbackMsg: "자신의 능력을 먼저 시험해보고 AI를 '검수관'으로 활용하는 최고로 능동적인 학습법입니다!"
+                    }
+                ]
+            },
+            {
+                title: "[상황 3. 친구와의 갈등과 고민] 친구와 오해가 생겨 마음이 상했을 때 나의 행동은?",
+                opts: [
+                    {
+                        text: "🤖 AI 챗봇에게 고민을 상담하고, AI가 시키는 대로만 친구에게 메시지를 보내고 상황을 끝낸다.",
+                        isCorrect: false,
+                        feedbackTitle: "⚠️ 윤리 선생님의 가르침: 사람의 마음은 화면 너머 진심으로 연결됩니다!",
+                        feedbackMsg: "AI 챗봇은 기계적인 언어 패턴일 뿐, 인간의 복잡한 감정을 깊이 공감할 수 없습니다. AI의 조언은 참고만 하고, 직접 친구를 만나 눈을 맞추며 대화하는 공감 능력이 필요합니다."
+                    },
+                    {
+                        text: "💡 AI에게 대화 물꼬를 트는 방법 정도만 참고하고, 직접 친구를 만나 진심 어린 대화를 나눈다.",
+                        isCorrect: true,
+                        feedbackTitle: "🌟 디지털 공감 능력이 뛰어납니다!",
+                        feedbackMsg: "기술에 감정을 빼앗기지 않고, 인간만의 특별한 공감 능력과 대화의 가치를 알고 계시네요!"
+                    }
+                ]
+            },
+            {
+                title: "[상황 4. 미술 및 디지털 창작 과제] 그림 과제를 제출할 때 나의 행동은?",
+                opts: [
+                    {
+                        text: "🤖 AI 이미지 생성기로 만든 완성작을 마치 내가 직접 손으로 그린 것처럼 속여 제출한다.",
+                        isCorrect: false,
+                        feedbackTitle: "⚠️ 윤리 선생님의 가르침: 정직함과 저작권 윤리를 지켜주세요!",
+                        feedbackMsg: "AI 생성물을 자신의 순수 창작물로 속이는 것은 정직하지 못한 행동이며 표절 및 저작권 문제가 발생할 수 있습니다. AI를 활용했다면 솔직하게 출처를 밝혀야 합니다."
+                    },
+                    {
+                        text: "💡 AI로 스케치 아이디어를 구상한 후 내 손으로 직접 그리거나, AI 활용 사실을 솔직히 밝힌다.",
+                        isCorrect: true,
+                        feedbackTitle: "🌟 정직하고 당당한 AI 리더입니다!",
+                        feedbackMsg: "창작의 정직성을 지키며 AI를 보조 도구로 유연하게 사용할 줄 아는 바람직한 디지털 시민입니다!"
+                    }
+                ]
+            },
+            {
+                title: "[상황 5. AI가 제시한 정보 판단] AI가 답변해 준 지식을 접했을 때 나의 태도는?",
+                opts: [
+                    {
+                        text: "🤖 AI는 첨단 기술이므로 그가 말한 내용은 무조건 100% 사실이라고 믿고 인용한다.",
+                        isCorrect: false,
+                        feedbackTitle: "⚠️ 윤리 선생님의 가르침: AI도 환각(거짓말) 현상이 있습니다!",
+                        feedbackMsg: "AI는 그럴듯하게 거짓 정보를 지어내는 '할루시네이션(환각)' 특성이 있습니다. AI가 한 말이라도 항상 서적, 전문 뉴스, 공식 데이터 사이트에서 '팩트체크'를 거쳐야 합니다."
+                    },
+                    {
+                        text: "💡 AI도 틀린 정보를 말할 수 있음을 알고, 다른 검색 엔진이나 책을 통해 교차 검증한다.",
+                        isCorrect: true,
+                        feedbackTitle: "🌟 비판적 사고력이 빛나는 비판적 수용 태도입니다!",
+                        feedbackMsg: "완벽합니다! AI 시대를 살아가는 6학년에게 가장 필요한 '비판적 미디어 리터러시' 태도를 갖추셨습니다!"
+                    }
+                ]
+            }
+        ];
+
+        let currentQuestIdx = 0;
+
+        function resetQuest4() {
+            currentQuestIdx = 0;
+            renderQuest();
+        }
+
+        function renderQuest() {
+            const q = questData[currentQuestIdx];
+            document.getElementById('quest-idx-text').innerText = currentQuestIdx + 1;
+            document.getElementById('quest-title').innerText = q.title;
+            
+            const optionsBox = document.getElementById('quest-options-box');
+            optionsBox.innerHTML = '';
+
+            q.opts.forEach((opt, idx) => {
+                const btn = document.createElement('div');
+                btn.className = 'quest-opt-btn';
+                btn.innerText = opt.text;
+                btn.onclick = () => selectQuestOpt(idx);
+                optionsBox.appendChild(btn);
+            });
+
+            document.getElementById('quest-feedback').style.display = 'none';
+            document.getElementById('btn-next-quest').style.display = 'none';
+        }
+
+        function selectQuestOpt(optIdx) {
+            const q = questData[currentQuestIdx];
+            const selectedOpt = q.opts[optIdx];
+            const fbBox = document.getElementById('quest-feedback');
+
+            fbBox.style.display = 'block';
+            if(selectedOpt.isCorrect) {
+                fbBox.className = 'feedback-card correct';
+                fbBox.innerHTML = `
+                    <div class="feedback-title">${selectedOpt.feedbackTitle}</div>
+                    <div>${selectedOpt.feedbackMsg}</div>
+                `;
+            } else {
+                fbBox.className = 'feedback-card wrong';
+                fbBox.innerHTML = `
+                    <div class="feedback-title">${selectedOpt.feedbackTitle}</div>
+                    <div>${selectedOpt.feedbackMsg}</div>
+                `;
+            }
+
+            document.getElementById('btn-next-quest').style.display = 'inline-block';
+        }
+
+        function nextQuest() {
+            currentQuestIdx++;
+            if(currentQuestIdx < questData.length) {
+                renderQuest();
+            } else {
+                document.getElementById('quest-title').innerText = "🎉 축하합니다! 5대 AI 주체성 퀘스트를 모두 완수하셨습니다!";
+                document.getElementById('quest-options-box').innerHTML = "<p style='font-size:16px; font-weight:bold; color:var(--primary);'>당신은 AI에 끌려다니지 않고 기술을 주도하는 당당한 AI의 주인입니다. 이제 최종 서약서로 이동하여 수료증을 완성하세요!</p>";
+                document.getElementById('quest-feedback').style.display = 'none';
+                document.getElementById('btn-next-quest').style.display = 'none';
+            }
+        }
+
+        // --- 최종 서약서 캔버스 서명 및 이미지 다운로드 ---
+        let canvas, ctx, isDrawing = false;
+
+        function initCanvas() {
+            canvas = document.getElementById('signature-pad');
+            if(!canvas) return;
+            ctx = canvas.getContext('2d');
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = "#2C3E50";
+
+            canvas.onmousedown = (e) => { isDrawing = true; ctx.beginPath(); ctx.moveTo(e.offsetX, e.offsetY); };
+            canvas.onmousemove = (e) => { if(isDrawing) { ctx.lineTo(e.offsetX, e.offsetY); ctx.stroke(); } };
+            canvas.onmouseup = () => { isDrawing = false; };
+
+            canvas.ontouchstart = (e) => {
+                isDrawing = true;
+                const rect = canvas.getBoundingClientRect();
+                ctx.beginPath();
+                ctx.moveTo(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
+            };
+            canvas.ontouchmove = (e) => {
+                if(isDrawing) {
+                    const rect = canvas.getBoundingClientRect();
+                    ctx.lineTo(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
+                    ctx.stroke();
+                }
+            };
+            canvas.ontouchend = () => { isDrawing = false; };
+        }
+
+        function clearCanvas() { 
+            if(ctx) ctx.clearRect(0, 0, canvas.width, canvas.height); 
+        }
+
+        function downloadPledgeCertificate() {
+            const name = document.getElementById('student-name').value.trim();
+            if(!name) {
+                alert("서약서 저장을 위해 [소속 및 이름]을 입력해 주세요!");
+                return;
+            }
+
+            const certCanvas = document.createElement('canvas');
+            certCanvas.width = 800;
+            certCanvas.height = 1000;
+            const cCtx = certCanvas.getContext('2d');
+
+            cCtx.fillStyle = "#FFFFFF";
+            cCtx.fillRect(0, 0, 800, 1000);
+
+            cCtx.strokeStyle = "#4A90E2";
+            cCtx.lineWidth = 16;
+            cCtx.strokeRect(20, 20, 760, 960);
+
+            cCtx.strokeStyle = "#F1C40F";
+            cCtx.lineWidth = 4;
+            cCtx.strokeRect(36, 36, 728, 928);
+
+            cCtx.fillStyle = "#2C3E50";
+            cCtx.font = "bold 36px sans-serif";
+            cCtx.textAlign = "center";
+            cCtx.fillText("📜 디지털·AI 윤리 수호자 수료증", 400, 110);
+
+            cCtx.font = "20px sans-serif";
+            cCtx.fillStyle = "#7F8C8D";
+            cCtx.fillText("주체적이고 책임감 있는 디지털 시민의 약속", 400, 150);
+
+            cCtx.font = "bold 26px sans-serif";
+            cCtx.fillStyle = "#2980B9";
+            cCtx.fillText(`수락자 : ${name}`, 400, 220);
+
+            cCtx.beginPath();
+            cCtx.moveTo(100, 250);
+            cCtx.lineTo(700, 250);
+            cCtx.strokeStyle = "#BDC3C7";
+            cCtx.lineWidth = 2;
+            cCtx.stroke();
+
+            cCtx.textAlign = "left";
+            cCtx.font = "bold 22px sans-serif";
+            cCtx.fillStyle = "#2C3E50";
+            cCtx.fillText("[ 나의 4대 디지털·AI 윤리 다짐 ]", 90, 310);
+
+            const promises = [
+                "1. AI가 만든 정보는 출처와 타당성을 비판적으로 검증하겠습니다.",
+                "2. 편향되거나 차별적인 데이터를 배제하고 공정성을 지키겠습니다.",
+                "3. 익명 공간에서도 타인을 존중하며 디지털 공감 능력을 발휘하겠습니다.",
+                "4. AI에 과도하게 의존하지 않고 나의 생각과 주체성을 중심에 두겠습니다."
+            ];
+
+            cCtx.font = "18px sans-serif";
+            cCtx.fillStyle = "#34495E";
+            let y = 370;
+            promises.forEach(p => {
+                cCtx.fillText("✔ " + p, 90, y);
+                y += 55;
+            });
+
+            const today = new Date();
+            const dateStr = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
+            cCtx.textAlign = "center";
+            cCtx.font = "20px sans-serif";
+            cCtx.fillStyle = "#7F8C8D";
+            cCtx.fillText(`발행일자: ${dateStr}`, 400, 680);
+
+            cCtx.font = "bold 22px sans-serif";
+            cCtx.fillStyle = "#2C3E50";
+            cCtx.fillText("서 명 :", 300, 780);
+
+            const sigPad = document.getElementById('signature-pad');
+            if(sigPad) {
+                cCtx.drawImage(sigPad, 370, 710, 220, 90);
+            }
+
+            const link = document.createElement('a');
+            link.download = `AI_윤리_수료증_${name}.png`;
+            link.href = certCanvas.toDataURL('image/png');
+            link.click();
+
+            alert("🎉 디지털·AI 윤리 수료증 이미지 파일이 성공적으로 저장되었습니다!");
+        }
+    </script>
+</body>
+</html>

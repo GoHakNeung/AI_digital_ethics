@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 디지털 윤리 서약서</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Jua', 'Gowun Dodum', sans-serif;
+        }
+
+        body {
+            background-color: #f0f9ff;
+            background-image: radial-gradient(#e0f2fe 2px, transparent 2px);
+            background-size: 24px 24px;
+            color: #334155;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 650px;
+            border-radius: 30px;
+            box-shadow: 0 15px 30px rgba(14, 165, 233, 0.15);
+            border: 6px solid #7dd3fc;
+            padding: 35px 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-title {
+            font-size: 2.2rem;
+            color: #0284c7;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 0px #e0f2fe;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #64748b;
+            margin-bottom: 25px;
+            font-family: 'Gowun Dodum', sans-serif;
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            width: 100%;
+            background-color: #f1f5f9;
+            height: 16px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            border: 2px solid #bae6fd;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #38bdf8, #0284c7);
+            width: 33%;
+            transition: width 0.4s ease;
+            border-radius: 10px;
+        }
+
+        /* Quiz Stage Cards */
+        .card {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .card.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .quiz-badge {
+            background-color: #fef08a;
+            color: #854d0e;
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            border: 2px solid #fde047;
+        }
+
+        .illustration {
+            width: 100%;
+            max-width: 250px;
+            height: 180px;
+            margin: 0 auto 15px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .quiz-question {
+            font-size: 1.35rem;
+            color: #1e293b;
+            margin-bottom: 25px;
+            line-height: 1.5;
+            word-break: keep-all;
+            background-color: #f8fafc;
+            padding: 15px;
+            border-radius: 18px;
+            border: 2px dashed #cbd5e1;
+        }
+
+        .ox-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+
+        .btn-ox {
+            width: 110px;
+            height: 110px;
+            border-radius: 25px;
+            border: 4px solid;
+            font-size: 3.5rem;
+            font-family: 'Jua', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 6px 0 rgba(0,0,0,0.1);
+        }
+
+        .btn-ox:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 rgba(0,0,0,0.1);
+        }
+
+        .btn-o {
+            background-color: #dcfce7;
+            border-color: #22c55e;
+            color: #15803d;
+        }
+
+        .btn-o:hover {
+            background-color: #bbf7d0;
+        }
+
+        .btn-x {
+            background-color: #ffe4e6;
+            border-color: #f43f5e;
+            color: #be123c;
+        }
+
+        .btn-x:hover {
+            background-color: #fecdd3;
+        }
+
+        .feedback-msg {
+            min-height: 40px;
+            font-size: 1.15rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .feedback-correct {
+            color: #16a34a;
+        }
+
+        .feedback-wrong {
+            color: #dc2626;
+        }
+
+        /* Certificate Stage */
+        .pledge-box {
+            background-color: #fffbebf5;
+            border: 3px dashed #fcd34d;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .pledge-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+            font-size: 1.15rem;
+            cursor: pointer;
+            background-color: #ffffff;
+            padding: 12px 15px;
+            border-radius: 12px;
+            border: 2px solid #fef3c7;
+            transition: all 0.2s ease;
+        }
+
+        .pledge-item:hover {
+            border-color: #fde047;
+            background-color: #fefce8;
+        }
+
+        .pledge-item input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            accent-color: #0284c7;
+            cursor: pointer;
+        }
+
+        .name-input-box {
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 1.2rem;
+        }
+
+        .name-input-box input {
+            padding: 10px 15px;
+            border: 3px solid #7dd3fc;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            outline: none;
+            width: 180px;
+            text-align: center;
+        }
+
+        .name-input-box input:focus {
+            border-color: #0284c7;
+        }
+
+        .btn-submit {
+            background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%);
+            color: white;
+            border: none;
+            padding: 14px 40px;
+            font-size: 1.3rem;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #0369a1;
+            transition: all 0.2s ease;
+        }
+
+        .btn-submit:hover {
+            background: linear-gradient(180deg, #7dd3fc 0%, #0369a1 100%);
+        }
+
+        .btn-submit:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #0369a1;
+        }
+
+        /* Success Screen */
+        .success-card {
+            display: none;
+            animation: popIn 0.5s ease-out;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .badge-img {
+            font-size: 4rem;
+            margin: 15px 0;
+        }
+
+        .final-name {
+            font-size: 1.6rem;
+            color: #0369a1;
+            text-decoration: underline;
+            text-underline-offset: 6px;
+        }
+
+        .stamp {
+            margin-top: 20px;
+            display: inline-block;
+            border: 4px solid #ef4444;
+            color: #ef4444;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transform: rotate(-5deg);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="header-title">📱 나의 디지털 윤리 서약서 💻</h1>
+    <p class="subtitle">알쏭달쏭 OX 퀴즈를 풀고 바른 어린이 서약서를 완성해보아요!</p>
+
+    <div class="progress-bar" id="progress-container">
+        <div class="progress-fill" id="progress-fill"></div>
+    </div>
+
+    <!-- Quiz 1 -->
+    <div class="card active" id="quiz-1">
+        <span class="quiz-badge">퀴즈 1단계</span>
+        <div class="illustration">
+            <!-- 고운 말 쓰기 일러스트: 기기를 통해 서로 고운 말을 주고받는 어린이들 -->
+            <svg width="220" height="170" viewBox="0 0 240 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- 배경 은은한 원 -->
+                <circle cx="120" cy="90" r="85" fill="#E0F2FE"/>
+
+                <!-- 왼쪽 어린이 (컴퓨터 앉아있는 아이) -->
+                <rect x="20" y="115" width="45" height="30" rx="4" fill="#94A3B8"/> <!-- 책상 -->
+                <rect x="25" y="80" width="35" height="28" rx="4" fill="#334155"/> <!-- 모니터 -->
+                <rect x="28" y="83" width="29" height="22" rx="2" fill="#38BDF8"/> <!-- 화면 -->
+                <circle cx="42" cy="55" r="15" fill="#FFEDD5" stroke="#F97316" stroke-width="2"/> <!-- 머리 -->
+                <circle cx="37" cy="52" r="2" fill="#431407"/> <!-- 눈 -->
+                <circle cx="47" cy="52" r="2" fill="#431407"/>
+                <path d="M40 58C40 58 42 61 44 61C46 61 48 58 48 58" stroke="#431407" stroke-width="2" stroke-linecap="round"/>
+                <path d="M27 70C27 70 35 65 42 65C49 65 57 70 57 70" fill="#0284C7"/> <!-- 옷 -->
+
+                <!-- 오른쪽 어린이 (스마트폰 들고 있는 아이) -->
+                <circle cx="198" cy="65" r="15" fill="#FFEDD5" stroke="#F97316" stroke-width="2"/> <!-- 머리 -->
+                <circle cx="193" cy="62" r="2" fill="#431407"/>
+                <circle cx="203" cy="62" r="2" fill="#431407"/>
+                <path d="M196 68C196 68 198 71 200 71C202 71 204 68 204 68" stroke="#431407" stroke-width="2" stroke-linecap="round"/>
+                <path d="M183 80C183 80 191 75 198 75C205 75 213 80 213 80" fill="#22C55E"/> <!-- 옷 -->
+                <rect x="175" y="85" width="16" height="28" rx="3" fill="#1E293B"/> <!-- 스마트폰 -->
+                <rect x="177" y="87" width="12" height="22" rx="1" fill="#FEF08A"/>
+
+                <!-- 중앙: 서로 연결된 고운 말 메시지 (하트 & 반짝이) -->
+                <!-- 큰 하트 말풍선 -->
+                <path d="M85 45C85 31.1929 98.4315 20 115 20C131.569 20 145 31.1929 145 45C145 58.8071 131.569 70 115 70C108 70 101.5 67.5 96.5 63.5L80 72L85.5 58.5C88.5 54.5 85 49 85 45Z" fill="#FFFFFF" stroke="#F43F5E" stroke-width="3"/>
+                <!-- 말풍선 안 하트 -->
+                <path d="M115 35C111 30 103 30 99 35C95 40 100 48 115 58C130 48 135 40 131 35C127 30 119 30 115 35Z" fill="#F43F5E"/>
+                
+                <!-- 날아가는 예쁜 하트들과 반짝이들 -->
+                <path d="M68 40C66 37 62 37 60 40C58 43 60 47 68 53C76 47 78 43 76 40C74 37 70 37 68 40Z" fill="#FB7185"/>
+                <path d="M162 48C160 45 156 45 154 48C152 51 154 55 162 61C170 55 172 51 170 48C168 45 164 45 162 48Z" fill="#FB7185"/>
+                <!-- 별 반짝이 -->
+                <path d="M78 80L80 84L84 85L80 86L78 90L76 86L72 85L76 84L78 80Z" fill="#F59E0B"/>
+                <path d="M152 82L154 86L158 87L154 88L152 92L150 88L146 87L150 86L152 82Z" fill="#F59E0B"/>
+            </svg>
+        </div>
+        <div class="quiz-question">
+            인터넷이나 스마트폰으로 친구와 이야기할 때,<br><strong>예쁜 말과 고운 말</strong>을 사용해야 할까요?
+        </div>
+        <div class="ox-buttons">
+            <button class="btn-ox btn-o" onclick="checkAnswer(1, true)">O</button>
+            <button class="btn-ox btn-x" onclick="checkAnswer(1, false)">X</button>
+        </div>
+        <div class="feedback-msg" id="feedback-1"></div>
+    </div>
+
+    <!-- Quiz 2 -->
+    <div class="card" id="quiz-2">
+        <span class="quiz-badge">퀴즈 2단계</span>
+        <div class="illustration">
+            <!-- 시간 약속 지키기 일러스트: 스마트폰 속 시계와 약속 표시 -->
+            <svg width="180" height="160" viewBox="0 0 200 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="100" cy="90" r="80" fill="#FEF3C7"/>
+                <rect x="65" y="25" width="70" height="120" rx="12" fill="#1E293B" stroke="#475569" stroke-width="4"/>
+                <rect x="71" y="38" width="58" height="85" rx="4" fill="#BAE6FD"/>
+                <circle cx="100" cy="75" r="24" fill="#FFFFFF" stroke="#0284C7" stroke-width="4"/>
+                <path d="M100 59V75H112" stroke="#EF4444" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="100" cy="75" r="3" fill="#0284C7"/>
+                <rect x="78" y="106" width="44" height="10" rx="5" fill="#22C55E"/>
+                <path d="M93 111L97 114L105 108" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M125 110L145 130" stroke="#F97316" stroke-width="8" stroke-linecap="round"/>
+            </svg>
+        </div>
+        <div class="quiz-question">
+            스마트폰을 사용하는 시간이 너무 길어지지 않게,<br><strong>약속한 시간만큼만</strong> 조심해서 사용해야 할까요?
+        </div>
+        <div class="ox-buttons">
+            <button class="btn-ox btn-o" onclick="checkAnswer(2, true)">O</button>
+            <button class="btn-ox btn-x" onclick="checkAnswer(2, false)">X</button>
+        </div>
+        <div class="feedback-msg" id="feedback-2"></div>
+    </div>
+
+    <!-- Quiz 3 -->
+    <div class="card" id="quiz-3">
+        <span class="quiz-badge">퀴즈 3단계</span>
+        <div class="illustration">
+            <!-- 개인정보 보호 일러스트: 안전한 자물쇠와 정보 방패 -->
+            <svg width="180" height="160" viewBox="0 0 200 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="100" cy="90" r="80" fill="#DCFCE7"/>
+                <path d="M100 25L145 45V90C145 120 100 145 100 145C100 145 55 120 55 90V45L100 25Z" fill="#22C55E" stroke="#15803D" stroke-width="4"/>
+                <path d="M88 72V62C88 55.3726 93.3726 50 100 50C106.627 50 112 55.3726 112 62V72" stroke="#FEF08A" stroke-width="5" stroke-linecap="round"/>
+                <rect x="80" y="70" width="40" height="32" rx="6" fill="#F59E0B" stroke="#B45309" stroke-width="3"/>
+                <circle cx="100" cy="84" r="4" fill="#78350F"/>
+                <path d="M100 88V94" stroke="#78350F" stroke-width="3" stroke-linecap="round"/>
+                <path d="M140 35L143 41L149 42L143 44L140 50L138 44L132 42L138 41L140 35Z" fill="#FDE047"/>
+            </svg>
+        </div>
+        <div class="quiz-question">
+            나의 이름, 전화번호, 주소 같은 <strong>개인정보</strong>는<br>인터넷에 마음대로 올리지 않고 소중히 지켜야 할까요?
+        </div>
+        <div class="ox-buttons">
+            <button class="btn-ox btn-o" onclick="checkAnswer(3, true)">O</button>
+            <button class="btn-ox btn-x" onclick="checkAnswer(3, false)">X</button>
+        </div>
+        <div class="feedback-msg" id="feedback-3"></div>
+    </div>
+
+    <!-- Final Pledge Stage -->
+    <div class="card" id="pledge-stage">
+        <span class="quiz-badge" style="background-color: #e0f2fe; color: #0369a1; border-color: #7dd3fc;">마지막 단계: 서약서 작성</span>
+        <h2 style="font-size: 1.5rem; margin-bottom: 15px; color: #0284c7;">📜 나의 디지털 윤리 약속</h2>
+        <p style="margin-bottom: 20px; font-size: 1rem; color: #475569;">퀴즈에서 배운 내용을 생각하며 다짐에 체크해보세요!</p>
+
+        <div class="pledge-box">
+            <label class="pledge-item">
+                <input type="checkbox" id="chk1">
+                <span>1. 인터넷에서 예쁜 말과 고운 말을 쓰고, 악플을 달지 않습니다.</span>
+            </label>
+            <label class="pledge-item">
+                <input type="checkbox" id="chk2">
+                <span>2. 스마트폰과 컴퓨터는 약속된 시간 동안만 사용합니다.</span>
+            </label>
+            <label class="pledge-item">
+                <input type="checkbox" id="chk3">
+                <span>3. 나의 이름과 개인정보를 소중하게 보호합니다.</span>
+            </label>
+        </div>
+
+        <div class="name-input-box">
+            <label for="student-name"><strong>서약자 이름 :</strong></label>
+            <input type="text" id="student-name" placeholder="이름 입력 (예: 홍길동)">
+        </div>
+
+        <button class="btn-submit" onclick="submitPledge()">약속하고 서약서 제출하기 ✨</button>
+        <div class="feedback-msg" id="pledge-feedback"></div>
+    </div>
+
+    <!-- Success Screen -->
+    <div class="success-card" id="success-stage">
+        <div class="badge-img">🎉🏆✨</div>
+        <h2 style="font-size: 1.8rem; color: #0284c7; margin-bottom: 15px;">멋져요! 디지털 윤리 어린이 서약 완료!</h2>
+        
+        <p style="font-size: 1.2rem; margin-bottom: 15px;">
+            <span class="final-name" id="display-name">홍길동</span> 학생은<br>
+            바른 디지털 생활을 실천하는 멋진 2학년 어린이입니다!
+        </p>
+
+        <div class="pledge-box" style="background-color: #f0fdf4; border-color: #86efac; text-align: center;">
+            <p style="margin-bottom: 8px; font-weight: bold; color: #166534;">[ 나의 3가지 다짐 ]</p>
+            <p style="font-size: 0.95rem; color: #15803d; line-height: 1.6;">
+                1. 고운 말, 예쁜 말 쓰기<br>
+                2. 약속한 시간만큼 사용하기<br>
+                3. 소중한 개인정보 지키기
+            </p>
+        </div>
+
+        <div class="stamp">참 잘했어요! 👍</div>
+    </div>
+</div>
+
+<script>
+    const answers = { 1: true, 2: true, 3: true };
+
+    function checkAnswer(quizNum, choice) {
+        const feedback = document.getElementById(`feedback-${quizNum}`);
+        if (choice === answers[quizNum]) {
+            feedback.innerHTML = "<span class='feedback-correct'>⭕ 정답이에요! 참 잘했어요!</span>";
+            setTimeout(() => {
+                nextQuiz(quizNum);
+            }, 1000);
+        } else {
+            feedback.innerHTML = "<span class='feedback-wrong'>❌ 다시 생각해볼까요? 한 번 더 시도해보세요!</span>";
+        }
+    }
+
+    function nextQuiz(currentQuiz) {
+        document.getElementById(`quiz-${currentQuiz}`).classList.remove('active');
+        
+        if (currentQuiz === 1) {
+            document.getElementById('quiz-2').classList.add('active');
+            document.getElementById('progress-fill').style.width = '66%';
+        } else if (currentQuiz === 2) {
+            document.getElementById('quiz-3').classList.add('active');
+            document.getElementById('progress-fill').style.width = '100%';
+        } else if (currentQuiz === 3) {
+            document.getElementById('pledge-stage').classList.add('active');
+            document.getElementById('progress-container').style.display = 'none';
+        }
+    }
+
+    function submitPledge() {
+        const chk1 = document.getElementById('chk1').checked;
+        const chk2 = document.getElementById('chk2').checked;
+        const chk3 = document.getElementById('chk3').checked;
+        const name = document.getElementById('student-name').value.trim();
+        const feedback = document.getElementById('pledge-feedback');
+
+        if (!chk1 || !chk2 || !chk3) {
+            feedback.innerHTML = "<span class='feedback-wrong'>3가지 약속 다짐 항목에 모두 체크해주세요!</span>";
+            return;
+        }
+
+        if (name === "") {
+            feedback.innerHTML = "<span class='feedback-wrong'>이름을 입력해주세요!</span>";
+            return;
+        }
+
+        document.getElementById('pledge-stage').classList.remove('active');
+        document.getElementById('display-name').innerText = name;
+        document.getElementById('success-stage').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>

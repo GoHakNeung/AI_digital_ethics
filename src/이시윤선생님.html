@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 윤리 탐험대 - 초등 5~6학년 AI 윤리 체험</title>
+  <style>
+    /* 기본 리셋 및 스타일 */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+      background-color: #f4f6f8;
+      color: #333;
+      line-height: 1.6;
+      padding: 20px 10px;
+    }
+    .container {
+      max-width: 768px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #eef0f2;
+      padding-bottom: 16px;
+    }
+    header h1 {
+      font-size: 24px;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+    header p {
+      font-size: 14px;
+      color: #64748b;
+    }
+    
+    /* 화면 전환용 클래스 */
+    .screen {
+      display: none;
+    }
+    .screen.active {
+      display: block;
+    }
+
+    /* 시작 화면 */
+    .start-card {
+      text-align: center;
+      padding: 20px 10px;
+    }
+    .input-group {
+      margin: 20px 0;
+    }
+    .input-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+    .input-group input {
+      padding: 10px 14px;
+      font-size: 16px;
+      border: 2px solid #cbd5e1;
+      border-radius: 6px;
+      width: 100%;
+      max-width: 300px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .input-group input:focus {
+      border-color: #3b82f6;
+    }
+
+    /* 진행률 바 */
+    .progress-container {
+      margin-bottom: 20px;
+    }
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      font-weight: bold;
+      color: #475569;
+      margin-bottom: 6px;
+    }
+    .progress-bar {
+      width: 100%;
+      height: 10px;
+      background-color: #e2e8f0;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background-color: #3b82f6;
+      transition: width 0.3s ease;
+    }
+
+    /* 상황 카드 */
+    .scenario-box {
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+    .scenario-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #0f172a;
+      margin-bottom: 10px;
+    }
+    .scenario-desc {
+      font-size: 15px;
+      color: #334155;
+      white-space: pre-line;
+    }
+
+    /* 선택지 */
+    .choices-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .choice-item {
+      display: flex;
+      align-items: flex-start;
+      border: 2px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background-color: #fff;
+    }
+    .choice-item:hover {
+      border-color: #94a3b8;
+      background-color: #f8fafc;
+    }
+    .choice-item.selected {
+      border-color: #3b82f6;
+      background-color: #eff6ff;
+    }
+    .choice-item input[type="radio"] {
+      margin-top: 3px;
+      margin-right: 12px;
+      cursor: pointer;
+    }
+    .choice-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    /* 나의 생각 입력 영역 (추가된 카드 스타일) */
+    .reflection-box {
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 18px;
+      margin-bottom: 20px;
+    }
+    .reflection-label {
+      display: block;
+      font-size: 16px;
+      font-weight: bold;
+      color: #0f172a;
+      margin-bottom: 6px;
+    }
+    .reflection-guide {
+      font-size: 14px;
+      color: #64748b;
+      margin-bottom: 10px;
+    }
+    #choice-reason {
+      width: 100%;
+      min-height: 110px;
+      font-size: 16px;
+      font-family: inherit;
+      padding: 12px;
+      border: 2px solid #cbd5e1;
+      border-radius: 6px;
+      outline: none;
+      resize: vertical;
+      transition: border-color 0.2s;
+      background-color: #ffffff;
+      color: #1e293b;
+    }
+    #choice-reason:focus {
+      border-color: #3b82f6;
+    }
+    #choice-reason[readonly] {
+      background-color: #f1f5f9;
+      color: #475569;
+      cursor: not-allowed;
+    }
+    .reflection-count {
+      text-align: right;
+      font-size: 13px;
+      color: #64748b;
+      margin-top: 6px;
+    }
+
+    /* 해설 상자 */
+    .explanation-box {
+      display: none;
+      background-color: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+    .explanation-box.active {
+      display: block;
+    }
+    .explanation-title {
+      font-size: 16px;
+      font-weight: bold;
+      color: #166534;
+      margin-bottom: 8px;
+    }
+    .explanation-desc {
+      font-size: 14px;
+      color: #15803d;
+      white-space: pre-line;
+    }
+
+    /* 서약 및 서명 화면 */
+    .pledge-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 20px 0;
+      text-align: left;
+    }
+    .pledge-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 15px;
+      cursor: pointer;
+      background: #f8fafc;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+    }
+    .pledge-item input {
+      margin-top: 3px;
+      cursor: pointer;
+    }
+    
+    /* 서명 캔버스 (CSS 배경으로 점선 처리) */
+    .signature-area {
+      margin: 20px 0;
+      text-align: center;
+    }
+    .signature-title {
+      font-weight: bold;
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+    .canvas-container {
+      position: relative;
+      display: inline-block;
+      border: 2px solid #cbd5e1;
+      border-radius: 8px;
+      overflow: hidden;
+      /* CSS 점선 중앙 안내선 */
+      background-color: #ffffff;
+      background-image: linear-gradient(to right, #cbd5e1 50%, rgba(255,255,255,0) 0%);
+      background-position: bottom 30px left 0;
+      background-size: 10px 1px;
+      background-repeat: repeat-x;
+    }
+    canvas {
+      display: block;
+      touch-action: none;
+      cursor: crosshair;
+    }
+    .canvas-btn {
+      margin-top: 6px;
+    }
+
+    /* 버튼 공통 */
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .btn {
+      padding: 10px 18px;
+      font-size: 15px;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .btn-primary {
+      background-color: #3b82f6;
+      color: white;
+    }
+    .btn-primary:hover {
+      background-color: #2563eb;
+    }
+    .btn-secondary {
+      background-color: #e2e8f0;
+      color: #475569;
+    }
+    .btn-secondary:hover {
+      background-color: #cbd5e1;
+    }
+    .btn-success {
+      background-color: #22c55e;
+      color: white;
+    }
+    .btn-success:hover {
+      background-color: #16a34a;
+    }
+    .btn:disabled {
+      background-color: #f1f5f9;
+      color: #94a3b8;
+      cursor: not-allowed;
+      border: 1px solid #e2e8f0;
+    }
+
+    /* 모달 (상장) 모바일 대응 및 오버레이 */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+      overflow-y: auto;
+      padding: 20px 10px;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal-content {
+      background: #ffffff;
+      width: 100%;
+      max-width: 680px;
+      margin: auto;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      position: relative;
+    }
+
+    /* 상장 디자인 */
+    .certificate {
+      border: 8px double #1e3a8a;
+      padding: 30px 20px;
+      text-align: center;
+      background-color: #fefce8;
+      border-radius: 4px;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.03);
+    }
+    .cert-title {
+      font-size: 28px;
+      font-weight: 900;
+      color: #1e3a8a;
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+    }
+    .cert-name {
+      font-size: 20px;
+      font-weight: bold;
+      color: #0f172a;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #cbd5e1;
+      display: inline-block;
+      padding-bottom: 4px;
+    }
+    .cert-body {
+      font-size: 15px;
+      color: #334155;
+      line-height: 1.7;
+      margin-bottom: 20px;
+      word-break: keep-all;
+    }
+    .cert-pledges {
+      text-align: left;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      padding: 14px 18px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      font-size: 13.5px;
+      color: #1e293b;
+    }
+    .cert-pledges h4 {
+      font-size: 14px;
+      color: #1e3a8a;
+      margin-bottom: 8px;
+    }
+    .cert-pledges ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    .cert-pledges li {
+      margin-bottom: 6px;
+      position: relative;
+      padding-left: 16px;
+    }
+    .cert-pledges li::before {
+      content: "✔";
+      position: absolute;
+      left: 0;
+      color: #22c55e;
+    }
+    .cert-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px dashed #cbd5e1;
+    }
+    .cert-date {
+      font-size: 14px;
+      color: #64748b;
+    }
+    .cert-signature-box {
+      text-align: right;
+    }
+    .cert-signature-box span {
+      font-size: 14px;
+      font-weight: bold;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    .cert-signature-img {
+      height: 45px;
+      vertical-align: middle;
+      border-bottom: 1px solid #94a3b8;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    /* 인쇄 전용 스타일 */
+    @page {
+      size: A4 portrait;
+      margin: 10mm;
+    }
+    @media print {
+      body * {
+        display: none !important;
+      }
+      body #certificate-modal,
+      body #certificate-modal * {
+        display: block !important;
+      }
+      .modal-overlay {
+        position: static !important;
+        background: transparent !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        overflow: visible !important;
+      }
+      .modal-content {
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        border: none !important;
+      }
+      .certificate {
+        width: 190mm !important;
+        height: 265mm !important;
+        box-sizing: border-box !important;
+        margin: 0 auto !important;
+        padding: 15mm 12mm !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        background-color: #fff !important;
+        border: 6pt double #1e3a8a !important;
+      }
+      .cert-title { font-size: 24pt !important; margin-bottom: 8mm !important; }
+      .cert-name { font-size: 16pt !important; margin-bottom: 8mm !important; }
+      .cert-body { font-size: 12pt !important; margin-bottom: 8mm !important; line-height: 1.6 !important; }
+      .cert-pledges { font-size: 10.5pt !important; padding: 6mm 8mm !important; margin-bottom: 8mm !important; }
+      .cert-pledges li { margin-bottom: 3mm !important; }
+      .cert-footer { display: flex !important; justify-content: space-between !important; align-items: center !important; margin-top: 5mm !important; padding-top: 5mm !important; }
+      .cert-signature-img { height: 15mm !important; }
+      .modal-actions {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>AI 윤리 탐험대 🚀</h1>
+    <p>올바른 인공지능 활용을 위한 윤리 체험 웹앱</p>
+  </header>
+
+  <!-- SCREEN 1: 이름 입력 -->
+  <div id="screen-start" class="screen active">
+    <div class="start-card">
+      <h2>탐험을 시작하기 전, 이름을 입력해 주세요!</h2>
+      <p style="margin-top: 8px; color: #64748b; font-size: 14px;">입력한 이름은 윤리 탐험 수료증(상장) 발급에 사용됩니다.</p>
+      <div class="input-group">
+        <label for="student-name">학생 이름</label>
+        <input type="text" id="student-name" placeholder="예: 홍길동" autocomplete="off" />
+      </div>
+      <button id="start-btn" class="btn btn-primary" style="width: 100%; max-width: 300px;">체험 시작하기</button>
+    </div>
+  </div>
+
+  <!-- SCREEN 2: 윤리 상황 체험 -->
+  <div id="screen-scenario" class="screen">
+    <!-- 진행률 -->
+    <div class="progress-container">
+      <div class="progress-info">
+        <span id="progress-text">상황 1 / 5</span>
+        <span id="progress-percent">20%</span>
+      </div>
+      <div class="progress-bar">
+        <div id="progress-fill" class="progress-fill"></div>
+      </div>
+    </div>
+
+    <!-- 상황 본문 -->
+    <div class="scenario-box">
+      <div id="scenario-title" class="scenario-title">상황 제목</div>
+      <div id="scenario-desc" class="scenario-desc">상황 설명이 들어갑니다.</div>
+    </div>
+
+    <!-- 선택지 -->
+    <div class="choices-container" id="choices-container">
+      <div class="choice-item" data-choice="A">
+        <input type="radio" name="choice" id="choiceA" value="A">
+        <label for="choiceA" class="choice-text" id="labelA">선택지 A</label>
+      </div>
+      <div class="choice-item" data-choice="B">
+        <input type="radio" name="choice" id="choiceB" value="B">
+        <label for="choiceB" class="choice-text" id="labelB">선택지 B</label>
+      </div>
+    </div>
+
+    <!-- 나의 생각 영역 (추가됨) -->
+    <div id="reflection-box" class="reflection-box">
+      <label for="choice-reason" class="reflection-label">
+        왜 그렇게 선택했나요?
+      </label>
+      <p class="reflection-guide">
+        선택한 이유를 자신의 생각으로 두세 문장 정도 작성해 주세요.
+      </p>
+      <textarea
+        id="choice-reason"
+        maxlength="300"
+        placeholder="예: 친구의 사진은 친구의 개인정보이므로 먼저 허락을 받아야 한다고 생각했습니다."
+      ></textarea>
+      <div class="reflection-count">
+        <span id="reason-count">0</span> / 300자
+      </div>
+    </div>
+
+    <!-- 해설 영역 -->
+    <div id="explanation-box" class="explanation-box">
+      <div class="explanation-title">💡 윤리 탐험대의 핵심 포인트</div>
+      <div id="explanation-desc" class="explanation-desc">해설 내용이 들어갑니다.</div>
+    </div>
+
+    <!-- 네비게이션 버튼 (확인 버튼 추가) -->
+    <div class="nav-buttons">
+      <button id="prev-btn" class="btn btn-secondary">
+        이전
+      </button>
+      <button id="confirm-choice-btn" class="btn btn-primary">
+        선택 확인하기
+      </button>
+      <button id="next-btn" class="btn btn-primary" disabled>
+        다음
+      </button>
+    </div>
+  </div>
+
+  <!-- SCREEN 3: 서약 및 서명 -->
+  <div id="screen-pledge" class="screen">
+    <h2 style="text-align: center; color: #0f172a; margin-bottom: 8px;">나의 AI 윤리 실천 서약서</h2>
+    <p style="text-align: center; color: #64748b; font-size: 14px;">체험하며 배운 내용을 바탕으로 실천할 약속을 체크해 주세요.</p>
+
+    <div class="pledge-list">
+      <label class="pledge-item">
+        <input type="checkbox" class="pledge-check" value="1">
+        <span>다른 사람의 사진이나 정보는 반드시 허락을 받고 AI에 입력하겠습니다.</span>
+      </label>
+      <label class="pledge-item">
+        <input type="checkbox" class="pledge-check" value="2">
+        <span>AI가 제공한 정보가 사실인지 꼭 확인하고 올바르게 사용하겠습니다.</span>
+      </label>
+      <label class="pledge-item">
+        <input type="checkbox" class="pledge-check" value="3">
+        <span>AI로 숙제나 과제를 할 때는 스스로 만든 부분과 AI의 도움을 구분하겠습니다.</span>
+      </label>
+      <label class="pledge-item">
+        <input type="checkbox" class="pledge-check" value="4">
+        <span>AI를 이용해 타인에게 상처를 주거나 나쁜 합성물을 만들지 않겠습니다.</span>
+      </label>
+    </div>
+
+    <div class="signature-area">
+      <div class="signature-title">서명하기 (마우스 또는 손가락으로 서명해 주세요)</div>
+      <div class="canvas-container">
+        <canvas id="sig-canvas" width="320" height="130"></canvas>
+      </div>
+      <div>
+        <button id="clear-canvas-btn" class="btn btn-secondary canvas-btn" style="padding: 4px 12px; font-size: 13px;">서명 지우기</button>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button id="pledge-prev-btn" class="btn btn-secondary">이전 (상황으로)</button>
+      <button id="complete-pledge-button" class="btn btn-success" disabled>서약 완료 및 상장 받기</button>
+    </div>
+  </div>
+</div>
+
+<!-- 모달: 수료 상장 -->
+<div id="certificate-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="cert-title-text">
+  <div class="modal-content">
+    <div class="certificate">
+      <div id="cert-title-text" class="cert-title">AI 윤리 실천 인증서</div>
+      <div class="cert-name"><span id="cert-user-name">홍길동</span> 어린이</div>
+      <p class="cert-body">
+        위 어린이는 'AI 윤리 탐험대'의 모든 과정을 성실히 완료하고,<br>
+        올바르고 안전하게 인공지능을 활용할 수 있는 윤리적 태도와 실천 다짐을 갖추었으므로 이 상장을 수여합니다.
+      </p>
+
+      <div class="cert-pledges">
+        <h4>[ 나의 AI 윤리 실천 서약 ]</h4>
+        <ul id="cert-pledge-list">
+          <!-- 체크된 원래 문장이 정확히 동적으로 들어감 -->
+        </ul>
+      </div>
+
+      <div class="cert-footer">
+        <div class="cert-date" id="cert-date">2026년 07월 31일</div>
+        <div class="cert-signature-box">
+          <span>서명:</span>
+          <img id="cert-sig-image" class="cert-signature-img" src="" alt="학생 서명">
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button id="restart-btn" class="btn btn-secondary">처음부터 다시 하기</button>
+      <button id="print-btn" class="btn btn-primary">인쇄하기</button>
+      <button id="close-modal-btn" class="btn btn-secondary">닫기</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* --------------------------------------------------
+   * 데이터 및 순수 메모리 상태 관리 (localStorage 불사용)
+   * -------------------------------------------------- */
+  const scenarios = [
+    {
+      id: 1,
+      title: "상황 1: 친구의 사진을 AI 이미지 생성기에 넣어도 될까?",
+      desc: "민주는 미술 시간에 AI 이미지 생성기를 사용하여 멋진 합성 사진을 만들고 있습니다. 재미있는 생각이 떠오른 민주는 옆자리에 앉은 친구의 얼굴 사진을 찍어, 허락 없이 AI 이미지 생성기에 입력하여 웃긴 합성 이미지를 만들려고 합니다.",
+      choiceA: "친구의 허락을 받지 않았더라도 재미를 위한 것이라면 괜찮다.",
+      choiceB: "친구의 얼굴 사진도 소중한 개인정보이므로 반드시 친구의 동의를 구해야 한다.",
+      explanation: "친구의 얼굴 사진은 소중한 개인정보입니다! 개인정보는 당사자의 허락 없이 AI 서비스에 입력하거나 공유해서는 안 됩니다. AI에 입력된 데이터는 저장되거나 다른 목적으로 사용될 수 있으므로, 항상 동의를 받는 것이 중요합니다."
+    },
+    {
+      id: 2,
+      title: "상황 2: AI가 알려준 정보는 항상 사실일까?",
+      desc: "지훈이는 사회 숙제로 우리 고장의 역사에 대해 조사하고 있습니다. 생성형 AI에게 질문을 하니 매우 그럴듯하고 상세한 답변을 빠르게 작성해 주었습니다.",
+      choiceA: "AI가 작성해 준 내용을 확인 없이 그대로 숙제에 적어 제출한다.",
+      choiceB: "AI는 틀린 정보를 진짜처럼 말할 수(환각 현상) 있으므로, 출처나 책을 통해 사실인지 확인한다.",
+      explanation: "AI는 때때로 잘못된 정보를 마치 사실인 것처럼 그럴듯하게 만들어내는 '환각(Hallucination)' 현상을 보입니다. 따라서 AI가 제공한 정보는 항상 도서, 신문, 공식 자료 등을 통해 검증하는 습관이 필요합니다."
+    },
+    {
+      id: 3,
+      title: "상황 3: AI로 만든 글짓기 숙제, 내가 쓴 것처럼 제출해도 될까?",
+      desc: "서윤이는 글짓기 숙제를 하려니 생각이 잘 나지 않아, AI에게 글의 줄거리와 문장을 모두 쓰도록 요청했습니다. AI가 완성한 글이 매우 훌륭했습니다.",
+      choiceA: "AI가 써준 글을 그대로 복사하여 내가 작성한 글인 것처럼 제출한다.",
+      choiceB: "AI의 글을 아이디어 참고용으로만 활용하고, 나만의 생각과 언어로 다시 작성하여 제출한다.",
+      explanation: "AI의 결과물을 마치 자신이 직접 만든 것처럼 제출하는 것은 정직하지 못한 행동이며 표절에 해당할 수 있습니다. AI는 나의 생각을 넓혀주는 도구로 활용하고, 최종 결과물은 자신의 힘으로 작성해야 합니다."
+    },
+    {
+      id: 4,
+      title: "상황 4: AI로 만든 이미지로 친구를 놀려도 될까?",
+      desc: "동현이는 AI 이미지를 합성하는 도구를 사용법을 배웠습니다. 장난으로 어색하게 합성된 친구의 사진을 만들어 학급 단체 채팅방에 올려 친구들을 웃게 해주고 싶어졌습니다.",
+      choiceA: "단순한 장난이고 친구들도 즐거워할 것이므로 단체 채팅방에 올린다.",
+      choiceB: "합성 사진으로 인해 당사자 친구가 상처받거나 불쾌할 수 있으므로 올리지 않는다.",
+      explanation: "장난이라도 상대방에게 상처나 모욕감을 주는 AI 합성물(딥페이크 등)을 제작하거나 공유하는 것은 딥페이크 윤리에 어긋나는 행동입니다. AI 기술을 사용할 때는 타인에 대한 존중과 배려가 바탕이 되어야 합니다."
+    },
+    {
+      id: 5,
+      title: "상황 5: AI 학습 데이터의 편견과 차별 문제",
+      desc: "AI 로봇이 사람들의 면접을 도와주는 프로그램을 체험 중입니다. 그런데 AI가 특정 성별이나 연령에 대해 불공정한 평가를 내리는 것을 발견했습니다.",
+      choiceA: "AI는 컴퓨터이므로 무조건 공정하고 정확할 것이라고 믿고 따른다.",
+      choiceB: "AI도 사람이 만든 데이터로 학습하므로 편견이 있을 수 있음을 인지하고 수정과 확인을 요구한다.",
+      explanation: "AI는 편향된 데이터를 학습할 경우 편견이나 차별을 그대로 학습할 수 있습니다. AI가 항상 중립적이거나 완벽하지 않다는 점을 기억하고, 비판적 사고를 통해 바라보아야 합니다."
+    }
+  ];
+
+  // JavaScript 변수로만 상태 유지 (웹 브라우저 저장소 제거)
+  let state = {
+    userName: '',
+    currentIndex: 0,
+    answers: {}, // { 0: { choice: 'B', reason: '...', confirmed: true } }
+    pledges: [], // [1, 2, 3, 4]
+    signatureData: null
+  };
+
+  // 임시 선택 상태 (확인 버튼 누르기 전 상태)
+  let selectedChoiceTemp = null;
+
+  /* --------------------------------------------------
+   * DOM 요소 참조
+   * -------------------------------------------------- */
+  const screenStart = document.getElementById('screen-start');
+  const screenScenario = document.getElementById('screen-scenario');
+  const screenPledge = document.getElementById('screen-pledge');
+
+  const studentNameInput = document.getElementById('student-name');
+  const startBtn = document.getElementById('start-btn');
+
+  const progressText = document.getElementById('progress-text');
+  const progressPercent = document.getElementById('progress-percent');
+  const progressFill = document.getElementById('progress-fill');
+
+  const scenarioTitle = document.getElementById('scenario-title');
+  const scenarioDesc = document.getElementById('scenario-desc');
+  const choiceRadioA = document.getElementById('choiceA');
+  const choiceRadioB = document.getElementById('choiceB');
+  const labelA = document.getElementById('labelA');
+  const labelB = document.getElementById('labelB');
+
+  const choiceReason = document.getElementById('choice-reason');
+  const reasonCount = document.getElementById('reason-count');
+
+  const explanationBox = document.getElementById('explanation-box');
+  const explanationDesc = document.getElementById('explanation-desc');
+
+  const prevBtn = document.getElementById('prev-btn');
+  const confirmChoiceBtn = document.getElementById('confirm-choice-btn');
+  const nextBtn = document.getElementById('next-btn');
+
+  const pledgeChecks = document.querySelectorAll('.pledge-check');
+  const pledgePrevBtn = document.getElementById('pledge-prev-btn');
+  const completePledgeBtn = document.getElementById('complete-pledge-button');
+
+  const sigCanvas = document.getElementById('sig-canvas');
+  const clearCanvasBtn = document.getElementById('clear-canvas-btn');
+
+  const certModal = document.getElementById('certificate-modal');
+  const certUserName = document.getElementById('cert-user-name');
+  const certPledgeList = document.getElementById('cert-pledge-list');
+  const certDate = document.getElementById('cert-date');
+  const certSigImage = document.getElementById('cert-sig-image');
+
+  const printBtn = document.getElementById('print-btn');
+  const closeModalBtn = document.getElementById('close-modal-btn');
+  const restartBtn = document.getElementById('restart-btn');
+
+  /* --------------------------------------------------
+   * 초기화 & 화면 전환
+   * -------------------------------------------------- */
+  function initApp() {
+    studentNameInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        startBtn.click();
+      }
+    });
+
+    showScreen('start');
+    setupCanvas();
+  }
+
+  function showScreen(screenName) {
+    screenStart.classList.remove('active');
+    screenScenario.classList.remove('active');
+    screenPledge.classList.remove('active');
+
+    if (screenName === 'start') {
+      screenStart.classList.add('active');
+    } else if (screenName === 'scenario') {
+      screenScenario.classList.add('active');
+    } else if (screenName === 'pledge') {
+      screenPledge.classList.add('active');
+      renderPledgeScreen();
+    }
+  }
+
+  /* --------------------------------------------------
+   * SCREEN 1: 시작
+   * -------------------------------------------------- */
+  startBtn.addEventListener('click', () => {
+    const name = studentNameInput.value.trim();
+    if (!name) {
+      alert('이름을 입력해 주세요!');
+      studentNameInput.focus();
+      return;
+    }
+    state.userName = name;
+    showScreen('scenario');
+    renderScenario();
+  });
+
+  /* --------------------------------------------------
+   * SCREEN 2: 윤리 상황, 이유 작성, 검증 처리
+   * -------------------------------------------------- */
+  function renderScenario() {
+    const current = scenarios[state.currentIndex];
+    
+    // 진행률 업데이트
+    const total = scenarios.length;
+    const currentNum = state.currentIndex + 1;
+    const pct = Math.round((currentNum / total) * 100);
+    progressText.textContent = `상황 ${currentNum} / ${total}`;
+    progressPercent.textContent = `${pct}%`;
+    progressFill.style.width = `${pct}%`;
+
+    // 본문 세팅
+    scenarioTitle.textContent = current.title;
+    scenarioDesc.textContent = current.desc;
+    labelA.textContent = current.choiceA;
+    labelB.textContent = current.choiceB;
+    explanationDesc.textContent = current.explanation;
+
+    const cardA = document.querySelector('.choice-item[data-choice="A"]');
+    const cardB = document.querySelector('.choice-item[data-choice="B"]');
+
+    // 라디오 및 카드의 기본 선택 상태 초기화
+    cardA.classList.remove('selected');
+    cardB.classList.remove('selected');
+    choiceRadioA.checked = false;
+    choiceRadioB.checked = false;
+    choiceRadioA.disabled = false;
+    choiceRadioB.disabled = false;
+
+    // 현재 상황의 응답 정보 불러오기
+    const currentAnswer = state.answers[state.currentIndex];
+
+    if (!currentAnswer) {
+      // 1) 저장된 응답이 없는 경우
+      selectedChoiceTemp = null;
+      choiceReason.value = '';
+      choiceReason.readOnly = false;
+      reasonCount.textContent = '0';
+      explanationBox.classList.remove('active');
+
+      confirmChoiceBtn.disabled = false;
+      confirmChoiceBtn.textContent = '선택 확인하기';
+      nextBtn.disabled = true;
+
+    } else if (!currentAnswer.confirmed) {
+      // 2) 선택과 이유를 작성했지만 미확정인 경우
+      selectedChoiceTemp = currentAnswer.choice;
+      if (selectedChoiceTemp === 'A') {
+        choiceRadioA.checked = true;
+        cardA.classList.add('selected');
+      } else if (selectedChoiceTemp === 'B') {
+        choiceRadioB.checked = true;
+        cardB.classList.add('selected');
+      }
+
+      choiceReason.value = currentAnswer.reason || '';
+      choiceReason.readOnly = false;
+      reasonCount.textContent = choiceReason.value.length;
+      explanationBox.classList.remove('active');
+
+      confirmChoiceBtn.disabled = false;
+      confirmChoiceBtn.textContent = '선택 확인하기';
+      nextBtn.disabled = true;
+
+    } else {
+      // 3) 확인이 완료된(confirmed === true) 경우
+      selectedChoiceTemp = currentAnswer.choice;
+      if (selectedChoiceTemp === 'A') {
+        choiceRadioA.checked = true;
+        cardA.classList.add('selected');
+      } else if (selectedChoiceTemp === 'B') {
+        choiceRadioB.checked = true;
+        cardB.classList.add('selected');
+      }
+
+      choiceRadioA.disabled = true;
+      choiceRadioB.disabled = true;
+
+      choiceReason.value = currentAnswer.reason || '';
+      choiceReason.readOnly = true;
+      reasonCount.textContent = choiceReason.value.length;
+
+      explanationBox.classList.add('active');
+
+      confirmChoiceBtn.disabled = true;
+      confirmChoiceBtn.textContent = '선택 확인 완료';
+      nextBtn.disabled = false;
+    }
+
+    // 이전 버튼 제어
+    prevBtn.disabled = state.currentIndex === 0;
+  }
+
+  // 글자 수 실시간 표시
+  choiceReason.addEventListener('input', () => {
+    reasonCount.textContent = choiceReason.value.length;
+    // 임시 작성 내용 업데이트
+    if (!state.answers[state.currentIndex] || !state.answers[state.currentIndex].confirmed) {
+      state.answers[state.currentIndex] = {
+        choice: selectedChoiceTemp,
+        reason: choiceReason.value,
+        confirmed: false
+      };
+    }
+  });
+
+  // 선택지 카드의 클릭 동작 (라디오 선택만 하고 해설/다음버튼은 활성화 금지)
+  document.querySelectorAll('.choice-item').forEach(card => {
+    card.addEventListener('click', () => {
+      const currentAnswer = state.answers[state.currentIndex];
+      if (currentAnswer && currentAnswer.confirmed) return; // 이미 확정된 카드는 변경 불가능
+
+      const choice = card.getAttribute('data-choice');
+      selectedChoiceTemp = choice;
+
+      const cardA = document.querySelector('.choice-item[data-choice="A"]');
+      const cardB = document.querySelector('.choice-item[data-choice="B"]');
+
+      if (choice === 'A') {
+        choiceRadioA.checked = true;
+        cardA.classList.add('selected');
+        cardB.classList.remove('selected');
+      } else {
+        choiceRadioB.checked = true;
+        cardB.classList.add('selected');
+        cardA.classList.remove('selected');
+      }
+
+      // 미확정 상태로 임시 저장
+      state.answers[state.currentIndex] = {
+        choice: selectedChoiceTemp,
+        reason: choiceReason.value,
+        confirmed: false
+      };
+    });
+  });
+
+  // [선택 확인하기] 버튼 클릭 및 유효성 검사
+  confirmChoiceBtn.addEventListener('click', () => {
+    // 1) 선택지 체크 검사
+    if (!selectedChoiceTemp) {
+      alert('먼저 자신의 생각과 가까운 행동을 선택해 주세요.');
+      choiceRadioA.focus();
+      return;
+    }
+
+    // 2) 이유 글자 수 검사 (공백 제외 5자 이상)
+    const reasonText = choiceReason.value.trim();
+    if (reasonText.length < 5) {
+      alert('선택한 이유를 5자 이상 작성해 주세요.');
+      choiceReason.focus();
+      return;
+    }
+
+    // 3) 조건 충족 시 확정 저장
+    state.answers[state.currentIndex] = {
+      choice: selectedChoiceTemp,
+      reason: choiceReason.value,
+      confirmed: true
+    };
+
+    // UI 상태 반영 (비활성화 및 해설 출력)
+    choiceRadioA.disabled = true;
+    choiceRadioB.disabled = true;
+    choiceReason.readOnly = true;
+
+    confirmChoiceBtn.disabled = true;
+    confirmChoiceBtn.textContent = '선택 확인 완료';
+
+    explanationBox.classList.add('active');
+    nextBtn.disabled = false;
+
+    // 해설 영역으로 부드럽게 스크롤
+    explanationBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+
+  prevBtn.addEventListener('click', () => {
+    if (state.currentIndex > 0) {
+      state.currentIndex--;
+      renderScenario();
+    }
+  });
+
+  nextBtn.addEventListener('click', () => {
+    const currentAnswer = state.answers[state.currentIndex];
+    if (!currentAnswer || !currentAnswer.confirmed) {
+      alert('선택과 이유 작성을 완료하고 [선택 확인하기] 버튼을 눌러주세요.');
+      return;
+    }
+
+    if (state.currentIndex < scenarios.length - 1) {
+      state.currentIndex++;
+      renderScenario();
+    } else {
+      // 5개 상황 모두 확정 완료되었는지 엄격히 검사 후 이동
+      const allConfirmed = scenarios.every((_, index) => {
+        const ans = state.answers[index];
+        return ans && ans.confirmed;
+      });
+
+      if (!allConfirmed) {
+        alert('모든 상황의 선택과 이유 작성이 완료되어야 서약서로 이동할 수 있습니다.');
+        return;
+      }
+      showScreen('pledge');
+    }
+  });
+
+  /* --------------------------------------------------
+   * SCREEN 3: 서약 및 서명 (마우스 & 터치)
+   * -------------------------------------------------- */
+  let isDrawing = false;
+  let hasSignature = false;
+  let ctx = null;
+
+  function setupCanvas() {
+    ctx = sigCanvas.getContext('2d');
+    ctx.lineWidth = 3;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = '#0f172a';
+
+    // 마우스 이벤트
+    sigCanvas.addEventListener('mousedown', startDrawing);
+    sigCanvas.addEventListener('mousemove', draw);
+    sigCanvas.addEventListener('mouseup', stopDrawing);
+    sigCanvas.addEventListener('mouseleave', stopDrawing);
+
+    // 터치 이벤트
+    sigCanvas.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      const touch = e.touches[0];
+      startDrawing({ clientX: touch.clientX, clientY: touch.clientY });
+    });
+    sigCanvas.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+      const touch = e.touches[0];
+      draw({ clientX: touch.clientX, clientY: touch.clientY });
+    });
+    sigCanvas.addEventListener('touchend', stopDrawing);
+  }
+
+  function getCanvasPos(e) {
+    const rect = sigCanvas.getBoundingClientRect();
+    return {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
+    };
+  }
+
+  function startDrawing(e) {
+    isDrawing = true;
+    const pos = getCanvasPos(e);
+    ctx.beginPath();
+    ctx.moveTo(pos.x, pos.y);
+  }
+
+  function draw(e) {
+    if (!isDrawing) return;
+    const pos = getCanvasPos(e);
+    ctx.lineTo(pos.x, pos.y);
+    ctx.stroke();
+    hasSignature = true;
+    checkPledgeCompletion();
+  }
+
+  function stopDrawing() {
+    if (isDrawing) {
+      isDrawing = false;
+      if (hasSignature) {
+        state.signatureData = sigCanvas.toDataURL();
+      }
+    }
+  }
+
+  clearCanvasBtn.addEventListener('click', () => {
+    ctx.clearRect(0, 0, sigCanvas.width, sigCanvas.height);
+    hasSignature = false;
+    state.signatureData = null;
+    checkPledgeCompletion();
+  });
+
+  function renderPledgeScreen() {
+    pledgeChecks.forEach(check => {
+      const val = parseInt(check.value);
+      check.checked = state.pledges.includes(val);
+    });
+
+    if (state.signatureData) {
+      const img = new Image();
+      img.onload = () => {
+        ctx.clearRect(0, 0, sigCanvas.width, sigCanvas.height);
+        ctx.drawImage(img, 0, 0);
+        hasSignature = true;
+        checkPledgeCompletion();
+      };
+      img.src = state.signatureData;
+    } else {
+      ctx.clearRect(0, 0, sigCanvas.width, sigCanvas.height);
+      hasSignature = false;
+      checkPledgeCompletion();
+    }
+  }
+
+  pledgeChecks.forEach(check => {
+    check.addEventListener('change', () => {
+      const checkedVals = Array.from(pledgeChecks)
+        .filter(c => c.checked)
+        .map(c => parseInt(c.value));
+      state.pledges = checkedVals;
+      checkPledgeCompletion();
+    });
+  });
+
+  function checkPledgeCompletion() {
+    const allPledgesChecked = Array.from(pledgeChecks).every(c => c.checked);
+    completePledgeBtn.disabled = !(allPledgesChecked && hasSignature);
+  }
+
+  pledgePrevBtn.addEventListener('click', () => {
+    showScreen('scenario');
+    renderScenario();
+  });
+
+  completePledgeBtn.addEventListener('click', () => {
+    openCertificateModal();
+  });
+
+  /* --------------------------------------------------
+   * MODAL: 수료 상장 & 포커스 트랩 & 인쇄
+   * -------------------------------------------------- */
+  function openCertificateModal() {
+    certUserName.textContent = state.userName;
+
+    // 체크된 문장 원문 복원
+    certPledgeList.innerHTML = '';
+    pledgeChecks.forEach(chk => {
+      if (chk.checked) {
+        const fullText = chk.nextElementSibling.textContent.trim();
+        const li = document.createElement('li');
+        li.textContent = fullText;
+        certPledgeList.appendChild(li);
+      }
+    });
+
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    certDate.textContent = `${year}년 ${month}월 ${day}일`;
+
+    certSigImage.src = state.signatureData || sigCanvas.toDataURL();
+
+    certModal.classList.add('active');
+    printBtn.focus();
+    document.addEventListener('keydown', handleModalKeyDown);
+  }
+
+  function closeModal() {
+    certModal.classList.remove('active');
+    document.removeEventListener('keydown', handleModalKeyDown);
+    completePledgeBtn.focus();
+  }
+
+  // 포커스 트랩 (ESC 닫힘 방지)
+  function handleModalKeyDown(e) {
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      return;
+    }
+
+    if (e.key === 'Tab') {
+      const focusables = [printBtn, closeModalBtn];
+      const firstFocusable = focusables[0];
+      const lastFocusable = focusables[focusables.length - 1];
+
+      if (e.shiftKey) {
+        if (document.activeElement === firstFocusable) {
+          e.preventDefault();
+          lastFocusable.focus();
+        }
+      } else {
+        if (document.activeElement === lastFocusable) {
+          e.preventDefault();
+          firstFocusable.focus();
+        }
+      }
+    }
+  }
+
+  closeModalBtn.addEventListener('click', closeModal);
+
+  printBtn.addEventListener('click', () => {
+    window.print();
+  });
+
+  restartBtn.addEventListener('click', () => {
+    if (confirm('모든 체험 기록을 초기화하고 처음부터 다시 시작하시겠습니까?')) {
+      state = {
+        userName: '',
+        currentIndex: 0,
+        answers: {},
+        pledges: [],
+        signatureData: null
+      };
+      selectedChoiceTemp = null;
+      closeModal();
+      studentNameInput.value = '';
+      showScreen('start');
+    }
+  });
+
+  window.addEventListener('DOMContentLoaded', initApp);
+</script>
+
+</body>
+</html>
