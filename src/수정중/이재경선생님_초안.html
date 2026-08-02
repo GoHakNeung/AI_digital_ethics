@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🤖 AI 시대, 나는 어떤 윤리 어린이일까?</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <!-- Google Fonts (Jua, Noto Sans KR) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            jua: ['Jua', 'sans-serif'],
+            noto: ['Noto Sans KR', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background-color: #f0f9ff;
+    }
+    .font-jua {
+      font-family: 'Jua', sans-serif;
+    }
+    /* 인쇄 전용 스타일 */
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #certificate-area, #certificate-area * {
+        visibility: visible;
+      }
+      #certificate-area {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 20px;
+        box-shadow: none !important;
+        border: 4px solid #3b82f6 !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen text-slate-800 flex flex-col justify-between selection:bg-pink-200">
+
+  <!-- ================= 0. 상단 헤더 ================= -->
+  <header class="bg-white/80 backdrop-blur-md sticky top-0 z-30 border-b border-indigo-100 shadow-sm no-print">
+    <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-2 cursor-pointer" onclick="goHome()">
+        <span class="text-3xl animate-bounce">🤖</span>
+        <h1 class="font-jua text-xl md:text-2xl text-indigo-600 tracking-wide">
+          AI 시대, 나는 어떤 윤리 어린이일까?
+        </h1>
+      </div>
+      <button onclick="openPasswordModal()" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold px-3 py-1.5 md:px-4 md:py-2 rounded-xl text-sm transition flex items-center gap-1 border border-indigo-200 shadow-sm">
+        <span>🔒</span> 교사용 페이지
+      </button>
+    </div>
+  </header>
+
+  <!-- ================= 메인 컨테이너 ================= -->
+  <main class="max-w-3xl mx-auto px-4 py-6 flex-grow w-full">
+
+    <!-- ---------------- 1단계: 학생 등록 화면 ---------------- -->
+    <section id="step-1" class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-indigo-100 transition-all">
+      <div class="text-center mb-6">
+        <div class="inline-block bg-indigo-100 text-indigo-700 font-bold px-4 py-1.5 rounded-full text-sm mb-3">
+           👋 반가워요! 탐험을 시작해 볼까요?
+        </div>
+        <h2 class="font-jua text-3xl md:text-4xl text-slate-800 mb-2">AI 윤리 탐험대 등록하기</h2>
+        <p class="text-slate-500 text-sm md:text-base">여러분의 멋진 AI 윤리 시민증을 만들어 드릴게요!</p>
+      </div>
+
+      <div class="bg-amber-50 border-2 border-amber-200 rounded-2xl p-4 mb-6 flex items-start gap-3">
+        <span class="text-3xl">🤖</span>
+        <div class="text-xs md:text-sm text-amber-900 leading-relaxed">
+          <strong>안녕! 나는 윤리봇이야!</strong><br/>
+          인공지능 기술이 발전하면서 우리에게 새로운 고민들이 생겨나고 있어. 
+          나와 함께 재미있는 윤리 딜레마를 해결하고 나만의 윤리 수칙을 만들어보자!
+        </div>
+      </div>
+
+      <form id="student-form" onsubmit="handleStart(event)" class="space-y-4 max-w-md mx-auto">
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">학년</label>
+            <select id="input-grade" required class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl p-3 font-bold focus:border-indigo-500 focus:outline-none">
+              <option value="5">5학년</option>
+              <option value="6" selected>6학년</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">반</label>
+            <input type="number" id="input-class" min="1" max="20" placeholder="1" required class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl p-3 font-bold focus:border-indigo-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">번호</label>
+            <input type="number" id="input-num" min="1" max="40" placeholder="15" required class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl p-3 font-bold focus:border-indigo-500 focus:outline-none">
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-600 mb-1">이름</label>
+          <input type="text" id="input-name" placeholder="홍길동" required class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl p-3 font-bold focus:border-indigo-500 focus:outline-none">
+        </div>
+        <button type="submit" class="w-full bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-jua text-2xl py-4 rounded-2xl shadow-lg transform active:scale-95 transition-all mt-4">
+          🚀 탐험 시작하기!
+        </button>
+      </form>
+    </section>
+
+
+    <!-- ---------------- 2단계: AI 윤리 딜레마 선택 (4문제) ---------------- -->
+    <section id="step-2" class="hidden transition-all">
+      <!-- 진행 바 -->
+      <div class="mb-4 bg-white rounded-2xl p-3 shadow-md border border-slate-100 flex items-center justify-between">
+        <span class="font-jua text-indigo-600 text-lg" id="progress-text">문제 1 / 4</span>
+        <div class="w-2/3 bg-slate-100 h-3 rounded-full overflow-hidden">
+          <div id="progress-bar" class="bg-indigo-500 h-full w-1/4 transition-all duration-300"></div>
+        </div>
+      </div>
+
+      <!-- 딜레마 카드 -->
+      <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-indigo-100 relative">
+        <div class="mb-4">
+          <span id="dilemma-category" class="bg-pink-100 text-pink-700 font-bold px-3 py-1 rounded-full text-xs md:text-sm">
+            카테고리
+          </span>
+          <h3 id="dilemma-title" class="font-jua text-2xl md:text-3xl text-slate-800 mt-2">
+            딜레마 제목
+          </h3>
+        </div>
+
+        <div class="bg-sky-50 border-2 border-sky-200 rounded-2xl p-4 md:p-5 mb-5 text-slate-700 text-sm md:text-base leading-relaxed">
+          <p id="dilemma-scenario">시나리오 내용이 들어갑니다.</p>
+        </div>
+
+        <!-- 가치 충돌 안내 -->
+        <div class="bg-purple-50 rounded-xl p-3 mb-6 text-xs md:text-sm text-purple-800 font-semibold border border-purple-200 flex items-center gap-2">
+          <span>⚖️</span>
+          <span id="dilemma-conflict">가치 충돌 해설</span>
+        </div>
+
+        <!-- 선택지 버튼 -->
+        <div id="choice-buttons" class="space-y-3">
+          <button onclick="chooseOption('A')" class="w-full text-left bg-gradient-to-r from-emerald-50 to-teal-50 hover:from-emerald-100 hover:to-teal-100 border-2 border-emerald-300 rounded-2xl p-4 font-bold text-slate-800 text-sm md:text-base transition transform active:scale-98 shadow-sm flex items-start gap-3">
+            <span class="bg-emerald-500 text-white font-jua rounded-lg px-2 py-0.5 text-lg">A</span>
+            <span id="choice-a-text" class="mt-0.5">선택지 A 내용</span>
+          </button>
+          <button onclick="chooseOption('B')" class="w-full text-left bg-gradient-to-r from-amber-50 to-orange-50 hover:from-amber-100 hover:to-orange-100 border-2 border-amber-300 rounded-2xl p-4 font-bold text-slate-800 text-sm md:text-base transition transform active:scale-98 shadow-sm flex items-start gap-3">
+            <span class="bg-amber-500 text-white font-jua rounded-lg px-2 py-0.5 text-lg">B</span>
+            <span id="choice-b-text" class="mt-0.5">선택지 B 내용</span>
+          </button>
+        </div>
+
+        <!-- 선택 후 통계 및 해설 영역 (기본 숨김) -->
+        <div id="result-box" class="hidden mt-6 pt-6 border-t-2 border-dashed border-slate-200">
+          <h4 class="font-jua text-lg text-slate-700 mb-3 flex items-center gap-2">
+            <span>📊</span> 우리 학교 친구들의 선택 비율
+          </h4>
+          
+          <!-- 통계 바 -->
+          <div class="space-y-3 mb-6">
+            <div>
+              <div class="flex justify-between text-xs font-bold mb-1">
+                <span class="text-emerald-700">A 선택</span>
+                <span id="stat-a-percent" class="text-emerald-700">50%</span>
+              </div>
+              <div class="w-full bg-slate-100 h-4 rounded-full overflow-hidden">
+                <div id="stat-a-bar" class="bg-emerald-500 h-full w-0 transition-all duration-1000"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between text-xs font-bold mb-1">
+                <span class="text-amber-700">B 선택</span>
+                <span id="stat-b-percent" class="text-amber-700">50%</span>
+              </div>
+              <div class="w-full bg-slate-100 h-4 rounded-full overflow-hidden">
+                <div id="stat-b-bar" class="bg-amber-500 h-full w-0 transition-all duration-1000"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 윤리봇 코멘트 카드 -->
+          <div class="bg-indigo-50 border-2 border-indigo-200 rounded-2xl p-4 flex items-start gap-3 mb-6">
+            <span class="text-3xl">🤖</span>
+            <div>
+              <div class="font-bold text-indigo-900 text-sm mb-1">윤리봇의 한마디!</div>
+              <p id="bot-comment" class="text-xs md:text-sm text-indigo-800 leading-relaxed"></p>
+            </div>
+          </div>
+
+          <button onclick="nextDilemma()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-jua text-xl py-3.5 rounded-2xl shadow-md transition transform active:scale-95">
+            다음 문제로 이동 ➡️
+          </button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ---------------- 3단계: AI 윤리 실천 체크리스트 & 서약서 ---------------- -->
+    <section id="step-3" class="hidden transition-all">
+      <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-indigo-100">
+        <div class="text-center mb-6">
+          <span class="text-4xl">📜</span>
+          <h2 class="font-jua text-3xl text-slate-800 mt-2">AI 윤리 실천 서약서</h2>
+          <p class="text-slate-500 text-sm mt-1">올바른 AI 사용을 위해 아래 수칙을 읽고 다짐해 주세요!</p>
+        </div>
+
+        <!-- 체크리스트 -->
+        <div class="space-y-3 mb-6">
+          <label class="flex items-start gap-3 p-3.5 bg-slate-50 hover:bg-indigo-50/50 rounded-2xl border-2 border-slate-200 cursor-pointer transition">
+            <input type="checkbox" class="checklist-item w-5 h-5 mt-0.5 rounded text-indigo-600 focus:ring-indigo-500">
+            <span class="text-sm md:text-base text-slate-700 font-semibold">
+              AI가 만든 결과물은 출처를 꼭 밝히겠습니다.
+            </span>
+          </label>
+          <label class="flex items-start gap-3 p-3.5 bg-slate-50 hover:bg-indigo-50/50 rounded-2xl border-2 border-slate-200 cursor-pointer transition">
+            <input type="checkbox" class="checklist-item w-5 h-5 mt-0.5 rounded text-indigo-600 focus:ring-indigo-500">
+            <span class="text-sm md:text-base text-slate-700 font-semibold">
+              친구의 얼굴이나 개인정보를 AI에 함부로 넣지 않겠습니다.
+            </span>
+          </label>
+          <label class="flex items-start gap-3 p-3.5 bg-slate-50 hover:bg-indigo-50/50 rounded-2xl border-2 border-slate-200 cursor-pointer transition">
+            <input type="checkbox" class="checklist-item w-5 h-5 mt-0.5 rounded text-indigo-600 focus:ring-indigo-500">
+            <span class="text-sm md:text-base text-slate-700 font-semibold">
+              AI가 알려준 정보가 진짜인지 한 번 더 확인하겠습니다.
+            </span>
+          </label>
+          <label class="flex items-start gap-3 p-3.5 bg-slate-50 hover:bg-indigo-50/50 rounded-2xl border-2 border-slate-200 cursor-pointer transition">
+            <input type="checkbox" class="checklist-item w-5 h-5 mt-0.5 rounded text-indigo-600 focus:ring-indigo-500">
+            <span class="text-sm md:text-base text-slate-700 font-semibold">
+              AI를 타인을 비방하거나 상처 주는 데 사용하지 않겠습니다.
+            </span>
+          </label>
+        </div>
+
+        <!-- 서명 캔버스 영역 -->
+        <div class="mb-6">
+          <div class="flex justify-between items-center mb-2">
+            <label class="font-jua text-slate-700 text-lg flex items-center gap-1">
+              <span>✍️</span> 나의 서명 (손가락이나 마우스로 그려주세요)
+            </label>
+            <button onclick="clearCanvas()" class="text-xs text-rose-500 hover:text-rose-700 font-bold bg-rose-50 border border-rose-200 px-2.5 py-1 rounded-lg transition">
+              🔄 지우기
+            </button>
+          </div>
+          <div class="border-2 border-dashed border-indigo-300 rounded-2xl bg-indigo-50/30 overflow-hidden touch-none">
+            <canvas id="signature-pad" class="w-full h-40 cursor-crosshair"></canvas>
+          </div>
+        </div>
+
+        <button id="submit-btn" onclick="submitPledge()" class="w-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-jua text-2xl py-4 rounded-2xl shadow-lg transition transform active:scale-95 flex items-center justify-center gap-2">
+          <span>🎉 서약서 제출하고 시민증 받기!</span>
+        </button>
+      </div>
+    </section>
+
+
+    <!-- ---------------- 4단계: 디지털 AI 윤리 시민증 (결과 카드) ---------------- -->
+    <section id="step-4" class="hidden transition-all">
+      <!-- 상장 스타일 카드 -->
+      <div id="certificate-area" class="bg-white rounded-3xl p-6 md:p-10 shadow-2xl border-8 border-indigo-400 relative overflow-hidden">
+        <div class="absolute -right-10 -bottom-10 text-9xl opacity-10 pointer-events-none">🤖</div>
+        <div class="absolute -left-10 -top-10 text-9xl opacity-10 pointer-events-none">🏅</div>
+
+        <div class="text-center mb-8 border-b-2 border-slate-100 pb-6">
+          <div class="inline-block bg-indigo-600 text-white font-jua text-sm md:text-base px-4 py-1 rounded-full mb-2">
+            제 2026-AI윤리-어린이
+          </div>
+          <h2 class="font-jua text-3xl md:text-5xl text-slate-800 tracking-wide mb-2">
+            디지털 AI 윤리 시민증
+          </h2>
+          <p class="text-xs md:text-sm text-indigo-600 font-bold">Digital AI Ethics Citizenship Certificate</p>
+        </div>
+
+        <!-- 학생 정보 -->
+        <div class="bg-indigo-50/60 rounded-2xl p-4 mb-6 flex justify-between items-center border border-indigo-100">
+          <div>
+            <div class="text-xs text-slate-500 font-bold mb-0.5">소속 및 이름</div>
+            <div class="font-jua text-xl md:text-2xl text-slate-800" id="cert-student-info">
+              6학년 1반 15번 홍길동
+            </div>
+          </div>
+          <div class="text-right">
+            <div class="text-xs text-slate-500 font-bold mb-0.5">발급일</div>
+            <div class="font-bold text-slate-700 text-sm" id="cert-date">2026. 07. 31</div>
+          </div>
+        </div>
+
+        <!-- 요약 가치 -->
+        <div class="mb-6">
+          <h3 class="font-jua text-lg text-slate-700 mb-2 flex items-center gap-1">
+            <span>💡</span> 내가 선택한 AI 윤리적 가치
+          </h3>
+          <div id="cert-values" class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs md:text-sm">
+            <!-- JS 동적 생성 -->
+          </div>
+        </div>
+
+        <!-- 실천 수칙 요약 -->
+        <div class="mb-8">
+          <h3 class="font-jua text-lg text-slate-700 mb-2 flex items-center gap-1">
+            <span>✅</span> 나의 AI 윤리 실천 약속
+          </h3>
+          <ul id="cert-checklist" class="list-disc list-inside space-y-1 text-xs md:text-sm text-slate-600 bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <!-- JS 동적 생성 -->
+          </ul>
+        </div>
+
+        <!-- 서명 및 직인 -->
+        <div class="flex justify-between items-end border-t-2 border-slate-100 pt-6">
+          <div class="text-center">
+            <div class="text-xs text-slate-400 font-bold mb-1">지도교사 확인</div>
+            <div class="font-jua text-indigo-900 text-base">윤리봇 어린이 AI 교육위원회</div>
+          </div>
+          <div class="text-right">
+            <div class="text-xs text-slate-400 font-bold mb-1">서약자 서명</div>
+            <div class="w-32 h-14 border border-slate-200 rounded-lg bg-white overflow-hidden flex items-center justify-center">
+              <img id="cert-signature-img" src="" alt="서명" class="max-h-full max-w-full object-contain" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 하단 버튼 -->
+      <div class="mt-6 flex flex-col md:flex-row gap-3 no-print">
+        <button onclick="window.print()" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-jua text-xl py-3.5 rounded-2xl shadow-lg transition flex items-center justify-center gap-2">
+          <span>🖨️</span> 시민증 인쇄 / PDF 저장
+        </button>
+        <button onclick="location.reload()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-jua text-xl px-6 py-3.5 rounded-2xl transition">
+          처음으로
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= 푸터 ================= -->
+  <footer class="bg-white/60 border-t border-slate-200 py-4 text-center text-xs text-slate-400 no-print">
+    초등학교 디지털·AI 윤리 교육을 위한 인터랙티브 학습 웹앱 🤖 (Firebase Realtime DB 연동)
+  </footer>
+
+
+  <!-- ================= 모달 1: 교사 비밀번호 입력 ================= -->
+  <div id="password-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border-4 border-indigo-200">
+      <h3 class="font-jua text-2xl text-slate-800 mb-2">🔒 교사 인증</h3>
+      <p class="text-xs text-slate-500 mb-4">선생님 확인을 위해 비밀번호를 입력해 주세요.<br/>(기본 비밀번호: <strong>1234</strong>)</p>
+      <input type="password" id="teacher-password" placeholder="비밀번호 입력" class="w-full bg-slate-50 border-2 border-slate-200 rounded-xl p-3 font-bold mb-4 focus:border-indigo-500 focus:outline-none">
+      <div class="flex gap-2">
+        <button onclick="closePasswordModal()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-2.5 rounded-xl text-sm transition">취소</button>
+        <button onclick="checkTeacherPassword()" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 rounded-xl text-sm transition">확인</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================= 모달 2: 교사용 대시보드 ================= -->
+  <div id="teacher-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl p-6 md:p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border-4 border-indigo-300">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <h2 class="font-jua text-2xl md:text-3xl text-indigo-700 flex items-center gap-2">
+            <span>📊</span> 실시간 학급 AI 윤리 응답 현황
+          </h2>
+          <p class="text-xs md:text-sm text-slate-500">파이어베이스 Cloud Firestore를 통해 학생들의 제출 현황이 실시간 업데이트됩니다.</p>
+        </div>
+        <button onclick="closeTeacherModal()" class="text-slate-400 hover:text-slate-600 font-bold text-2xl">✕</button>
+      </div>
+
+      <!-- 통계 요약 섹션 -->
+      <div class="mb-8 bg-indigo-50/50 p-4 rounded-2xl border border-indigo-100">
+        <h3 class="font-jua text-lg text-slate-700 mb-3">📈 문항별 전체 학생 선택 통계</h3>
+        <div id="teacher-stats-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- JS 동적 생성 -->
+        </div>
+      </div>
+
+      <!-- 학생별 응답 현황 테이블 -->
+      <div class="mb-6">
+        <h3 class="font-jua text-lg text-slate-700 mb-3">📋 학생 제출 목록</h3>
+        <div class="overflow-x-auto border border-slate-200 rounded-2xl">
+          <table class="w-full text-left text-xs md:text-sm">
+            <thead class="bg-slate-100 text-slate-600 font-bold border-b border-slate-200">
+              <tr>
+                <th class="p-3">학생 정보</th>
+                <th class="p-3">Q1 (프라이버시/안전)</th>
+                <th class="p-3">Q2 (공정/도구)</th>
+                <th class="p-3">Q3 (저작권/공익)</th>
+                <th class="p-3">Q4 (통학버스)</th>
+                <th class="p-3">서약 제출</th>
+                <th class="p-3">제출 시간</th>
+              </tr>
+            </thead>
+            <tbody id="student-table-body" class="divide-y divide-slate-100 text-slate-700">
+              <!-- JS 동적 생성 -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="flex justify-between items-center pt-4 border-t border-slate-200">
+        <button onclick="clearAllData()" class="bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold px-4 py-2 rounded-xl text-xs md:text-sm border border-rose-200 transition">
+          🗑️ 전체 데이터 초기화
+        </button>
+        <button onclick="closeTeacherModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-2 rounded-xl text-sm transition">
+          닫기
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================= FIREBASE & APP SCRIPT ================= -->
+  <script type="module">
+    // Firebase SDK v10 ES Modules CDN
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { 
+      getFirestore, 
+      collection, 
+      addDoc, 
+      getDocs, 
+      deleteDoc, 
+      doc, 
+      onSnapshot 
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    // 1. Firebase 설정 객체
+    const firebaseConfig = {
+      apiKey: "AIzaSyB7yD6sSf6kk8NZbBf9V0F4sX3WhsET4WM",
+      authDomain: "jaegyeong-ai.firebaseapp.com",
+      projectId: "jaegyeong-ai",
+      storageBucket: "jaegyeong-ai.firebasestorage.app",
+      messagingSenderId: "19189612656",
+      appId: "1:19189612656:web:0a9a6dd990324a21c134b5"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const COLLECTION_NAME = "studentDataList";
+
+    const TEACHER_PASSWORD = "1234";
+
+    // 딜레마 문제 데이터
+    const DILEMMAS = [
+      {
+        id: 1,
+        category: "프라이버시 vs 안전",
+        title: "AI 학폭 예방 시스템의 비밀 감시",
+        scenario: "학교에서 학생들의 사적인 단톡방 대화를 모니터링하는 AI 학폭 예방 시스템을 도입했습니다. AI 덕분에 심각한 학교폭력 위험에 처한 친구를 발견해 구했습니다.",
+        conflict: "나의 개인정보 및 비밀 보장(프라이버시) 🆚 친구의 안전 및 위험 예방(안전)",
+        choiceA: "사생활이 침해되어도 학폭 예방과 친구의 안전을 위해 계속 작동해야 해!",
+        choiceB: "친구를 돕는 것도 좋지만, 우리 대화를 AI가 감시하는 건 싫어!",
+        labelA: "안전 최우선",
+        labelB: "프라이버시 우선",
+        botA: "위험을 막고 생명과 안전을 지키는 가치를 가장 중요하게 생각했군요!",
+        botB: "개인의 자유와 프라이버시가 침해되지 않는 것이 우선이라고 생각했군요!"
+      },
+      {
+        id: 2,
+        category: "공정성 vs 효율/도구 활용",
+        title: "AI 도움을 받은 글쓰기 대회 1등",
+        scenario: "평소 글쓰기가 서툰 친구가 AI의 문장 교정과 아이디어 추천 도움을 받아 백일장 대회에서 1등 상을 받았습니다.",
+        conflict: "AI를 활용한 능력 보완(도구 활용) 🆚 정당한 노력과 형평성(공정성)",
+        choiceA: "글쓰기 약점을 보완해 주는 도구일 뿐! 생각은 친구의 것이니 상을 받아야 해.",
+        choiceB: "스스로 노력해서 쓴 다른 친구들과의 형평성에 어긋나니 불공정해.",
+        labelA: "도구 활용 인정",
+        labelB: "공정성 강조",
+        botA: "AI를 약점을 극복하는 좋은 도구로 바라보는 포용적 관점이군요!",
+        botB: "노력에 대한 정당한 보상과 규칙의 공정성을 더 중요하게 생각했군요!"
+      },
+      {
+        id: 3,
+        category: "저작권 vs 공익",
+        title: "무단 학습 AI로 만든 기부 포스터",
+        scenario: "화가의 허락 없이 화풍을 무단 학습한 AI 그림 프로그램으로 멋진 포스터를 만들어 불우이웃돕기 기부금을 크게 모았습니다.",
+        conflict: "창작자의 권리 보호(저작권) 🆚 불우이웃 돕기(공익)",
+        choiceA: "불우이웃을 돕는 좋은 목적에 성공적으로 쓰였으니 괜찮아!",
+        choiceB: "아무리 결과가 좋아도 창작자의 권리를 침해한 기술을 쓰면 안 돼!",
+        labelA: "공익과 결과 중심",
+        labelB: "저작권과 과정 중심",
+        botA: "사회에 보탬이 되는 좋은 결과와 목적을 우선시했군요!",
+        botB: "정당한 저작권 보호와 과정의 올바름을 더 중요하게 생각했군요!"
+      },
+      {
+        id: 4,
+        category: "AI 자율주행의 선택",
+        title: "통학버스의 순간적인 판단",
+        scenario: "브레이크가 고장 난 AI 자율주행 통학버스가 직진하면 길을 건너는 보행자와 충돌하고, 핸들을 틀면 방음벽에 부딪혀 버스 탑승 학생이 다칩니다.",
+        conflict: "탑승객 보호 우선 🆚 전체 피해 최소화 및 보행자 보호",
+        choiceA: "AI는 무조건 버스 안의 탑승객(학생) 보호를 최우선해야 해!",
+        choiceB: "전체 피해 인원을 줄이기 위해 도로 위 보행자 안전을 고려해야 해!",
+        labelA: "탑승객 보호 우선",
+        labelB: "보행자/피해최소화 우선",
+        botA: "승객 보호라는 AI 시스템의 명확한 책임을 최우선으로 선택했군요!",
+        botB: "전체적인 피해 최소화라는 더 넓은 사회적 안전을 고려했군요!"
+      }
+    ];
+
+    let currentUser = {
+      grade: "",
+      classNum: "",
+      num: "",
+      name: "",
+      answers: {},
+      checklist: [],
+      signatureUrl: "",
+      submittedAt: ""
+    };
+
+    let currentDilemmaIdx = 0;
+    let canvas, ctx, isDrawing = false;
+    let classStudentsData = []; // 파이어베이스 실시간 데이터 저장 캐시
+
+    // 앱 시작 시 파이어베이스 실시간 수신기(onSnapshot) 실행
+    window.addEventListener("DOMContentLoaded", () => {
+      initCanvas();
+
+      // Firestore 데이터 실시간 감시
+      try {
+        onSnapshot(collection(db, COLLECTION_NAME), (snapshot) => {
+          classStudentsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          // 교사 모달이 열려 있다면 실시간 갱신
+          if (!document.getElementById("teacher-modal").classList.contains("hidden")) {
+            renderTeacherDashboard();
+          }
+        }, (error) => {
+          console.warn("Firestore 실시간 수신 오류 (로컬 스토리지로 보완):", error);
+          classStudentsData = getLocalData();
+        });
+      } catch (err) {
+        console.warn("Firestore 초기화 실패, 로컬 스토리지 데이터 사용", err);
+        classStudentsData = getLocalData();
+      }
+    });
+
+
+    // ----- 1단계: 학생 등록 -----
+    window.handleStart = function(e) {
+      e.preventDefault();
+      currentUser.grade = document.getElementById("input-grade").value;
+      currentUser.classNum = document.getElementById("input-class").value;
+      currentUser.num = document.getElementById("input-num").value;
+      currentUser.name = document.getElementById("input-name").value.trim();
+
+      if (!currentUser.name) {
+        alert("이름을 입력해 주세요!");
+        return;
+      }
+
+      showStep("step-2");
+      loadDilemma(0);
+    };
+
+
+    // ----- 2단계: 딜레마 로직 -----
+    function loadDilemma(idx) {
+      currentDilemmaIdx = idx;
+      const data = DILEMMAS[idx];
+
+      document.getElementById("progress-text").innerText = `문제 ${idx + 1} / ${DILEMMAS.length}`;
+      document.getElementById("progress-bar").style.width = `${((idx + 1) / DILEMMAS.length) * 100}%`;
+
+      document.getElementById("dilemma-category").innerText = data.category;
+      document.getElementById("dilemma-title").innerText = data.title;
+      document.getElementById("dilemma-scenario").innerText = data.scenario;
+      document.getElementById("dilemma-conflict").innerText = data.conflict;
+
+      document.getElementById("choice-a-text").innerText = data.choiceA;
+      document.getElementById("choice-b-text").innerText = data.choiceB;
+
+      document.getElementById("result-box").classList.add("hidden");
+      document.getElementById("choice-buttons").classList.remove("pointer-events-none", "opacity-50");
+    }
+
+    window.chooseOption = function(choice) {
+      const currentDilemma = DILEMMAS[currentDilemmaIdx];
+      currentUser.answers[`q${currentDilemma.id}`] = choice;
+
+      document.getElementById("choice-buttons").classList.add("pointer-events-none", "opacity-50");
+
+      // 실시간 통계 계산 (파이어베이스 실시간 데이터 + 현재 선택)
+      const stats = calculateStats(currentDilemma.id, choice);
+      
+      document.getElementById("stat-a-percent").innerText = `${stats.percentA}%`;
+      document.getElementById("stat-b-percent").innerText = `${stats.percentB}%`;
+      
+      const barA = document.getElementById("stat-a-bar");
+      const barB = document.getElementById("stat-b-bar");
+      barA.style.width = "0%";
+      barB.style.width = "0%";
+
+      document.getElementById("bot-comment").innerText = choice === 'A' ? currentDilemma.botA : currentDilemma.botB;
+
+      document.getElementById("result-box").classList.remove("hidden");
+      setTimeout(() => {
+        barA.style.width = `${stats.percentA}%`;
+        barB.style.width = `${stats.percentB}%`;
+      }, 100);
+    };
+
+    function calculateStats(qId, currentChoice) {
+      let countA = 0, countB = 0;
+
+      classStudentsData.forEach(item => {
+        if (item.answers && item.answers[`q${qId}`] === 'A') countA++;
+        if (item.answers && item.answers[`q${qId}`] === 'B') countB++;
+      });
+
+      if (currentChoice === 'A') countA++;
+      if (currentChoice === 'B') countB++;
+
+      const total = countA + countB;
+      const percentA = total === 0 ? 50 : Math.round((countA / total) * 100);
+      const percentB = total === 0 ? 50 : 100 - percentA;
+
+      return { percentA, percentB };
+    }
+
+    window.nextDilemma = function() {
+      if (currentDilemmaIdx < DILEMMAS.length - 1) {
+        loadDilemma(currentDilemmaIdx + 1);
+      } else {
+        showStep("step-3");
+        resizeCanvas();
+      }
+    };
+
+
+    // ----- 3단계: 서약 및 캔버스 서명 -----
+    function initCanvas() {
+      canvas = document.getElementById("signature-pad");
+      ctx = canvas.getContext("2d");
+
+      canvas.addEventListener("mousedown", startDrawing);
+      canvas.addEventListener("mousemove", draw);
+      canvas.addEventListener("mouseup", stopDrawing);
+      canvas.addEventListener("mouseleave", stopDrawing);
+
+      canvas.addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        const touch = e.touches[0];
+        startDrawing({ clientX: touch.clientX, clientY: touch.clientY });
+      });
+      canvas.addEventListener("touchmove", (e) => {
+        e.preventDefault();
+        const touch = e.touches[0];
+        draw({ clientX: touch.clientX, clientY: touch.clientY });
+      });
+      canvas.addEventListener("touchend", stopDrawing);
+    }
+
+    function resizeCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+      ctx.lineWidth = 3;
+      ctx.lineCap = "round";
+      ctx.strokeStyle = "#1e1b4b";
+    }
+
+    function getPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    }
+
+    function startDrawing(e) {
+      isDrawing = true;
+      const pos = getPos(e);
+      ctx.beginPath();
+      ctx.moveTo(pos.x, pos.y);
+    }
+
+    function draw(e) {
+      if (!isDrawing) return;
+      const pos = getPos(e);
+      ctx.lineTo(pos.x, pos.y);
+      ctx.stroke();
+    }
+
+    function stopDrawing() {
+      isDrawing = false;
+    }
+
+    window.clearCanvas = function() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    };
+
+    function isCanvasBlank() {
+      const pixelBuffer = new Uint32Array(ctx.getImageData(0, 0, canvas.width, canvas.height).data.buffer);
+      return !pixelBuffer.some(color => color !== 0);
+    }
+
+    window.submitPledge = async function() {
+      const checkboxes = document.querySelectorAll(".checklist-item");
+      const checkedIndices = [];
+      checkboxes.forEach((cb, idx) => {
+        if (cb.checked) checkedIndices.push(idx);
+      });
+
+      if (checkedIndices.length === 0) {
+        alert("최소 하나 이상의 윤리 실천 수칙에 체크해 주세요!");
+        return;
+      }
+
+      if (isCanvasBlank()) {
+        alert("나의 서약 서명을 그려주세요!");
+        return;
+      }
+
+      const submitBtn = document.getElementById("submit-btn");
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<span>⏳ 클라우드 저장 중...</span>`;
+
+      currentUser.checklist = checkedIndices;
+      currentUser.signatureUrl = canvas.toDataURL();
+      
+      const now = new Date();
+      currentUser.submittedAt = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+
+      // Firebase 저장 및 LocalStorage 백업 저장
+      await saveDataToFirebase(currentUser);
+
+      if (typeof confetti === 'function') {
+        confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
+      }
+
+      renderCertificate();
+      showStep("step-4");
+    };
+
+
+    // ----- 파이어베이스 & 데이터 저장 연동 -----
+    async function saveDataToFirebase(studentData) {
+      // 1. LocalStorage 백업
+      saveLocalData(studentData);
+
+      // 2. Firestore 데이터 저장
+      try {
+        await addDoc(collection(db, COLLECTION_NAME), {
+          ...studentData,
+          createdAt: Date.now()
+        });
+      } catch (err) {
+        console.error("Firestore 데이터 저장 중 오류 발생:", err);
+      }
+    }
+
+    function getLocalData() {
+      const data = localStorage.getItem(COLLECTION_NAME);
+      return data ? JSON.parse(data) : [];
+    }
+
+    function saveLocalData(student) {
+      const list = getLocalData();
+      list.push(student);
+      localStorage.setItem(COLLECTION_NAME, JSON.stringify(list));
+    }
+
+
+    // ----- 4단계: 시민증 렌더링 -----
+    function renderCertificate() {
+      document.getElementById("cert-student-info").innerText = 
+        `${currentUser.grade}학년 ${currentUser.classNum}반 ${currentUser.num}번 ${currentUser.name}`;
+      
+      document.getElementById("cert-date").innerText = currentUser.submittedAt.split(" ")[0];
+      document.getElementById("cert-signature-img").src = currentUser.signatureUrl;
+
+      const valuesContainer = document.getElementById("cert-values");
+      valuesContainer.innerHTML = "";
+      DILEMMAS.forEach(d => {
+        const ans = currentUser.answers[`q${d.id}`];
+        const valText = ans === 'A' ? d.labelA : d.labelB;
+        const colorClass = ans === 'A' ? 'bg-emerald-50 text-emerald-800 border-emerald-200' : 'bg-amber-50 text-amber-800 border-amber-200';
+        
+        valuesContainer.innerHTML += `
+          <div class="p-2.5 rounded-xl border ${colorClass} flex justify-between items-center">
+            <span class="font-bold text-xs">${d.category}</span>
+            <span class="font-jua text-sm">${valText}</span>
+          </div>
+        `;
+      });
+
+      const checklistContainer = document.getElementById("cert-checklist");
+      checklistContainer.innerHTML = "";
+      const checklistTexts = [
+        "AI가 만든 결과물은 출처를 꼭 밝히겠습니다.",
+        "친구의 얼굴이나 개인정보를 AI에 함부로 넣지 않겠습니다.",
+        "AI가 알려준 정보가 진짜인지 한 번 더 확인하겠습니다.",
+        "AI를 타인을 비방하거나 상처 주는 데 사용하지 않겠습니다."
+      ];
+
+      currentUser.checklist.forEach(idx => {
+        checklistContainer.innerHTML += `<li>${checklistTexts[idx]}</li>`;
+      });
+    }
+
+
+    // ----- 교사 대시보드 로직 -----
+    window.openPasswordModal = function() {
+      document.getElementById("teacher-password").value = "";
+      document.getElementById("password-modal").classList.remove("hidden");
+    };
+
+    window.closePasswordModal = function() {
+      document.getElementById("password-modal").classList.add("hidden");
+    };
+
+    window.checkTeacherPassword = function() {
+      const inputPass = document.getElementById("teacher-password").value;
+      if (inputPass === TEACHER_PASSWORD) {
+        closePasswordModal();
+        renderTeacherDashboard();
+        document.getElementById("teacher-modal").classList.remove("hidden");
+      } else {
+        alert("비밀번호가 일치하지 않습니다!");
+      }
+    };
+
+    window.closeTeacherModal = function() {
+      document.getElementById("teacher-modal").classList.add("hidden");
+    };
+
+    function renderTeacherDashboard() {
+      const list = classStudentsData;
+
+      // 1. 문항별 전체 선택 통계
+      const statsContainer = document.getElementById("teacher-stats-container");
+      statsContainer.innerHTML = "";
+
+      DILEMMAS.forEach(d => {
+        let countA = 0, countB = 0;
+        list.forEach(student => {
+          if (student.answers && student.answers[`q${d.id}`] === 'A') countA++;
+          if (student.answers && student.answers[`q${d.id}`] === 'B') countB++;
+        });
+
+        const total = countA + countB;
+        const pA = total === 0 ? 0 : Math.round((countA / total) * 100);
+        const pB = total === 0 ? 0 : 100 - pA;
+
+        statsContainer.innerHTML += `
+          <div class="bg-white p-3.5 rounded-xl border border-slate-200">
+            <div class="font-bold text-xs text-slate-700 mb-1">Q${d.id}. ${d.category} (총 ${total}명)</div>
+            <div class="space-y-1 text-xs">
+              <div class="flex justify-between font-semibold text-emerald-700">
+                <span>A: ${d.labelA}</span>
+                <span>${countA}명 (${pA}%)</span>
+              </div>
+              <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden mb-2">
+                <div class="bg-emerald-500 h-full" style="width: ${pA}%"></div>
+              </div>
+              <div class="flex justify-between font-semibold text-amber-700">
+                <span>B: ${d.labelB}</span>
+                <span>${countB}명 (${pB}%)</span>
+              </div>
+              <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                <div class="bg-amber-500 h-full" style="width: ${pB}%"></div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      // 2. 학생 제출 목록 테이블
+      const tbody = document.getElementById("student-table-body");
+      tbody.innerHTML = "";
+
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-400">제출된 데이터가 없습니다.</td></tr>`;
+        return;
+      }
+
+      list.slice().reverse().forEach(student => {
+        tbody.innerHTML += `
+          <tr class="hover:bg-slate-50">
+            <td class="p-3 font-bold text-slate-800">${student.grade}년 ${student.classNum}반 ${student.num}번 ${student.name}</td>
+            <td class="p-3"><span class="px-2 py-0.5 rounded text-xs ${student.answers?.q1==='A'?'bg-emerald-100 text-emerald-800':'bg-amber-100 text-amber-800'}">${student.answers?.q1 || '-'}</span></td>
+            <td class="p-3"><span class="px-2 py-0.5 rounded text-xs ${student.answers?.q2==='A'?'bg-emerald-100 text-emerald-800':'bg-amber-100 text-amber-800'}">${student.answers?.q2 || '-'}</span></td>
+            <td class="p-3"><span class="px-2 py-0.5 rounded text-xs ${student.answers?.q3==='A'?'bg-emerald-100 text-emerald-800':'bg-amber-100 text-amber-800'}">${student.answers?.q3 || '-'}</span></td>
+            <td class="p-3"><span class="px-2 py-0.5 rounded text-xs ${student.answers?.q4==='A'?'bg-emerald-100 text-emerald-800':'bg-amber-100 text-amber-800'}">${student.answers?.q4 || '-'}</span></td>
+            <td class="p-3 text-center">${student.signatureUrl ? '✅ 완료' : '❌ 미완료'}</td>
+            <td class="p-3 text-slate-400 text-xs">${student.submittedAt || '-'}</td>
+          </tr>
+        `;
+      });
+    }
+
+    // 전체 삭제 (Firestore + LocalStorage)
+    window.clearAllData = async function() {
+      if (confirm("정말로 클라우드 및 로컬의 모든 학생 데이터를 초기화하시겠습니까? 이 작업은 복구할 수 없습니다.")) {
+        localStorage.removeItem(COLLECTION_NAME);
+        
+        try {
+          const snapshot = await getDocs(collection(db, COLLECTION_NAME));
+          const deletePromises = snapshot.docs.map(docItem => deleteDoc(doc(db, COLLECTION_NAME, docItem.id)));
+          await Promise.all(deletePromises);
+          alert("모든 데이터가 성공적으로 삭제되었습니다.");
+        } catch (err) {
+          console.error("데이터 삭제 실패:", err);
+          alert("데이터 삭제 도중 오류가 발생했습니다. 파이어베이스 보안 규칙을 확인해 주세요.");
+        }
+      }
+    };
+
+
+    // ----- 유틸 함수 -----
+    function showStep(stepId) {
+      ["step-1", "step-2", "step-3", "step-4"].forEach(id => {
+        document.getElementById(id).classList.add("hidden");
+      });
+      document.getElementById(stepId).classList.remove("hidden");
+      window.scrollTo(0, 0);
+    }
+
+    window.goHome = function() {
+      if (confirm("첫 화면으로 이동하시겠습니까? 진행 중인 내용이 초기화될 수 있습니다.")) {
+        location.reload();
+      }
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>학교생활 루틴 확인서</title>
+    <style>
+        /* 전체 배경 및 폰트 설정 */
+        body { 
+            font-family: 'Malgun Gothic', '맑은 고딕', sans-serif; 
+            background-color: #FFF3E0; 
+            padding: 40px; /* 여백을 넉넉하게 */
+            display: flex; 
+            justify-content: flex-start; /* 왼쪽 정렬 */
+            align-items: flex-start; /* 위쪽 정렬 */
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* 메인 테두리 박스 */
+        .container { 
+            background-color: #FFFFFF; 
+            padding: 40px 50px; /* 안쪽 여백을 넓혀 시원한 느낌 추가 */
+            border-radius: 25px; 
+            border: 8px solid #FF9800; 
+            box-shadow: 0 10px 20px rgba(255, 152, 0, 0.15); 
+            max-width: 700px; /* 전체 크기를 더 넓게 수정 */
+            width: 100%; 
+        }
+
+        /* 제목 스타일 */
+        h1 { 
+            text-align: center; 
+            color: #E65100; 
+            font-size: 32px;
+            margin-top: 0;
+            margin-bottom: 25px;
+            text-shadow: 1px 1px 2px rgba(230, 81, 0, 0.1);
+        }
+
+        /* 소제목 (시간대별) 스타일 */
+        h3 { 
+            color: #EF6C00; 
+            margin-bottom: 12px; 
+            border-bottom: 3px solid #FFE0B2; 
+            padding-bottom: 5px; 
+            margin-top: 25px;
+            font-size: 20px;
+        }
+
+        /* 체크리스트 항목 스타일 */
+        .checklist { margin-bottom: 15px; }
+        
+        label { 
+            display: flex; 
+            align-items: center;
+            margin-bottom: 12px; 
+            font-size: 18px; /* 글자 크기 살짝 키움 */
+            color: #5D4037; 
+            cursor: pointer; 
+            font-weight: 600;
+        }
+
+        /* 체크박스 디자인 */
+        input[type="checkbox"] { 
+            margin-right: 15px; 
+            transform: scale(1.4); 
+            accent-color: #FF9800; 
+            cursor: pointer;
+        }
+
+        /* 하단 이름 및 버튼 영역 */
+        .footer { 
+            margin-top: 40px; 
+            text-align: center; 
+            background-color: #FFF8E1; 
+            padding: 25px; 
+            border-radius: 15px;
+            border: 3px dashed #FFCA28; 
+        }
+
+        /* 이름 입력 칸 */
+        .name-input { 
+            padding: 12px; 
+            font-size: 16px; 
+            border: 3px solid #FFCA28; 
+            border-radius: 10px; 
+            width: 250px; 
+            margin-bottom: 15px; 
+            text-align: center;
+            font-weight: bold;
+            color: #5D4037;
+            outline: none;
+        }
+
+        .name-input:focus {
+            border-color: #FF9800; 
+        }
+
+        /* 제출하기 버튼 */
+        .submit-btn { 
+            padding: 12px 40px; 
+            font-size: 18px; 
+            color: white; 
+            background-color: #FF9800; 
+            border: 3px solid #F57C00; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+        }
+
+        .submit-btn:hover { 
+            background-color: #F57C00; 
+            transform: translateY(-2px); 
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🏫 학교생활 루틴 확인서</h1>
+    
+    <form onsubmit="alert('참 잘했어요! 루틴 확인서가 제출되었습니다.'); return false;">
+        
+        <div class="checklist">
+            <h3>☀️ 아침시간</h3>
+            <label><input type="checkbox"> 가방과 겉옷을 바르게 정리했나요?</label>
+            <label><input type="checkbox"> 알림장이나 과제를 제출했나요?</label>
+            <label><input type="checkbox"> 자리에 앉아 수업 준비를 했나요?</label>
+        </div>
+
+        <div class="checklist">
+            <h3>🎈 중간놀이시간</h3>
+            <label><input type="checkbox"> 친구들과 사이좋게 놀았나요?</label>
+            <label><input type="checkbox"> 화장실에 다녀오고 물을 마셨나요?</label>
+            <label><input type="checkbox"> 다음 시간 준비물을 꺼내두었나요?</label>
+        </div>
+
+        <div class="checklist">
+            <h3>🍱 점심시간</h3>
+            <label><input type="checkbox"> 밥 먹기 전 손을 깨끗이 씻었나요?</label>
+            <label><input type="checkbox"> 남기지 않고 골고루 맛있게 먹었나요?</label>
+            <label><input type="checkbox"> 식사 후 내 자리를 깨끗하게 정리했나요?</label>
+        </div>
+
+        <div class="checklist">
+            <h3>🎒 하교시간</h3>
+            <label><input type="checkbox"> 내 물건을 빠짐없이 챙겼나요?</label>
+            <label><input type="checkbox"> 책상 주변의 쓰레기를 주웠나요?</label>
+            <label><input type="checkbox"> 밝게 웃으며 인사했나요?</label>
+        </div>
+
+        <div class="footer">
+            <input type="text" class="name-input" placeholder="이름을 입력하세요" required><br>
+            <button type="submit" class="submit-btn">제출하기</button>
+        </div>
+        
+    </form>
+</div>
+
+</body>
+</html>

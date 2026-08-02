@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>초등 윤리 판단 모럴머신</title>
+    <!-- 가독성 좋은 Pretendard 폰트 -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style>
+        :root {
+            --primary: #4A90E2;    /* 메인 파랑 */
+            --accent-a: #FF6B6B;   /* 선택 A 빨강 */
+            --accent-b: #2ECC71;   /* 선택 B 초록 */
+            --bg: #EDF2F7;         /* 배경 회색 */
+            --text-main: #1A1A1A;  /* 아주 짙은 검정 */
+            --text-sub: #4A5568;   /* 짙은 회색 */
+        }
+
+        body {
+            font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 35px;
+            max-width: 680px;
+            width: 100%;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            text-align: center;
+            box-sizing: border-box;
+            position: relative;
+            border: 4px solid #E2E8F0;
+        }
+
+        h1 { 
+            color: var(--primary); 
+            margin-top: 0;
+            margin-bottom: 15px; 
+            font-size: 2.2rem; 
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+        
+        .subtitle { 
+            color: var(--text-sub); 
+            margin-bottom: 25px; 
+            font-size: 1.15rem; 
+            line-height: 1.6;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            height: 14px;
+            background-color: #E2E8F0;
+            border-radius: 7px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            width: 0%;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .q-number {
+            font-weight: 700; 
+            color: var(--primary); 
+            margin-bottom: 12px; 
+            font-size: 1.2rem;
+        }
+
+        /* 디테일 일러스트 박스 */
+        .scenario-img-box {
+            width: 100%;
+            height: 240px;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            background-color: #F8FAFC;
+            border: 3px solid #E2E8F0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scenario-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .scenario-box {
+            background: #F8FAFC;
+            border: 3px solid #E2E8F0;
+            border-radius: 18px;
+            padding: 22px;
+            margin-bottom: 25px;
+            font-size: 1.25rem; 
+            line-height: 1.7; 
+            color: var(--text-main);
+            word-break: keep-all; 
+            font-weight: 700; 
+            text-align: left; 
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .options-grid { grid-template-columns: 1fr; }
+            .scenario-img-box { height: 190px; }
+            .scenario-box { font-size: 1.15rem; padding: 18px; }
+            h1 { font-size: 1.8rem; }
+        }
+
+        .btn {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 18px; 
+            font-size: 1.15rem; 
+            font-weight: 800; 
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-main);
+            line-height: 1.5;
+            word-break: keep-all;
+            border: 4px solid var(--primary); 
+            text-align: left;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .btn-a { border-color: var(--accent-a); color: #C53030; }
+        .btn-a:hover { background-color: var(--accent-a); color: white; }
+
+        .btn-b { border-color: var(--accent-b); color: #1E7E34; }
+        .btn-b:hover { background-color: var(--accent-b); color: white; }
+
+        .start-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 18px 45px;
+            font-size: 1.3rem; 
+            font-weight: 800;
+            border-radius: 35px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
+            transition: all 0.2s;
+        }
+
+        .start-btn:hover { 
+            background-color: #357ABD; 
+            transform: scale(1.05);
+        }
+
+        .result-item {
+            text-align: left;
+            margin-bottom: 16px;
+            padding: 18px;
+            background: #F8FAFC;
+            border-radius: 14px;
+            border: 2px solid #E2E8F0;
+            border-left: 6px solid var(--primary);
+        }
+        .result-item strong { font-size: 1.15rem; color: var(--text-main); line-height: 1.5;}
+        .result-item span { font-size: 1.05rem; line-height: 1.6; display: block; margin-top: 8px;}
+
+        .feedback-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 35px;
+            box-sizing: border-box;
+            z-index: 10;
+        }
+
+        .feedback-tag {
+            font-size: 2rem; 
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 18px;
+            letter-spacing: -1px;
+        }
+
+        .feedback-desc {
+            font-size: 1.25rem; 
+            color: var(--text-main);
+            line-height: 1.7;
+            margin-bottom: 30px;
+            word-break: keep-all;
+            font-weight: 600;
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <!-- 시작 화면 -->
+    <div class="card" id="start-card">
+        <h1>🤖 교실 속 윤리 엔진 모럴머신</h1>
+        <div class="scenario-img-box" style="height: 240px; border: none;">
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 180'><rect width='260' height='180' rx='20' fill='%23EBF8FF'/><circle cx='130' cy='60' r='28' fill='%23FCE8E6'/><path d='M 100 50 Q 130 25 160 50' fill='%232D3748'/><circle cx='118' cy='60' r='4' fill='%23333333'/><circle cx='142' cy='60' r='4' fill='%23333333'/><path d='M 120 72 Q 130 82 140 72' stroke='%23333333' stroke-width='3' fill='none'/><path d='M 80 180 C 80 120 100 110 130 110 C 160 110 180 120 180 180 Z' fill='%234A90E2'/><circle cx='60' cy='95' r='20' fill='%23FCE8E6'/><path d='M 35 180 C 35 140 45 130 60 130 C 75 130 85 140 85 180 Z' fill='%23FF6B6B'/><circle cx='200' cy='95' r='20' fill='%23FCE8E6'/><path d='M 175 180 C 175 140 185 130 200 130 C 215 130 225 140 225 180 Z' fill='%232ECC71'/><path d='M 115 110 L 130 95 L 145 110 Z' fill='%23FFD700'/></svg>" alt="학교 친구들 캐릭터">
+        </div>
+        <p class="subtitle">학교생활 중 만나게 되는 10가지 곤란한 순간!<br>어떤 선택이 옳을지 나만의 생각을 정해보세요.</p>
+        <button class="start-btn" onclick="startTest()">탐험 시작하기 🚀</button>
+    </div>
+
+    <!-- 문제 화면 -->
+    <div class="card hidden" id="quiz-card">
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+        <div class="q-number" id="question-number">상황 1 / 10</div>
+        
+        <!-- 상황별 직관적 인물 캐릭터 일러스트 -->
+        <div class="scenario-img-box">
+            <img id="scenario-img" src="" alt="상황별 인물 캐릭터">
+        </div>
+
+        <div class="scenario-box" id="scenario-text">상황 설명 텍스트가 표시됩니다.</div>
+        
+        <div class="options-grid">
+            <button class="btn btn-a" id="btn-a" onclick="selectOption('A')">선택 A</button>
+            <button class="btn btn-b" id="btn-b" onclick="selectOption('B')">선택 B</button>
+        </div>
+
+        <!-- 피드백 레이어 -->
+        <div class="feedback-overlay hidden" id="feedback-box">
+            <div style="font-size: 1.1rem; color: var(--text-sub); margin-bottom: 8px; font-weight: 700;">내가 선택한 윤리 스타일</div>
+            <div class="feedback-tag" id="feedback-tag">스타일 이름</div>
+            <div class="feedback-desc" id="feedback-desc">스타일 설명</div>
+            <button class="start-btn" onclick="nextQuestion()">다음 질문으로 ➡️</button>
+        </div>
+    </div>
+
+    <!-- 결과 화면 -->
+    <div class="card hidden" id="result-card">
+        <h1>📊 나의 선택 탐험 결과</h1>
+        <p class="subtitle">정답은 없습니다! 내가 어떤 가치를 중요하게 생각하는지 알아보세요.</p>
+        
+        <div id="type-analysis" style="font-size: 1.35rem; font-weight: 800; margin-bottom: 25px; color: var(--primary); white-space: pre-line; line-height: 1.6;"></div>
+        <div id="results-list" style="max-height: 380px; overflow-y: auto; padding-right: 8px;"></div>
+        
+        <button class="start-btn" onclick="location.reload()" style="margin-top: 25px;">처음부터 다시하기</button>
+    </div>
+
+    <script>
+        // 상황별 정교화된 명확한 벡터 일러스트 SVG (내장형 Data URL)
+        const characterSVGs = {
+            // 1. 단톡방 사진 놀림 (스마트폰 속 비웃는 대화 + 속상해서 고개 숙인 아이)
+            chat: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 160'><rect width='260' height='160' rx='15' fill='%23EBF8FF'/><rect x='20' y='20' width='90' height='120' rx='12' fill='%232D3748'/><rect x='25' y='28' width='80' height='104' fill='%23FFFFFF' rx='5'/><rect x='30' y='35' width='50' height='18' rx='8' fill='%23E2E8F0'/><text x='35' y='48' font-size='10' font-weight='bold' fill='%23FF6B6B'>ㅋㅋㅋ</text><rect x='45' y='60' width='55' height='18' rx='8' fill='%234A90E2'/><text x='50' y='73' font-size='10' font-weight='bold' fill='%23FFFFFF'>사진 봐라</text><circle cx='180' cy='65' r='22' fill='%23FCE8E6'/><path d='M 160 55 Q 180 35 200 55' fill='%232D3748'/><path d='M 170 70 Q 180 62 190 70' stroke='%23333333' stroke-width='3' fill='none'/><path d='M 170 80 Q 180 72 190 80' stroke='%23FF6B6B' stroke-width='3' fill='none'/><path d='M 140 160 C 140 120 160 110 180 110 C 200 110 220 120 220 160 Z' fill='%23A0AEC0'/></svg>",
+            
+            // 2. 친구 따돌림 요구 (한 아이가 손가락질하며 따돌리라 요구 + 가운데서 눈치보는 아이)
+            friends: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 160'><rect width='260' height='160' rx='15' fill='%23FFF5F5'/><circle cx='60' cy='65' r='20' fill='%23FCE8E6'/><path d='M 40 60 Q 60 40 80 60' fill='%23FF6B6B'/><path d='M 35 160 C 35 120 45 110 60 110 C 75 110 85 120 85 160 Z' fill='%23FF6B6B'/><line x1='75' y1='115' x2='120' y2='110' stroke='%23FF6B6B' stroke-width='6' stroke-linecap='round'/><circle cx='135' cy='75' r='18' fill='%23FCE8E6'/><path d='M 120 70 Q 135 55 150 70' fill='%232D3748'/><circle cx='129' cy='75' r='2.5' fill='%23333333'/><circle cx='141' cy='75' r='2.5' fill='%23333333'/><path d='M 130 85 L 140 85' stroke='%23333333' stroke-width='2'/><path d='M 115 160 C 115 130 125 120 135 120 C 145 120 155 130 155 160 Z' fill='%234A90E2'/><circle cx='210' cy='85' r='18' fill='%23FCE8E6'/><path d='M 195 80 Q 210 65 225 80' fill='%232D3748'/><path d='M 190 160 C 190 130 200 120 210 120 C 220 120 230 130 230 160 Z' fill='%23CBD5E0'/></svg>",
+
+            // 3. 부서진 물건과 비밀 (깨진 장난감 + 입에 손가락을 대며 비밀로 해달라는 아이)
+            secret: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 160'><rect width='260' height='160' rx='15' fill='%23F0FFF4'/><circle cx='100' cy='65' r='22' fill='%23FCE8E6'/><path d='M 80 55 Q 100 35 120 55' fill='%232D3748'/><circle cx='93' cy='62' r='3' fill='%23333333'/><circle cx='107' cy='62' r='3' fill='%23333333'/><path d='M 95 75 Q 100 70 105 75' stroke='%23333333' stroke-width='2' fill='none'/><rect x='98' y='72' width='4' height='16' fill='%23FCE8E6' rx='2'/><path d='M 65 160 C 65 120 85 105 100 105 C 115 105 135 120 135 160 Z' fill='%23ECC94B'/><rect x='160' y='110' width='50' height='35' fill='%23E2E8F0' rx='5'/><path d='M 180 110 L 165 85 L 195 100 L 205 80 L 215 110' stroke='%23E2E8F0' stroke-width='4' fill='none'/><text x='170' y='132' font-size='14' font-weight='bold' fill='%23E53E3E'>CRACK!</text></svg>",
+
+            // 4. 괴롭힘 현장 (당해서 속상해하는 아이 + 밀치는 가해 아이 + SOS 신호)
+            bullying: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 160'><rect width='260' height='160' rx='15' fill='%23FFF5F5'/><circle cx='90' cy='75' r='20' fill='%23FCE8E6'/><path d='M 70 70 Q 90 50 110 70' fill='%232D3748'/><path d='M 82 78 Q 90 86 98 78' stroke='%23333333' stroke-width='2' fill='none'/><path d='M 65 160 C 65 120 75 110 90 110 C 105 110 115 120 115 160 Z' fill='%23A0AEC0'/><circle cx='170' cy='65' r='20' fill='%23FCE8E6'/><path d='M 150 55 Q 170 35 190 55' fill='%23E53E3E'/><path d='M 145 160 C 145 115 155 100 170 100 C 185 100 195 115 195 160 Z' fill='%23E53E3E'/><line x1='150' y1='110' x2='105' y2='110' stroke='%23E53E3E' stroke-width='8' stroke-linecap='round'/><text x='30' y='50' font-size='22' font-weight='bold' fill='%23E53E3E'>HELP!</text></svg>",
+
+            // 5. 게임 중 실수 (축구공과 골대, 안절부절못하는 실수한 아이)
+            game: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 160'><rect width='260' height='160' rx='15' fill='%23FAF5FF'/><rect x='20' y='40' width='80' height='80' fill='none' stroke='%23CBD5E0' stroke-width='6'/><circle cx='170' cy='70' r='20' fill='%23FCE8E6'/><path d='M 150 65 Q 170 45 190 65' fill='%232D3748'/><circle cx='163' cy='70' r='2.5' fill='%23333333'/><circle cx='177' cy='70' r='2.5' fill='%23333333'/><path d='M 163 82 Q 170 75 177 82' stroke='%23333333' stroke-width='2' fill='none'/><path d='M 145 160 C 145 115 155 105 170 105 C 185 105 195 115 195 160 Z' fill='%233182CE'/><circle cx='120' cy='130' r='14' fill='%23FFFFFF' stroke='%23333333' stroke-width='3'/><path d='M 120 116 L 124 124 L 133 125 L 126 131 L 129 140 L 120 134 L 111 140 L 114 131 L 107 125 L 116 124 Z' fill='%23333333'/></svg>",
+
+            // 6. SNS 악성 소문 (컴퓨터 화면 속 나쁜 글 + 충격받은 아이)
+            sns: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 160'><rect width='260' height='160' rx='15' fill='%23EBF8FF'/><rect x='130' y='20' width='110' height='80' rx='8' fill='%232D3748'/><rect x='135' y='25' width='100' height='70' fill='%23FFFFFF'/><text x='145' y='48' font-size='12' font-weight='bold' fill='%23E53E3E'>⚠️ 악성 소문</text><text x='145' y='68' font-size='10' fill='%234A5568'>OO이가 그랬대!</text><circle cx='65' cy='70' r='22' fill='%23FCE8E6'/><path d='M 45 60 Q 65 40 85 60' fill='%232D3748'/><circle cx='57' cy='68' r='3.5' fill='%23333333'/><circle cx='73' cy='68' r='3.5' fill='%23333333'/><ellipse cx='65' cy='82' rx='5' ry='7' fill='%23333333'/><path d='M 35 160 C 35 120 50 110 65 110 C 80 110 95 120 95 160 Z' fill='%234ECDC4'/></svg>",
+
+            // 7. 숙제 강요 (쌓인 책과 연필을 들고 압박당하는 아이)
+            homework: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 160'><rect width='260' height='160' rx='15' fill='%23FFFFF0'/><rect x='30' y='110' width='70' height='15' fill='%23E53E3E' rx='3'/><rect x='35' y='95' width='60' height='15' fill='%233182CE' rx='3'/><rect x='40' y='80' width='50' height='15' fill='%2338A169' rx='3'/><circle cx='160' cy='65' r='20' fill='%23FCE8E6'/><path d='M 140 60 Q 160 40 180 60' fill='%232D3748'/><circle cx='152' cy='68' r='2.5' fill='%23333333'/><circle cx='168' cy='68' r='2.5' fill='%23333333'/><path d='M 153 78 Q 160 72 167 78' stroke='%23333333' stroke-width='2' fill='none'/><path d='M 135 160 C 135 115 145 105 160 105 C 175 105 185 115 185 160 Z' fill='%23ED8936'/><line x1='120' y1='100' x2='140' y2='120' stroke='%23D69E2E' stroke-width='6' stroke-linecap='round'/></svg>",
+
+            // 8. 과거 놀렸던 친구 도와주기 (넘어져서 울고 있는 친구와 다가가는 나)
+            help: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 160'><rect width='260' height='160' rx='15' fill='%23F0FFF4'/><circle cx='190' cy='95' r='18' fill='%23FCE8E6'/><path d='M 175 90 Q 190 75 205 90' fill='%234A5568'/><path d='M 160 160 C 160 135 175 125 190 125 C 205 125 220 135 220 160 Z' fill='%23ECC94B'/><path d='M 182 102 Q 190 96 198 102' stroke='%23333333' stroke-width='2' fill='none'/><circle cx='70' cy='65' r='20' fill='%23FCE8E6'/><path d='M 50 60 Q 70 40 90 60' fill='%232D3748'/><path d='M 45 160 C 45 115 55 105 70 105 C 85 105 95 115 95 160 Z' fill='%2348BB78'/><line x1='90' y1='115' x2='150' y2='125' stroke='%2348BB78' stroke-width='6' stroke-linecap='round'/></svg>",
+
+            // 9. 청소 구역 몰아주기 (혼자 빗자루 들고 땀 흘리는 아이)
+            clean: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 160'><rect width='260' height='160' rx='15' fill='%23EBF8FF'/><circle cx='130' cy='65' r='22' fill='%23FCE8E6'/><path d='M 110 55 Q 130 35 150 55' fill='%232D3748'/><circle cx='122' cy='65' r='3' fill='%23333333'/><circle cx='138' cy='65' r='3' fill='%23333333'/><path d='M 123 78 Q 130 72 137 78' stroke='%23333333' stroke-width='2' fill='none'/><circle cx='152' cy='60' r='3' fill='%233182CE'/><path d='M 100 160 C 100 115 115 105 130 105 C 145 105 160 115 160 160 Z' fill='%234A90E2'/><line x1='70' y1='150' x2='110' y2='85' stroke='%23D69E2E' stroke-width='6'/><path d='M 55 150 L 80 150 L 70 125 L 60 125 Z' fill='%23ECC94B'/></svg>",
+
+            // 10. 급식 새치기 (급식판 든 줄과 그 사이로 당당하게 끼어드는 아이)
+            order: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 160'><rect width='260' height='160' rx='15' fill='%23EDF2F7'/><circle cx='50' cy='80' r='16' fill='%23FCE8E6'/><path d='M 25 160 C 25 125 35 115 50 115 C 65 115 75 125 75 160 Z' fill='%23CBD5E0'/><circle cx='210' cy='80' r='16' fill='%23FCE8E6'/><path d='M 185 160 C 185 125 195 115 210 115 C 225 115 235 125 235 160 Z' fill='%23CBD5E0'/><circle cx='130' cy='65' r='20' fill='%23FCE8E6'/><path d='M 110 55 Q 130 35 150 55' fill='%23E53E3E'/><path d='M 105 160 C 105 110 115 100 130 100 C 145 100 155 110 155 160 Z' fill='%23E53E3E'/><rect x='110' y='120' width='40' height='18' rx='4' fill='%23A0AEC0'/><path d='M 130 40 L 130 20 L 120 30 M 130 20 L 140 30' stroke='%23E53E3E' stroke-width='4' stroke-linecap='round'/></svg>"
+        };
+
+        const scenarios = [
+            {
+                q: "1. 단톡방에서 친구들이 한 친구의 웃긴 사진을 올리며 놀리고 있습니다. 내가 말리지 않으면 나도 가해자가 될 것 같지만, 말리면 나까지 놀림받을까 봐 두렵습니다.",
+                img: characterSVGs.chat,
+                a: "위험을 무릅쓰고 '그만해'라고 단톡방에 말한다.",
+                b: "상황을 지켜보다가 놀림당하는 친구에게 따로 개인 톡을 보내 위로한다.",
+                tagA: "🛡️ 용기 있는 중재자",
+                descA: "나보다 친구의 어려움을 먼저 생각하고, 잘못된 상황을 멈추기 위해 직접 나서는 멋진 용기를 가졌군요!"
+            },
+            {
+                q: "2. 친한 친구가 싫어하는 다른 친구를 따돌리기 위해 나에게 '너 저 애랑 놀면 너랑도 안 놀 거야'라고 말합니다.",
+                img: characterSVGs.friends,
+                a: "친한 친구의 말을 무시하고 따돌림받는 친구에게 먼저 다가가 놀아준다.",
+                b: "우선 친한 친구와 대화하며 따돌리지 말자고 설득하려고 노력한다.",
+                tagA: "⚖️ 원칙주의 단호파",
+                descA: "친구의 부당한 압박에 굴하지 않고, 옳다고 생각하는 행동을 단호하게 지키려는 곧은 마음을 가졌군요!"
+            },
+            {
+                q: "3. 한 친구가 실수로 다른 친구의 소중한 물건을 부수고 나에게만 비밀로 해달라고 부탁했습니다.",
+                img: characterSVGs.secret,
+                a: "친구와의 의리보다는 사실대로 솔직하게 피해 친구나 선생님께 알린다.",
+                b: "일단 비밀을 지켜주되, 부순 친구가 직접 사과할 수 있도록 설득한다.",
+                tagA: "🔍 정의로운 해결사",
+                descA: "거짓말이나 숨김없이 진실을 밝히고 신속하게 문제를 바로잡는 것을 가장 중요하게 생각하는군요!"
+            },
+            {
+                q: "4. 쉬는 시간에 한 친구가 지속적으로 장난을 빙자해 다른 친구의 뺨을 때리거나 옷을 잡아당기며 괴롭힙니다. 당하는 친구는 억지 웃음을 짓고 있습니다.",
+                img: characterSVGs.bullying,
+                a: "당하는 친구가 웃고 있어도 명백한 폭력이므로 즉시 선생님께 신고한다.",
+                b: "당하는 친구에게 먼저 다가가 '진짜 괜찮은 거 맞냐'고 의사를 묻는다.",
+                tagA: "🚨 직접 행동파",
+                descA: "괴롭힘의 심각성을 빠르게 파악하고, 곧바로 외부의 도움을 요청해 문제를 확실히 해결하려는 마음을 가졌군요!"
+            },
+            {
+                q: "5. 반 전체가 참여하는 게임에서 한 친구가 계속 실수를 해서 우리 반이 질 것 같습니다. 친구들이 그 애에게 소리를 지르고 화를 냅니다.",
+                img: characterSVGs.game,
+                a: "친구들에게 소리치지 말라고 제지하고 분위기를 다잡는다.",
+                b: "실수한 친구 편에 서서 괜찮다고 따뜻하게 응원해준다.",
+                tagA: "📢 질서 수호자",
+                descA: "비난이나 거친 행동이 교실 내에 퍼지지 않도록 리더십을 발휘해 상황을 정리하려는 마음을 가졌군요!"
+            },
+            {
+                q: "6. SNS 익명 게시판에 우리 반 친구에 대한 나쁜 소문이 올라왔습니다. 나와 별로 친하지 않은 친구입니다.",
+                img: characterSVGs.sns,
+                a: "잘못된 소문이 퍼지지 않도록 글을 삭제해달라고 신고하거나 댓글을 단다.",
+                b: "괜히 관심을 주면 소문이 더 커질 수 있으니 그 글을 못 본 척 무시한다.",
+                tagA: "⚡ 적극적 대응파",
+                descA: "온라인 폭력이나 루머에 대해 즉각 대응하고 정정하며 인터넷에서도 정의로운 행동을 실천하는군요!"
+            },
+            {
+                q: "7. 친구가 나에게 학원 과제를 대신해 달라고 하면서, 해주지 않으면 앞으로 같이 안 놀겠다고 협박합니다.",
+                img: characterSVGs.homework,
+                a: "단호하게 거절하고 선생님이나 부모님께 도움을 요청한다.",
+                b: "친구 관계가 깨지는 것이 두려워 일단 들어주고 나중에 대화로 풀어본다.",
+                tagA: "🛑 자기주도 보호파",
+                descA: "부당한 요구나 협박에 당당히 '아니오'라고 말하며 자신의 권리를 스스로 지킬 줄 아는 성숙함을 가졌군요!"
+            },
+            {
+                q: "8. 예전에 나를 놀렸던 친구가 이번에는 다른 아이들에게 괴롭힘을 당하고 있는 모습을 보았습니다.",
+                img: characterSVGs.help,
+                a: "과거 일은 잊고 당장 그 친구를 돕거나 선생님께 알린다.",
+                b: "내가 나서면 나도 얽힐 수 있으니 다른 친구들이 돕는 것을 기다린다.",
+                tagA: "🌟 포용적 정의파",
+                descA: "과거의 안 좋은 감정보다 현재 불쌍한 처지에 놓인 사람을 돕는 정의로움을 우선시하는 넓은 마음을 가졌군요!"
+            },
+            {
+                q: "9. 청소 시간에 힘이 약한 친구에게 누군가가 힘든 청소 구역을 다 몰아주었습니다.",
+                img: characterSVGs.clean,
+                a: "몰아준 친구에게 항의하고 청소를 똑같이 다시 나누자고 한다.",
+                b: "말없이 힘들어하는 친구의 청소를 함께 도와준다.",
+                tagA: "📐 공정성 추구파",
+                descA: "규칙과 공평함을 중요시하며, 불합리한 처사에 대해 문제 제기를 두려워하지 않는 용기 있는 마음을 가졌군요!"
+            },
+            {
+                q: "10. 교실에서 급식 순서를 지키지 않고 힘으로 새치기하는 친구가 있습니다.",
+                img: characterSVGs.order,
+                a: "새치기한 친구에게 직접 찾아가 맨 뒤로 가라고 말한다.",
+                b: "선생님께 이 사실을 조용히 말씀드려 지도받게 한다.",
+                tagA: "🔥 당당한 해결파",
+                descA: "공공장소에서의 질서를 해치는 행동을 보았을 때 본인이 직접 당당하게 시정을 요구하는 주도적인 성향을 가졌군요!"
+            }
+        ];
+
+        let currentIdx = 0;
+        let userChoices = [];
+
+        function startTest() {
+            document.getElementById('start-card').classList.add('hidden');
+            document.getElementById('quiz-card').classList.remove('hidden');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const qData = scenarios[currentIdx];
+            document.getElementById('question-number').innerText = `상황 ${currentIdx + 1} / ${scenarios.length}`;
+            document.getElementById('scenario-text').innerText = qData.q;
+            
+            const imgElement = document.getElementById('scenario-img');
+            imgElement.src = qData.img;
+
+            document.getElementById('btn-a').innerText = "A. " + qData.a;
+            document.getElementById('btn-b').innerText = "B. " + qData.b;
+            
+            const progressPercent = ((currentIdx) / scenarios.length) * 100;
+            document.getElementById('progress').style.width = `${progressPercent}%`;
+
+            document.getElementById('feedback-box').classList.add('hidden');
+        }
+
+        function selectOption(option) {
+            const qData = scenarios[currentIdx];
+            const tag = option === 'A' ? qData.tagA : (qData.tagB || "🤝 신중한 배려파");
+            const desc = option === 'A' ? qData.descA : "갈등을 부드럽게 완화하고 관계와 타인의 감정을 우선으로 배려하는 따뜻한 선택입니다.";
+            const text = option === 'A' ? qData.a : qData.b;
+
+            userChoices.push({
+                question: qData.q,
+                selected: option,
+                text: text,
+                tag: tag
+            });
+
+            document.getElementById('feedback-tag').innerText = tag;
+            document.getElementById('feedback-desc').innerText = desc;
+            document.getElementById('feedback-box').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentIdx++;
+
+            if (currentIdx < scenarios.length) {
+                showQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quiz-card').classList.add('hidden');
+            document.getElementById('result-card').classList.remove('hidden');
+
+            const resultsList = document.getElementById('results-list');
+            resultsList.innerHTML = '';
+
+            let countA = userChoices.filter(c => c.selected === 'A').length;
+            let countB = userChoices.length - countA;
+
+            const analysisBox = document.getElementById('type-analysis');
+            if (countA > countB) {
+                analysisBox.innerText = `💡 당신은 '용기 있는 행동파' 성향에 가깝습니다!\n(불의를 보면 직접 맞서거나 공정함과 정의를 중요하게 생각하는 친구군요.)`;
+            } else {
+                analysisBox.innerText = `💡 당신은 '신중한 배려파' 성향에 가깝습니다!\n(갈등을 부드럽게 해결하고, 타인의 감정과 안전한 관계를 세심하게 배려하는 친구군요.)`;
+            }
+
+            userChoices.forEach((res, index) => {
+                const item = document.createElement('div');
+                item.className = 'result-item';
+                item.innerHTML = `
+                    <strong>상황 ${index + 1}. ${res.question}</strong><br>
+                    <span style="color: var(--primary); font-weight: 800;">👉 나의 선택: ${res.text}</span>
+                    <span style="color: var(--text-sub); font-weight: 700;">[유형: ${res.tag}]</span>
+                `;
+                resultsList.appendChild(item);
+            });
+        }
+    </script>
+</body>
+</html>
