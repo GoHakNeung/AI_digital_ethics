@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수업자료 - AI·디지털 윤리 바이브 코딩</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header 스타일 */
+        header {
+            background-color: #1a252f;
+            color: #ffffff;
+            text-align: center;
+            padding: 3rem 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: #bdc3c7;
+        }
+
+        /* Main 컨텐츠 스타일 */
+        main {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .card-container {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 1.25rem 1.5rem;
+            border: 1px solid #e1e4e8;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-color: #3498db;
+        }
+
+        .card-info h3 {
+            font-size: 1.2rem;
+            color: #2c3e50;
+            margin-bottom: 0.25rem;
+        }
+
+        .card-info p {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        .badge {
+            padding: 0.25rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .badge-file {
+            background-color: #e8f4fd;
+            color: #2980b9;
+        }
+
+        .badge-link {
+            background-color: #fef9e7;
+            color: #d35400;
+        }
+
+        .badge-nav {
+            background-color: #e2e8f0;
+            color: #475569;
+        }
+
+        /* Footer 스타일 */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>수업자료 및 논문</h1>
+        <p>강의안 및 참고 인공지능 윤리 논문 모음</p>
+    </header>
+
+    <main>
+        <div class="card-container">
+            <!-- 메인으로 돌아가기 -->
+            <a href="index.html" class="card">
+                <div class="card-info">
+                    <h3>🏠 메인 페이지로 돌아가기</h3>
+                    <p>초기 화면으로 이동합니다.</p>
+                </div>
+                <span class="badge badge-nav">상위 폴더 ⬆️</span>
+            </a>
+
+            <!-- 강의안 -->
+            <a href="Lecture_Notes/11주차.html" class="card">
+                <div class="card-info">
+                    <h3>11주차 강의안</h3>
+                    <p>Lecture_Notes/11주차.html</p>
+                </div>
+                <span class="badge badge-file">HTML 파일</span>
+            </a>    
+            
+            <!-- 인공지능 윤리 논문1 -->
+            <a href="https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002842342" target="_blank" class="card">
+                <div class="card-info">
+                    <h3>인공지능 윤리 논문1</h3>
+                    <p>Moral machine을 활용한 인공지능 윤리교육이 초등학생의 인공지능에 대한 인식에 미치는 영향</p>
+                </div>
+                <span class="badge badge-link">외부 링크 🔗</span>
+            </a>
+            
+            <!-- 인공지능 윤리 논문2 -->
+            <a href="https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003001768" target="_blank" class="card">
+                <div class="card-info">
+                    <h3>인공지능 윤리 논문2</h3>
+                    <p>인공지능 윤리 역량 신장을 위한 인공지능 윤리 딜레마 개발</p>
+                </div>
+                <span class="badge badge-link">외부 링크 🔗</span>
+            </a>
+            
+            <!-- 인공지능 윤리 논문3 -->
+            <a href="https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003109558" target="_blank" class="card">
+                <div class="card-info">
+                    <h3>인공지능 윤리 논문3</h3>
+                    <p>딜레마 토론 기반 인공지능 윤리교육 모델 개발</p>
+                </div>
+                <span class="badge badge-link">외부 링크 🔗</span>
+            </a>         
+        </div>
+    </main>
+
+    <footer>
+        <p>© AI·디지털 윤리 바이브 코딩. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

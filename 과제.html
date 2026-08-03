@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>과제 - AI·디지털 윤리 바이브 코딩</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header 스타일 */
+        header {
+            background-color: #1a252f;
+            color: #ffffff;
+            text-align: center;
+            padding: 3rem 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: #bdc3c7;
+        }
+
+        /* Main 컨텐츠 스타일 */
+        main {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .card-container {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 1.25rem 1.5rem;
+            border: 1px solid #e1e4e8;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-color: #3498db;
+        }
+
+        .card-info h3 {
+            font-size: 1.2rem;
+            color: #2c3e50;
+            margin-bottom: 0.25rem;
+        }
+
+        .card-info p {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        .badge {
+            padding: 0.25rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .badge-file {
+            background-color: #e8f4fd;
+            color: #2980b9;
+        }
+
+        .badge-link {
+            background-color: #fef9e7;
+            color: #d35400;
+        }
+
+        .badge-nav {
+            background-color: #e2e8f0;
+            color: #475569;
+        }
+
+        /* Footer 스타일 */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>과제 목록</h1>
+        <p>선생님들이 함께 만든 AI·디지털 윤리 코딩 프로젝트 모음</p>
+    </header>
+
+    <main>
+        <div class="card-container">
+            <!-- 메인으로 돌아가기 -->
+            <a href="index.html" class="card">
+                <div class="card-info">
+                    <h3>🏠 메인 페이지로 돌아가기</h3>
+                    <p>초기 화면으로 이동합니다.</p>
+                </div>
+                <span class="badge badge-nav">상위 폴더 ⬆️</span>
+            </a>
+
+            <!-- 프로젝트 1 -->
+            <a href="src/강승만선생님.html" class="card">
+                <div class="card-info">
+                    <h3>강승만 선생님 프로젝트</h3>
+                    <p>src/강승만선생님.html</p>
+                </div>
+                <span class="badge badge-file">HTML 파일</span>
+            </a>
+
+            <!-- 프로젝트 2 -->
+            <a href="src/장지환선생님.html" class="card">
+                <div class="card-info">
+                    <h3>장지환 선생님 프로젝트</h3>
+                    <p>src/장지환선생님.html</p>
+                </div>
+                <span class="badge badge-file">HTML 파일</span>
+            </a>
+
+            <!-- 프로젝트 3 -->
+            <a href="src/이재경선생님_최종.html" class="card">
+                <div class="card-info">
+                    <h3>이재경 선생님(최종) 프로젝트</h3>
+                    <p>src/이재경선생님_최종.html</p>
+                </div>
+                <span class="badge badge-file">HTML 파일</span>
+            </a>
+
+            <!-- 프로젝트 4 -->
+            <a href="src/박충기선생님.html" class="card">
+                <div class="card-info">
+                    <h3>박충기 선생님 프로젝트</h3>
+                    <p>src/박충기선생님.html</p>
+                </div>
+                <span class="badge badge-file">HTML 파일</span>
+            </a>
+
+            <!-- 프로젝트 5 -->
+            <a href="src/박완기선생님.html" class="card">
+                <div class="card-info">
+                    <h3>박완기 선생님 프로젝트</h3>
+                    <p>src/박완기선생님.html</p>
+                </div>
+                <span class="badge badge-file">HTML 파일</span>
+            </a>
+
+            <!-- 프로젝트 6 -->
+            <a href="src/강미란선생님.HTML" class="card">
+                <div class="card-info">
+                    <h3>강미란 선생님 프로젝트</h3>
+                    <p>src/강미란선생님.HTML</p>
+                </div>
+                <span class="badge badge-file">HTML 파일</span>
+            </a>
+
+            <!-- 프로젝트 7 -->
+            <a href="src/박대영선생님_최종.html" class="card">
+                <div class="card-info">
+                    <h3>박대영 선생님 프로젝트</h3>
+                    <p>src/박대영선생님_최종.html</p>
+                </div>
+                <span class="badge badge-file">HTML 파일</span>
+            </a>
+
+            <!-- 프로젝트 8 -->
+            <a href="src/손영규선생님.html" class="card">
+                <div class="card-info">
+                    <h3>손영규 선생님 프로젝트</h3>
+                    <p>src/손영규선생님.html</p>
+                </div>
+                <span class="badge badge-file">HTML 파일</span>
+            </a>
+
+            <!-- 프로젝트 9 -->
+            <a href="src/이시윤선생님.html" class="card">
+                <div class="card-info">
+                    <h3>이시윤 선생님 프로젝트</h3>
+                    <p>src/이시윤선생님.html</p>
+                </div>
+                <span class="badge badge-file">HTML 파일</span>
+            </a>
+
+            <!-- 프로젝트 10 -->
+            <a href="src/최상용선생님.html" class="card">
+                <div class="card-info">
+                    <h3>최상용 선생님 프로젝트</h3>
+                    <p>src/최상용선생님.html</p>
+                </div>
+                <span class="badge badge-file">HTML 파일</span>
+            </a>
+
+            <!-- 프로젝트 11 -->
+            <a href="src/송기동선생님.html" class="card">
+                <div class="card-info">
+                    <h3>송기동 선생님 프로젝트</h3>
+                    <p>src/송기동선생님.html</p>
+                </div>
+                <span class="badge badge-file">HTML 파일</span>
+            </a>
+
+            <!-- 프로젝트 12 (외부) -->
+            <a href="https://dilemma-quest-ai.lovable.app" target="_blank" class="card">
+                <div class="card-info">
+                    <h3>조상근 선생님 프로젝트</h3>
+                    <p>외부 링크 : https://dilemma-quest-ai.lovable.app/</p>
+                </div>
+                <span class="badge badge-link">외부 링크 🔗</span>
+            </a>
+
+            <!-- 프로젝트 13 (외부) -->
+            <a href="https://digital-moral-detective.vercel.app/" target="_blank" class="card">
+                <div class="card-info">
+                    <h3>김명수 선생님 프로젝트</h3>
+                    <p>외부 링크 : https://digital-moral-detective.vercel.app/</p>
+                </div>
+                <span class="badge badge-link">외부 링크 🔗</span>
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        <p>© AI·디지털 윤리 바이브 코딩. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
