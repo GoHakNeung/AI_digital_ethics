@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="ko" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SlideCraft AI - Presentation Export</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+        body { font-family: 'Inter', 'Pretendard', sans-serif; }
+        .slide { display: none; }
+        .slide.active { display: flex; animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 스크롤바 커스텀 */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
+        
+        /* 커스텀 애니메이션 및 인터랙션 요소 */
+        .hover-card { transition: all 0.3s ease; }
+        .hover-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
+        
+        .bar-chart-fill { transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); width: 0; }
+        .slide.active .bar-w-1 { width: 22%; }
+        .slide.active .bar-w-2 { width: 78%; }
+        .slide.active .bar-w-3 { width: 30%; }
+
+        /* 맥박 애니메이션 */
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+        .animate-pulse-soft { animation: pulse-soft 2s infinite; }
+    </style>
+    <style>
+        html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; }
+        .slide-layout-wrapper { width: 100vw; height: 100vh; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; box-sizing: border-box; }
+        .slide-layout-wrapper > header { flex-shrink: 0; z-index: 10; }
+        .slide-layout-wrapper > main { flex: 1; overflow: auto; position: relative; width: 100%; }
+        .slide-layout-wrapper > footer { flex-shrink: 0; z-index: 10; }
+        .slide-page { display: none; width: 100%; height: 100%; }
+        .slide-page.active { display: block !important; }
+        .slide-page.active > * { display: block !important; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 h-screen flex flex-col overflow-hidden" style="">
+    <div class="slide-layout-wrapper">
+        <div id="export-header-container"><header class="bg-white shadow-sm z-10 flex-shrink-0" data-el-id="el-2">
+        <div class="h-1 w-full bg-slate-200" data-el-id="el-3">
+            <div id="progress-bar" class="h-1 bg-indigo-600 transition-all duration-300" style="width: 0%;" data-el-id="el-4"></div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center" data-el-id="el-5">
+            <div class="flex items-center gap-3" data-el-id="el-6">
+                <span class="bg-indigo-100 text-indigo-700 p-2 rounded-lg" data-el-id="el-7">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                </span>
+                <h1 class="text-xl font-bold text-slate-700" data-el-id="el-8">유네스코 지침: 인공지능과 교육</h1>
+            </div>
+            
+        11</div></header></div>
+        <main class="flex-grow relative overflow-hidden flex items-center justify-center p-4 lg:p-6 w-full max-w-7xl mx-auto flex-1 overflow-auto relative">
+                    <div class="slide-page active" id="slide-page-0">
+                        <div class="slide active flex-col items-center justify-center w-full h-full text-center" id="slide-0">
+            <div class="inline-block mb-4 px-5 py-1.5 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-700 font-semibold text-sm tracking-wide shadow-sm">
+                정책입안자 및 교육자를 위한 지침
+            </div>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 mb-6 leading-tight tracking-tight">
+                유네스코 지침으로 읽는 <br> <span class="text-indigo-600">인공지능과 교육의 미래</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+                개론, AI 활용, 윤리적 과제를 중심으로<br class="hidden md:block">초등 교육 현장의 변화와 교사의 역할을 재정의합니다.
+            </p>
+            <button onclick="nextSlide()" class="px-8 py-4 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 text-lg flex items-center gap-2 mx-auto">
+                강의 시작하기 
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </button>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-1">
+                        <div class="slide w-full h-full flex-col" id="slide-1">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">1</span>
+                강의 개요 및 목적
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover-card flex flex-col justify-center text-center">
+                    <div class="text-5xl mb-4">📖</div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">지침서 핵심 파악</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        유네스코 발간 문헌인 'AI and Education'의 주요 개론과 3장, 4장의 핵심 내용을 숙지합니다.
+                    </p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover-card flex flex-col justify-center text-center">
+                    <div class="text-5xl mb-4">🤖</div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">기술 본질과 활용 실태</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        AI의 기술적 개념과 한계를 이해하고, 현재 교육 현장에서 어떻게 활용되고 있는지 파악합니다.
+                    </p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover-card flex flex-col justify-center text-center">
+                    <div class="text-5xl mb-4">🎯</div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">SDG 4 달성 및 윤리</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        포용적이고 공평한 양질의 교육(SDG 4)을 위한 윤리적 이슈와 초등 교실의 시사점을 도출합니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-2">
+                        <div class="slide w-full h-full flex-col" id="slide-2" data-el-id="el-11">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0" data-el-id="el-12">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md" data-el-id="el-13">2</span>
+                [개론 1] AI의 급속한 발전과 교육계의 부상
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4" data-el-id="el-14">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2" data-el-id="el-15">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-indigo-500 shrink-0" data-el-id="el-16">
+                        <h3 class="text-lg font-bold text-indigo-800 mb-2" data-el-id="el-17">일상으로의 침투</h3>
+                        <p class="text-slate-700 text-sm leading-relaxed slide-element-selected" data-el-id="el-18">단순 수식 계산을 넘어 의료 진단, 안면 인식, 대화형 비서 등 일상생활 전반에 깊숙이 스며들고 있습니다.</p>
+                    </div>
+                    <div class="bg-indigo-50 p-5 rounded-2xl shadow-sm border border-indigo-100 shrink-0 mt-2" data-el-id="el-19">
+                        <h3 class="text-lg font-bold text-indigo-900 mb-2" data-el-id="el-20">도입 배경</h3>
+                        <p class="text-indigo-800 text-sm leading-relaxed" data-el-id="el-21">
+                            특히 COVID-19 이후 원격·온라인 학습의 확산으로, 학습 격차 해소를 위한 <strong>적응형·개인화 교육</strong>에 대한 요구가 폭발적으로 증가했습니다.
+                        </p>
+                    </div>
+                </div>
+                <div class="bg-slate-800 rounded-2xl shadow-inner border border-slate-700 p-6 flex flex-col items-center justify-center relative overflow-hidden text-center" data-el-id="el-22">
+                    <h3 class="text-slate-300 font-bold mb-4" data-el-id="el-23">교육 분야 AI 시장 규모 전망 (2024년)</h3>
+                    <div class="text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 mb-4" data-el-id="el-24">
+                        60억 달러
+                    </div>
+                    <p class="text-slate-400 text-sm" data-el-id="el-25">기하급수적인 데이터의 생성과 컴퓨터 처리 능력의<br>향상이 맞물려 거대한 시장과 혁신을 창출하고 있습니다.</p>
+                </div>
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-3">
+                        <div class="slide w-full h-full flex-col" id="slide-3">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">3</span>
+                [개론 2] 정책입안자를 위한 AI 핵심 개념
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="bg-slate-100 rounded-2xl shadow-inner border border-slate-200 p-6 flex flex-col justify-center">
+                    <h3 class="text-lg font-bold text-slate-700 mb-6 text-center">주요 기술 체계의 진화</h3>
+                    <div class="space-y-4 relative">
+                        <div class="absolute left-6 top-6 bottom-6 w-1 bg-slate-300 rounded-full"></div>
+                        <div class="relative z-10 flex items-center group">
+                            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center font-bold text-slate-600 border-4 border-slate-300 z-10">1</div>
+                            <div class="ml-4 bg-white p-3 rounded-lg flex-1 shadow-sm border border-slate-200">
+                                <h4 class="font-bold text-slate-800 text-sm">전통적 AI (규칙 기반)</h4>
+                                <p class="text-xs text-slate-500">IF-THEN 조건부 논리 수행</p>
+                            </div>
+                        </div>
+                        <div class="relative z-10 flex items-center group">
+                            <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center font-bold text-indigo-600 border-4 border-indigo-300 z-10">2</div>
+                            <div class="ml-4 bg-white p-3 rounded-lg flex-1 shadow-sm border border-slate-200">
+                                <h4 class="font-bold text-slate-800 text-sm">머신러닝 (ML)</h4>
+                                <p class="text-xs text-slate-500">대량의 데이터 분석 및 패턴 학습</p>
+                            </div>
+                        </div>
+                        <div class="relative z-10 flex items-center group">
+                            <div class="w-12 h-12 bg-indigo-500 rounded-full flex items-center justify-center font-bold text-white border-4 border-indigo-200 z-10">3</div>
+                            <div class="ml-4 bg-white p-3 rounded-lg flex-1 shadow-sm border border-slate-200">
+                                <h4 class="font-bold text-slate-800 text-sm">딥러닝 / 인공신경망</h4>
+                                <p class="text-xs text-slate-500">은닉층을 통한 복잡한 추론과 고도화</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 shrink-0 h-full flex flex-col justify-center">
+                        <h3 class="text-lg font-bold text-slate-800 mb-4 border-b pb-2">대표 적용 기술 분야</h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="bg-slate-50 p-3 rounded-lg text-center border border-slate-100">
+                                <div class="text-2xl mb-1">🗣️</div>
+                                <div class="text-xs font-bold text-slate-700">자연어 처리 (NLP)</div>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg text-center border border-slate-100">
+                                <div class="text-2xl mb-1">🎙️</div>
+                                <div class="text-xs font-bold text-slate-700">음성 인식</div>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg text-center border border-slate-100">
+                                <div class="text-2xl mb-1">👁️</div>
+                                <div class="text-xs font-bold text-slate-700">이미지 식별</div>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg text-center border border-slate-100">
+                                <div class="text-2xl mb-1">📊</div>
+                                <div class="text-xs font-bold text-slate-700">데이터 마이닝</div>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-lg text-center border border-slate-100 col-span-2">
+                                <div class="text-2xl mb-1">🤖</div>
+                                <div class="text-xs font-bold text-slate-700">자율적 에이전트 / 감정 인식</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-4">
+                        <div class="slide w-full h-full flex-col" id="slide-4" data-el-id="el-3">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0" data-el-id="el-4">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md" data-el-id="el-5">4</span>
+                [개론 3] 약(Weak) AI의 한계와 증강 지능
+            </h2>
+            <div class="flex flex-col lg:flex-row gap-6 flex-grow overflow-hidden pb-4" data-el-id="el-6">
+                <div class="flex-1 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 border-t-4 border-t-rose-400 hover-card" data-el-id="el-7">
+                    <h3 class="text-xl font-bold text-rose-700 mb-4 text-center" data-el-id="el-8">약 인공지능의 한계</h3>
+                    <ul class="space-y-4 text-sm text-slate-600" data-el-id="el-9">
+                        <li class="flex items-start gap-2" data-el-id="el-10">
+                            <span class="text-rose-500 mt-0.5" data-el-id="el-11">✖</span>
+                            <div data-el-id="el-12" class="">
+                                <strong class="text-slate-800">모라벡의 역설 (Moravec’s paradox):</strong>
+                                <p data-el-id="el-13" class="">특정 영역의 패턴 식별은 뛰어나지만, 한 살 아기 수준의 상식, 추론, 가치 판단 능력은 부족합니다.</p><p data-el-id="el-1785784684223" class="text-slate-700 text-sm leading-relaxed mb-2">·어린아이는 동일한 수준의 정확도에 도달하기 위해서는 몇 개의 이미지만 학습하면 되지만, 머신러닝 알고리즘은 수백만 개의 라벨링 이미지가 필요함.</p><p></p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-2" data-el-id="el-14">
+                            <span class="text-rose-500 mt-0.5" data-el-id="el-15">✖</span>
+                            <div data-el-id="el-16" class="">
+                                <strong class="text-slate-800">인간 데이터 절대 의존:</strong>
+                                <p data-el-id="el-17" class="">데이터 선택, 라벨링, 출력 결과 해석 등 전체 학습 과정은 전적으로 인간의 작업에 의존합니다.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="flex-shrink-0 flex items-center justify-center lg:w-16" data-el-id="el-18">
+                    <svg class="w-8 h-8 text-slate-300 lg:rotate-[-90deg]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                </div>
+
+                <div class="flex-1 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 border-t-4 border-t-emerald-400 hover-card" data-el-id="el-19">
+                    <h3 class="text-xl font-bold text-emerald-700 mb-4 text-center" data-el-id="el-20">증강 지능 (Augmented Intelligence)</h3>
+                    <div class="text-center mb-4" data-el-id="el-21">
+                        <span class="text-4xl" data-el-id="el-22">👨‍🏫 🤝 🤖</span>
+                    </div>
+                    <p class="text-sm text-slate-700 leading-relaxed text-center font-medium slide-element-selected" data-el-id="el-23">
+                        AI가 인간을 <strong>대체(Replace)</strong>하는 것이 아니라, <br>
+                        인간의 인지 능력과 가치 판단을 <strong>보완하고 향상(Augment)</strong>시키는<br> 
+                        '협력적 관계'로 재정립해야 합니다.
+                    </p><p data-el-id="el-1785784795688" class="text-slate-700 text-lm leading-relaxed mb-2"></p><p data-el-id="el-1785784851693" class="text-slate-700 text-sm leading-relaxed mb-2">체스대회에서 아마추어+AI &gt; AI 또는 체스 챔피언 승리</p><p></p>
+                </div>
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-5">
+                        <div class="slide w-full h-full flex-col" id="slide-5">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">5</span>
+                [개론 4] 4차 산업혁명과 노동 시장의 변화
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="bg-slate-800 p-6 rounded-2xl shadow-sm text-center flex flex-col justify-center text-white relative overflow-hidden">
+                    <div class="relative z-10">
+                        <div class="text-4xl font-bold text-amber-400 mb-2">30% 자동화</div>
+                        <p class="text-slate-300 text-sm mb-6">2030년까지 전 세계 작업 활동의 30%가 자동화 예측</p>
+                        
+                        <div class="bg-slate-700/50 p-4 rounded-xl border border-slate-600 text-left">
+                            <h4 class="font-bold text-rose-300 mb-2">⚠ 중산층 일자리의 위기</h4>
+                            <p class="text-xs text-slate-300">
+                                고도의 신체적 기술이나 인식력이 필요한 저소득층 일자리보다, 논리력과 대수학 등 데이터 분석이 주가 되는 <strong>'중산층 사무직 일자리'</strong>가 AI에 의해 더 쉽게 대체될 가능성이 높습니다.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-amber-500 rounded-full filter blur-[60px] opacity-20"></div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-center">
+                    <h3 class="text-lg font-bold text-slate-800 mb-4 text-center border-b pb-2">교육의 핵심 과제</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <div class="bg-indigo-100 p-2 rounded text-indigo-700">🌱</div>
+                            <div>
+                                <strong class="text-slate-700 text-sm">새로운 역량 개발</strong>
+                                <p class="text-xs text-slate-500 mt-1">단순 기술 교육을 넘어, 창의성, 공감, 상호작용 등 인간 고유의 능력이 필요한 직업군을 위한 역량 강화.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <div class="bg-emerald-100 p-2 rounded text-emerald-700">🔄</div>
+                            <div>
+                                <strong class="text-slate-700 text-sm">재교육 및 평생학습 체계</strong>
+                                <p class="text-xs text-slate-500 mt-1">사라지는 직업과 새로 생겨나는 직업 사이의 공백을 메우기 위해 지속적인 평생학습과 재교육 지원 필수.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-6">
+                        <div class="slide w-full h-full flex-col" id="slide-6">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">6</span>
+                [3장] 교육 분야 AI 활용의 4가지 범주
+            </h2>
+            <div class="grid grid-cols-2 gap-4 lg:gap-6 flex-grow overflow-hidden pb-4">
+                <div class="bg-blue-50 border border-blue-100 p-5 rounded-2xl shadow-sm flex flex-col hover-card">
+                    <div class="text-3xl mb-2">🏢</div>
+                    <h3 class="text-md font-bold text-blue-800 mb-2">1. 교육 관리 및 수행</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        교육행정정보시스템(EMIS) 고도화, 학습 분석을 통한 낙제 예측 및 스케줄링 자동화.
+                    </p>
+                </div>
+                <div class="bg-emerald-50 border border-emerald-100 p-5 rounded-2xl shadow-sm flex flex-col hover-card">
+                    <div class="text-3xl mb-2">📝</div>
+                    <h3 class="text-md font-bold text-emerald-800 mb-2">2. 학습 및 평가</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        지능형 튜터링 시스템(ITS), 대화/탐구 기반 학습, 자동 작문 평가(AWE) 및 맞춤형 튜토리얼.
+                    </p>
+                </div>
+                <div class="bg-amber-50 border border-amber-100 p-5 rounded-2xl shadow-sm flex flex-col hover-card">
+                    <div class="text-3xl mb-2">👩‍🏫</div>
+                    <h3 class="text-md font-bold text-amber-800 mb-2">3. 교사 지원 및 교육 강화</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        채점 및 질문 답변을 돕는 AI 학습 조교, 포럼 모니터링, AI-인간 듀얼 교사 모델.
+                    </p>
+                </div>
+                <div class="bg-purple-50 border border-purple-100 p-5 rounded-2xl shadow-sm flex flex-col hover-card">
+                    <div class="text-3xl mb-2">🌟</div>
+                    <h3 class="text-md font-bold text-purple-800 mb-2">4. 평생학습</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        AI 기반 평생학습 동반자, 다차원적 역량 증명을 위한 AI 기반 e-포트폴리오.
+                    </p>
+                </div>
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-7">
+                        <div class="slide w-full h-full flex-col" id="slide-7" data-el-id="el-3">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0" data-el-id="el-4">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md" data-el-id="el-5">7</span>
+                [3장] 1. 교육 관리 및 행정 지원을 위한 AI
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4" data-el-id="el-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-center text-center" data-el-id="el-7">
+                    <h3 class="text-lg font-bold text-slate-700 mb-4" data-el-id="el-8">교육행정정보시스템 (EMIS) 연계</h3>
+                    <div class="w-full h-40 bg-slate-100 rounded-xl mb-4 relative overflow-hidden flex items-center justify-center border border-slate-200" data-el-id="el-9">
+                        <div class="absolute inset-0 grid grid-cols-4 grid-rows-3 gap-1 p-2 opacity-50" data-el-id="el-10">
+                            <div class="bg-blue-200 rounded" data-el-id="el-11"></div><div class="bg-blue-300 rounded col-span-2" data-el-id="el-12"></div><div class="bg-blue-100 rounded" data-el-id="el-13"></div>
+                            <div class="bg-blue-300 rounded col-span-3" data-el-id="el-14"></div><div class="bg-blue-200 rounded" data-el-id="el-15"></div>
+                            <div class="bg-blue-100 rounded" data-el-id="el-16"></div><div class="bg-blue-200 rounded" data-el-id="el-17"></div><div class="bg-blue-300 rounded col-span-2" data-el-id="el-18"></div>
+                        </div>
+                        <div class="z-10 bg-white/90 backdrop-blur px-4 py-2 rounded-lg shadow-sm font-bold text-blue-700" data-el-id="el-19">
+                            학습 분석 (Learning Analytics)
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-600" data-el-id="el-20">
+                        빅데이터를 분석하여 낙제 위험군 학생을 조기 식별하고, 입학 및 출결 관리, 대시보드 기반 의사결정을 지원합니다.
+                    </p>
+                </div>
+
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2 justify-center" data-el-id="el-21">
+<div class="p-5 rounded-2xl shadow-sm border border-l-4 border-l-slate-500 shrink-0" data-el-id="el-22">
+                        <h3 class="text-lg mb-2 flex items-center gap-2 text-indigo-400 font-bold text-slate-700" data-el-id="el-23">AI와 교육에 대한 베이징 합의</h3>
+                        <p class="text-slate-700 text-sm leading-relaxed mb-3" data-el-id="el-24">10. 증거기반 정책 수립 프로세스로 전환하는데 있어 데이터 사용의 획기적인 발전을 인식한다. 데이터 수집 및 처리 능력을 강화하고 교육 관리의 공정성, 포용성, 개방성 및 개인화를 도모하기 위해 교육행정정보시스템 (EMIS) 고도화와 관련된 AI 기술 및 도구의 통합과 개발을 고려한다.
+</p><p data-el-id="el-1785785342394" class="text-slate-700 text-sm leading-relaxed mb-3">11. 각기 다른 학습기관 및 환경에서 학생, 교직원, 학부모, 지역사회 등 다양한 이해관계자에게 교육 및 훈련 서비스를 제공하기 위해 AI 활용이 가능한 모델 도입을 고려해야 한다.</p><p></p>
+                        <ul class="list-disc pl-5 text-rose-700 text-xs space-y-1" data-el-id="el-25">
+                            
+                            
+                        </ul>
+                    </div>
+
+
+                    <div class="bg-rose-50 p-5 rounded-2xl shadow-sm border border-rose-200 border-l-4 border-l-rose-500 shrink-0" data-el-id="el-22">
+                        <h3 class="text-lg font-bold text-rose-800 mb-2 flex items-center gap-2" data-el-id="el-23">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                            우려 사항 (윤리적 위험)
+                        </h3>
+                        <p class="text-slate-700 text-sm leading-relaxed mb-3" data-el-id="el-24">
+                            학생들의 집중도나 출결 상태를 모니터링하기 위해 사용되는 무분별한 데이터 수집은 <strong>과도한 감시 체계</strong>로 변질될 수 있습니다.
+                        </p>
+                        <ul class="list-disc pl-5 text-rose-700 text-xs space-y-1" data-el-id="el-25">
+                            <li data-el-id="el-26" class="">얼굴 표정 분석 카메라 도입의 심리적 불안감</li>
+                            <li data-el-id="el-27" class="">정신 건강 등 민감 데이터 평가 및 수집 논란</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-8">
+                        <div class="slide w-full h-full flex-col" id="slide-8" data-el-id="el-3">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0" data-el-id="el-4">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md" data-el-id="el-5">8</span>
+                [3장] 2. 학습 및 평가 지원을 위한 AI
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 flex-grow overflow-y-auto pb-4" data-el-id="el-6">
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 hover-card" data-el-id="el-7">
+                    <h3 class="font-bold text-indigo-700 text-sm mb-1" data-el-id="el-8">지능형 튜터링 시스템 (ITS)</h3>
+                    <p class="text-xs text-slate-600" data-el-id="el-9">개별 학생의 지식 상태를 추적하여 난이도를 자동 조정하고 단계별 맞춤형 학습 경로 제공. (가장 널리 상용화됨)</p>
+                </div>
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 hover-card" data-el-id="el-10">
+                    <h3 class="font-bold text-emerald-700 text-sm mb-1" data-el-id="el-11">대화 및 탐구 기반 학습 (DBTS/ELE)</h3>
+                    <p class="text-xs text-slate-600" data-el-id="el-12">자연어 처리를 활용해 소크라테스식 질문을 던지거나, 지식을 스스로 구성하도록 돕는 탐구 환경 제공.</p>
+                </div>
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 hover-card" data-el-id="el-13">
+                    <h3 class="font-bold text-amber-700 text-sm mb-1" data-el-id="el-14">자동 작문 평가 (AWE)</h3>
+                    <p class="text-xs text-slate-600" data-el-id="el-15">즉각적 채점 및 피드백 제공. (단, 문맥을 이해하거나 창의성을 완벽히 평가하지 못한다는 한계가 있음)</p>
+                </div>
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 hover-card" data-el-id="el-16">
+                    <h3 class="font-bold text-rose-700 text-sm mb-1" data-el-id="el-17">AR/VR 및 티처블 에이전트</h3>
+                    <p class="text-xs text-slate-600" data-el-id="el-18">교실 내 몰입감을 높이거나, 학생이 직접 가상 에이전트나 로봇을 가르치게 함으로써 메타인지 자극.</p>
+                </div>
+            
+
+                </div>
+                    <div data-el-id="el-1785785512093" class="p-5 rounded-2xl shadow-sm border border-l-4 border-l-slate-500 shrink-0">
+                        <h3 class="text-lg font-semibold text-indigo-400 mb-1" data-el-id="el-1">AI와 교육에 대한 베이징 합의</h3>
+                        <p class="text-slate-700 text-sm slide-element-selected" data-el-id="el-2">13. 교사 정책 면에서 AI가 활용되는 교육환경에 맞게 교사의 역할 및 필수 역량을 적극적으로 검토하고, 교원 양성기관을 강화하며, 적절한 역량 개발 프로그램을 갖춰야 한다.</p>
+                        <p class="text-slate-700 text-sm slide-element-selected" data-el-id="el-2">14. 학습 및 학습 평가를 지원하기 위해 AI의 잠재력과 관련된 트렌드를 인식하여, AI의 심층 통합과 학습 방법론 전환을 촉진하기 위한 커리큘럼을 검토하고 조정한다. 리스크보다 AI의 이점이 크다면 AI 툴이나 AI 솔루션을 적용, 개발하는 것을 고려해야 한다. 다양한 과목의 학습이나 다학제간 기술과 역량을 위한 AI 툴 개발을 지원해야 한다.</p>
+                        <p class="text-slate-700 text-sm slide-element-selected" data-el-id="el-2">16. 적응형 학습 프로세스를 지원하기 위해 AI 도구를 적용하거나 개발하여 데이터의 잠재력을 활용하여 학생들의 역량을 다차원적으로 평가하고 대규모 및 원격 평가를 지원한다.</p>
+                    </div>
+
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-9">
+                        <div class="slide w-full h-full flex-col" id="slide-9" data-el-id="el-3">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0" data-el-id="el-4">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md" data-el-id="el-5">9</span>
+                [3장] 3. 교사 지원 및 역량 강화를 위한 AI
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4" data-el-id="el-6">
+                <div class="bg-slate-800 rounded-2xl shadow-inner border border-slate-700 p-6 flex flex-col justify-center relative" data-el-id="el-7">
+                    <h3 class="text-lg font-bold text-white mb-4 text-center" data-el-id="el-8">AI-인간 '듀얼 교사' 모델</h3>
+                    
+                    <div class="flex items-center justify-center gap-4 text-center mt-4" data-el-id="el-9">
+                        <div class="bg-slate-700 p-4 rounded-xl border border-slate-600 w-1/2" data-el-id="el-10">
+                            <div class="text-3xl mb-2" data-el-id="el-11">👩‍🏫</div>
+                            <h4 class="font-bold text-white text-sm" data-el-id="el-12">인간 교사</h4>
+                            <p class="text-xs text-slate-300 mt-1" data-el-id="el-13">대인 관계, 정서적 지도, 학습 설계, 가치관 형성</p>
+                        </div>
+                        <div class="text-2xl text-slate-400" data-el-id="el-14">➕</div>
+                        <div class="bg-indigo-900/50 p-4 rounded-xl border border-indigo-700 w-1/2" data-el-id="el-15">
+                            <div class="text-3xl mb-2" data-el-id="el-16">🤖</div>
+                            <h4 class="font-bold text-indigo-200 text-sm" data-el-id="el-17">AI 조교 (TA)</h4>
+                            <p class="text-xs text-slate-300 mt-1" data-el-id="el-18">출석 점검, 단순 과제 채점, 반복 질문 자동 응답</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2 justify-center slide-element-selected" data-el-id="el-19">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-emerald-500 shrink-0" data-el-id="el-20">
+                        <h3 class="text-lg font-bold text-emerald-800 mb-2" data-el-id="el-21">핵심 원칙: 교사 대체 불가</h3>
+                        <p class="text-slate-700 text-sm leading-relaxed mb-3" data-el-id="el-22">
+                            AI는 교사를 대체하기 위한 것이 아닙니다. <strong>행정적·기능적 업무 부담을 경감</strong>시켜 교사가 학생들과의 <span class="font-bold text-emerald-600" data-el-id="el-23">상호작용, 공감, 고차원적 사고 지도</span>에 집중할 수 있도록 돕는 것이 본질입니다.
+                        </p>
+                    </div>
+                
+                    <div data-el-id="el-1785790378043" class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-emerald-500 shrink-0">
+                        <h3 class="text-lg font-semibold text-slate-700 mb-1" data-el-id="el-1">예시</h3>
+                        <p class="text-slate-700 text-sm" data-el-id="el-2">·AI 기반 토론 포럼 모니터링</p>
+                        <p class="text-slate-700 text-sm" data-el-id="el-2">·AI-인간 듀얼 교사 모델</p>
+                        <p class="text-slate-700 text-sm" data-el-id="el-2">·AI 학습 조교</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-10">
+                        <div class="slide w-full h-full flex-col" id="slide-10" data-el-id="el-3">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0" data-el-id="el-4">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md" data-el-id="el-5">10</span>
+                [3장] 4. 교육의 공익성 확보와 지속적 평가
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-grow overflow-hidden pb-4" data-el-id="el-6">
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 hover-card flex flex-col justify-center" data-el-id="el-7">
+                    <div class="text-4xl mb-3 text-center" data-el-id="el-8">🧭</div>
+                    <h3 class="text-md font-bold text-slate-800 mb-2 text-center" data-el-id="el-9">AI 평생학습 동반자</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed text-center" data-el-id="el-10">
+                        단순 지식 전달을 넘어, 학습자의 장기적 목표와 관심사에 기반한 <strong>개별화된 학습 경로</strong>를 평생 동안 안내.
+                    </p>
+                </div>
+                
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 hover-card flex flex-col justify-center" data-el-id="el-11">
+                    <div class="text-4xl mb-3 text-center" data-el-id="el-12">📈</div>
+                    <h3 class="text-md font-bold text-slate-800 mb-2 text-center" data-el-id="el-13">지속적 평가 (Continuous)</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed text-center" data-el-id="el-14">
+                        일회성의 스트레스 높은 고부담 시험을 대체하여, 일상적 모니터링을 통해 <strong>과정 중심의 역량 진단</strong> 실현.
+                    </p>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 hover-card flex flex-col justify-center" data-el-id="el-15">
+                    <div class="text-4xl mb-3 text-center" data-el-id="el-16">📁</div>
+                    <h3 class="text-md font-bold text-slate-800 mb-2 text-center" data-el-id="el-17">AI e-포트폴리오</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed text-center" data-el-id="el-18">
+                        정규 교육 외의 비형식·무형식 학습 성취까지 종합적으로 수집하고 블록체인으로 인증하는 <strong>동적 이력서</strong>.
+                    </p>
+                </div>
+            </div>
+                    <div data-el-id="el-1785785512093" class="p-5 rounded-2xl shadow-sm border border-l-4 border-l-slate-500 shrink-0">
+                        <h3 class="text-lg font-semibold text-indigo-400 mb-1" data-el-id="el-1">AI와 교육에 대한 베이징 합의</h3>
+                        <p class="text-slate-700 text-sm" data-el-id="el-2">20. SDG4를 달성하기 위해 권장하는 원칙은 형식, 비형식, 무형식 학습을 포함한 평생학습임을 재확인한다. 시간과 장소를 불문하고 개별맞춤화된 학습시스템을 구축하기 위해 AI 플랫폼과 데이터에 기반한 분석을 수용해야 한다. 유연한 학습 경로 구축, 개별 학습 성과의 축적, 인식, 검증, 전송에 AI를 활용한다.</p>
+                        <p class="text-slate-700 text-sm" data-el-id="el-2">21. 노령층, 특히 여성 노령층을 위한 정책에 주의를 기울여야 하고, 이들이 디지털 라이프에 필요한 기술 개발에 참여하게 해야 한다. 노령층의 노동자들이 원하는 만큼 경제적으로 활동하도록 충분한 자금 지원을 받는 프로그램을 기획하고 실행해야 한다.</p>
+        </div></div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-11">
+                        <div class="slide w-full h-full flex-col" id="slide-11" data-el-id="el-3">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0" data-el-id="el-4">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md" data-el-id="el-5">11</span>
+                [3장] 윤리적·포용적·공정한 AI 활용
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4" data-el-id="el-6">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2" data-el-id="el-7">
+                    <div class="bg-rose-50 p-5 rounded-2xl shadow-sm border border-rose-200 border-l-4 border-l-rose-500 shrink-0" data-el-id="el-8">
+                        <h3 class="text-lg font-bold text-rose-800 mb-2 slide-element-selected" data-el-id="el-9">교육 데이터 및 알고리즘과 관련된 새로운 윤리적 법적 문제</h3>
+                        <h3 class="text-lg font-bold text-rose-800 mb-2 slide-element-selected" data-el-id="el-9">: 데이터 감시(Dataveillance)문제</h3>
+                        <p class="text-slate-700 text-sm leading-relaxed" data-el-id="el-10">
+                            방대한 학습자 데이터의 소유권, 접근 권한, 사전 동의 문제 중요합니다. 포괄적인 정보 보호 규제(예: GDPR)가 부재할 경우 심각한 인권 침해 소지가 있습니다.
+                        </p>
+                    </div>
+                    <div class="bg-rose-50 p-5 rounded-2xl shadow-sm border border-rose-200 border-l-4 border-l-rose-500 shrink-0" data-el-id="el-8">
+                        <h4 class="text-lg font-bold text-rose-800 mb-2 slide-element-selected" data-el-id="el-9">윤리적 문제</h4>
+                    <ul class="text-left text-xs text-indigo-700 space-y-2 font-medium bg-white p-4 rounded-xl border border-indigo-200 w-full" data-el-id="el-18">
+                        <li data-el-id="el-19">■ 학습자 데이터의 수집 및 사용에 대한 윤리적 범주를 정의하고
+지속적으로 업데이트할 때 어떤 기준을 고려해야 하는가?</li>
+                        <li data-el-id="el-20">■ 학교, 학생, 교사는 대규모 데이터셋에서 어떻게 대표성을 배제
+하거나 이의를 제기할 수 있는가?</li>
+                        <li data-el-id="el-21">■ AI의 의사결정 과정을 추적하지 못할 경우 어떤 윤리적 영향이
+있는가?</li>
+                        <li data-el-id="el-21">■ 민간(제품개발자)와 공공(연구에 참여하는 학교 및 대학)의
+윤리적 의무는 무엇인가?</li>
+                        <li data-el-id="el-21">■ 학습자의 일시적인 관심과 감정, 학습 과정의 복잡성은 교육적
+맥락에 적용된 AI의 데이터 해석과 윤리에 어떤 영향을 미치는
+가?</li>
+                        <li data-el-id="el-21">■ 윤리적으로 어떤 교육학적 접근 방식이 보장되고 있는가?</li>
+                    </ul>
+
+                    </div>
+
+                </div>
+                
+              <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2" data-el-id="el-7">
+                    <div class="bg-amber-50 p-5 rounded-2xl shadow-sm border border-amber-200 border-l-4 border-l-amber-500 shrink-0" data-el-id="el-11">
+                        <h3 class="text-lg font-bold text-amber-800 mb-2" data-el-id="el-12">정보 격차 (Digital Divide)</h3>
+                        <p class="text-slate-700 text-sm leading-relaxed" data-el-id="el-13">
+                            초고속 통신망 및 스마트 기기에 접근할 수 없는 지역이나 계층은 AI 편익에서 배제되며, 이는 기존의 불평등을 더욱 악화시킵니다.
+                        </p>
+                    </div>
+                    <div class="bg-amber-50 p-5 rounded-2xl shadow-sm border border-amber-200 border-l-4 border-l-amber-500 shrink-0" data-el-id="el-11">
+                        <h3 class="text-lg font-bold text-amber-800 mb-2" data-el-id="el-12">AI를 통한 포용성 증진 기회</h3>
+                        <p class="text-slate-700 text-sm leading-relaxed" data-el-id="el-13">
+                        적절히 활용된다면 소외계층과 특수 교육 대상자의 접근성을 비약적으로 높일 수 있습니다.
+                        </p>
+                    <ul class="text-left text-xs text-indigo-700 space-y-2 font-medium bg-white p-4 rounded-xl border border-indigo-200 w-full" data-el-id="el-18">
+                        <li data-el-id="el-19">• 난독증 조기 발견용 AI 스크리닝 (Dytective)</li>
+                        <li data-el-id="el-20">• 청각장애 아동을 위한 실시간 수화 번역 앱</li>
+                        <li data-el-id="el-21">• 자폐증 학습자를 위한 사회성 훈련 스마트 로봇</li>
+                        <li data-el-id="el-21">• 글로벌 디지털 도서관</li>
+                    </ul>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-12">
+                        <div class="slide w-full h-full flex-col" id="slide-12">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">12</span>
+                [3장] AI 시대에 인간을 대비시키는 교육
+            </h2>
+            <div class="flex flex-col flex-grow overflow-hidden pb-4 gap-6">
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 text-center">
+                    <h3 class="text-lg font-bold text-slate-800 mb-4">교육의 패러다임 전환: 기계 vs 인간</h3>
+                    <div class="flex flex-col md:flex-row justify-center items-center gap-8">
+                        <div class="flex-1 bg-slate-100 p-4 rounded-xl text-center border border-slate-200">
+                            <h4 class="font-bold text-slate-500 mb-2">기계가 잘하는 것</h4>
+                            <p class="text-sm text-slate-600">데이터 처리, 패턴 식별, 통계적 추론, 반복 작업</p>
+                        </div>
+                        <div class="text-2xl text-slate-400">VS</div>
+                        <div class="flex-1 bg-indigo-50 p-4 rounded-xl text-center border border-indigo-200">
+                            <h4 class="font-bold text-indigo-600 mb-2">인간이 잘하는 것 (고유 역량)</h4>
+                            <p class="text-sm text-indigo-900 font-medium">공감, 자기주도, 상식, 가치 판단, 비판적 사고, 창의력</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 border-l-4 border-l-emerald-500">
+                        <h4 class="font-bold text-emerald-800 mb-2">AI 리터러시 함양</h4>
+                        <p class="text-xs text-slate-600 leading-relaxed">모든 시민이 AI가 데이터를 다루는 방식과 사회적 영향을 비판적으로 이해하고 통제할 수 있도록 평생학습을 촉진해야 합니다.</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500">
+                        <h4 class="font-bold text-blue-800 mb-2">K-12 커리큘럼 통합</h4>
+                        <p class="text-xs text-slate-600 leading-relaxed">컴퓨팅 사고력, 데이터 및 알고리즘 리터러시, 기초 코딩 교육을 공교육 내 포함하여 수동적 소비자가 아닌 창조자로 육성합니다.</p>
+                    </div>
+                </div>
+                    <div class="bg-white-50 p-5 rounded-2xl shadow-sm border border-rose-200 border-l-4 border-l-rose-500 shrink-0" data-el-id="el-8">
+                        <h4 class="text-lg font-bold text-rose-800 mb-2 slide-element-selected" data-el-id="el-9">필요로 하는 프레임워크</h4>
+                    <ul class="text-left text-xs text-indigo-700 space-y-2 font-medium bg-white p-4 rounded-xl border border-indigo-200 w-full" data-el-id="el-18">
+                        <li data-el-id="el-19">1) 모든 사람(특히 노년층)이 AI78(특히 AI 알고리즘에 의해 데이터
+가 선택, 조작 및 해석되고 이것이 개인과 사회에 미치는 영향)
+와 그 의미를 확실히 이해할 수 있도록 평생학습을 촉진한다.</li>
+                        <li data-el-id="el-20">2) 기초적인 AI 학습을 K-12 학교 커리큘럼79(컴퓨팅 사고, 데이터
+및 알고리즘 리터러시, 코딩 및 통계 포함)에 통합하고, 이를 통
+해 젊은이들이 자신의 AI 도구를 생성할 수 있도록 한다.</li>
+                        <li data-el-id="el-21">3) 심화되는 기술 격차를 해결하고 전 세계적으로 창출되는 AI
+일자리를 메우기 위한 차세대 AI 전문가 양성 교육이 필요하다.</li>
+                        <li data-el-id="el-21">4) 혁신적 공평한 AI 개발을 위한 고등교육 및 연구기관을 육성
+한다.</li>
+                        <li data-el-id="el-21">5) 증가하는 AI 인력의 다양성과 포용성을 보장한다.</li>
+                        <li data-el-id="el-21">6) 직원과 고용주의 새로운 요구 사항을 예측하고 기술 향상 또는
+재교육의 기회를 제공한다.</li>
+                    </ul>
+
+                    </div>
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-13">
+                        <div class="slide w-full h-full flex-col" id="slide-13">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">13</span>
+                [4장] 데이터 윤리와 알고리즘 편향성, 그리고 성평등
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-center">
+                    <h3 class="text-lg font-bold text-slate-800 mb-4 border-b pb-2">알고리즘 편향성 (Algorithmic Bias)</h3>
+                    <div class="bg-rose-50 p-4 rounded-xl border border-rose-100 mb-4">
+                        <p class="text-sm text-rose-800 leading-relaxed">
+                            "AI는 설계상 초기 데이터의 편향성을 증폭시킵니다."
+                        </p>
+                    </div>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        학습 데이터에 인간 사회의 편견(인종, 계층 등)이 포함되어 있다면, 알고리즘은 이를 기계적으로 학습하고 자동화하여 차별을 기정사실화할 위험이 있습니다.
+                    </p>
+                </div>
+
+                <div class="bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-700 flex flex-col justify-center text-white">
+                    <h3 class="text-lg font-bold text-slate-200 mb-4 border-b border-slate-600 pb-2">성평등 문제 (Gender Equality)</h3>
+                    
+                    <div class="mb-4">
+                        <div class="flex justify-between text-xs text-slate-300 mb-1">
+                            <span>전 세계 AI 전문 인력 중 여성 비율</span>
+                            <span class="text-amber-400 font-bold">22%</span>
+                        </div>
+                        <div class="h-4 w-full bg-slate-600 rounded-full overflow-hidden flex">
+                            <div class="h-full bg-amber-400 bar-chart-fill bar-w-1"></div>
+                            <div class="h-full bg-slate-500 bar-chart-fill bar-w-2"></div>
+                        </div>
+                    </div>
+                    
+                    <ul class="text-xs text-slate-300 space-y-2 mt-2">
+                        <li class="flex gap-2">
+                            <span class="text-amber-400">•</span> 
+                            대다수 AI 비서가 여성의 이름/목소리를 가져 순종적 고정관념 고착 우려.
+                        </li>
+                        <li class="flex gap-2">
+                            <span class="text-amber-400">•</span> 
+                            개발 단계부터 성 감수성과 다양성을 반영하는 정책 개입 필수.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-14">
+                        <div class="slide w-full h-full flex-col" id="slide-14">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">14</span>
+                [4장] 교육 분야 AI 활용의 모니터링·연구
+            </h2>
+            <div class="flex flex-col gap-6 flex-grow overflow-y-auto pb-4">
+                <div class="bg-amber-50 p-5 rounded-2xl shadow-sm border border-amber-200 border-l-4 border-l-amber-500">
+                    <h3 class="text-lg font-bold text-amber-800 mb-2">증거 기반(Evidence-based) 검증의 부재</h3>
+                    <p class="text-slate-700 text-sm leading-relaxed">
+                        상업적 에듀테크 기업들의 화려한 홍보와 달리, AI 도구가 실질적으로 학업 성과를 얼마나 개선하는지에 대한 <strong>강력하고 체계적인 학술적 증거는 아직 부족</strong>합니다. 기술의 '새로움' 자체에 매몰되지 말아야 합니다.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 flex-grow">
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 flex flex-col justify-center">
+                        <h4 class="font-bold text-slate-800 text-sm mb-2 text-center">과장된 신화 경계</h4>
+                        <div class="text-3xl text-center mb-2">🛑</div>
+                        <p class="text-xs text-slate-600 text-center">COVID-19 등 위기 상황에서 도입된 도구들이 단순한 땜질식 처방을 넘어 진정한 교육적 혁신인지 철저히 검증해야 합니다.</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 flex flex-col justify-center">
+                        <h4 class="font-bold text-slate-800 text-sm mb-2 text-center">체계적 연구 지원</h4>
+                        <div class="text-3xl text-center mb-2">🔬</div>
+                        <p class="text-xs text-slate-600 text-center">국가 차원의 시범 테스트를 지원하고, 기득권(기업)의 영향을 받지 않는 독립적인 학제 간 연구 프레임워크를 구축해야 합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-15">
+                        <div class="slide w-full h-full flex-col" id="slide-15">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">15</span>
+                [4장] AI가 교사 역할에 미치는 영향
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-center">
+                    <h3 class="text-lg font-bold text-slate-800 mb-6 text-center">교사 역할의 본질적 재정의</h3>
+                    
+                    <div class="flex items-center justify-between mb-4 px-2">
+                        <div class="text-center w-5/12">
+                            <div class="bg-slate-100 p-2 rounded text-slate-500 font-bold text-sm mb-2">기존</div>
+                            <p class="text-xs text-slate-600">지식 전달자<br>평가 및 채점자</p>
+                        </div>
+                        <div class="text-2xl text-indigo-500 font-bold w-2/12 text-center">→</div>
+                        <div class="text-center w-5/12">
+                            <div class="bg-indigo-100 p-2 rounded text-indigo-700 font-bold text-sm mb-2">AI 시대</div>
+                            <p class="text-xs text-indigo-900 font-medium">학습 설계자<br>정서적 멘토, 윤리 안내자</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-500 text-center mt-4">인간적인 소통, 공감, 상호작용은 AI가 절대 대체할 수 없는 교육의 심장입니다.</p>
+                </div>
+                
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2 justify-center">
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 border-l-4 border-l-emerald-500 shrink-0 text-white">
+                        <h3 class="text-lg font-bold text-emerald-400 mb-2">교시 환경 및 권리 보호</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-3">
+                            기계가 교사를 대체하는 비용 절감 논리를 경계하고, 교사의 권리와 근무 조건은 최우선으로 보호되어야 합니다.
+                        </p>
+                        <p class="text-slate-400 text-xs">
+                            * 교사들이 AI 환경에서 주도적으로 일할 수 있도록 실질적인 역량 강화(연수) 프로그램이 필수적입니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-16">
+                        <div class="slide w-full h-full flex-col" id="slide-16">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">16</span>
+                [4장] AI가 학습자 주체성(Agency)에 미치는 영향
+            </h2>
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col justify-center h-full relative">
+                
+                <div class="flex gap-4 w-full bg-slate-100 p-1 rounded-xl mb-6 relative z-10">
+                    <button onclick="toggleAgencyView('risk')" id="btn-agency-risk" class="flex-1 py-2 text-sm font-bold bg-white text-rose-600 rounded-lg shadow-sm transition-all">주체성 위축 우려 (Risk)</button>
+                    <button onclick="toggleAgencyView('direction')" id="btn-agency-direction" class="flex-1 py-2 text-sm font-bold text-slate-500 hover:text-emerald-500 transition-all">교육적 설계 방향 (Direction)</button>
+                </div>
+
+                <div id="view-agency-risk" class="text-center w-full transition-all duration-300 flex-grow flex flex-col justify-center items-center px-4">
+                    <div class="text-5xl mb-4">🤖 ⛓️</div>
+                    <h4 class="font-bold text-lg text-rose-700 mb-3">적응형 AI에 대한 과도한 의존 경계</h4>
+                    <p class="text-sm text-slate-600 leading-relaxed max-w-lg">
+                        기계가 학습 경로를 모두 결정해주는 환경은 학생 스스로 고민하고 극복하는 <strong>자기규제, 메타인지, 독립적 사고의 기회</strong>를 박탈할 위험이 큽니다. 단순 문제풀이 위주의 시스템은 학습자를 수동적으로 만듭니다.
+                    </p>
+                </div>
+
+                <div id="view-agency-direction" class="text-center w-full hidden transition-all duration-300 flex-grow flex flex-col justify-center items-center px-4">
+                    <div class="text-5xl mb-4">🌱 🚀</div>
+                    <h4 class="font-bold text-lg text-emerald-700 mb-3">주체성을 강화하는 교육학적 설계</h4>
+                    <p class="text-sm text-slate-600 leading-relaxed max-w-lg">
+                        인간다운 성장과 주체성을 위협하는 AI가 아닌, 탐구와 실패를 허용하며 학생이 기계를 도구로 주도적으로 활용할 수 있도록 <strong>구성주의적 교육학 설계</strong>가 반드시 병행되어야 합니다.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-17">
+                        <div class="slide w-full h-full flex-col" id="slide-17">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">17</span>
+                [결론] 초등 현장 교사를 위한 핵심 요약
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="bg-indigo-50 p-6 rounded-2xl shadow-sm border border-indigo-200 flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-3xl shadow-sm mb-4 border-2 border-indigo-200">💖</div>
+                    <h3 class="font-bold text-indigo-900 text-lg mb-2">인본주의적 접근</h3>
+                    <p class="text-sm text-indigo-800 leading-relaxed">
+                        기술 자체가 목적이 되어서는 안 됩니다. 인간의 존엄성과 역량 강화를 중심에 두고 AI를 도입하는 철학이 선행되어야 합니다.
+                    </p>
+                </div>
+                <div class="bg-emerald-50 p-6 rounded-2xl shadow-sm border border-emerald-200 flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-3xl shadow-sm mb-4 border-2 border-emerald-200">⚖️</div>
+                    <h3 class="font-bold text-emerald-900 text-lg mb-2">균형 잡힌 시각</h3>
+                    <p class="text-sm text-emerald-800 leading-relaxed">
+                        AI의 편의성과 맞춤형 교육의 가능성을 적극 수용하되, 데이터 편향, 프라이버시 침해, 주체성 상실의 이면을 항상 경계해야 합니다.
+                    </p>
+                </div>
+                <div class="bg-amber-50 p-6 rounded-2xl shadow-sm border border-amber-200 flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-3xl shadow-sm mb-4 border-2 border-amber-200">🧑‍🏫</div>
+                    <h3 class="font-bold text-amber-900 text-lg mb-2">교사의 리더십</h3>
+                    <p class="text-sm text-amber-800 leading-relaxed">
+                        단순한 도구 사용자를 넘어, 비판적 소비자이자 학생들이 올바른 디지털 윤리관을 갖추도록 이끄는 강력한 리더십이 요구됩니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+                    </div>
+                </main>
+        <div id="export-footer-container"><footer class="bg-white border-t border-slate-200 p-4 flex-shrink-0 z-10" data-el-id="el-26">
+        <div class="max-w-7xl mx-auto flex justify-between items-center" data-el-id="el-27">
+            <button onclick="prevSlide()" id="prev-btn" class="px-5 py-2.5 rounded-lg font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2" style="opacity: 1; cursor: pointer;" data-editor-nav-bound="true" data-el-id="el-28">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                이전
+            </button>
+            <div class="text-sm text-slate-500 hidden sm:block" data-el-id="el-29">
+                키보드 <kbd class="px-2 py-1 bg-slate-50 border border-slate-300 rounded mx-1 shadow-sm font-sans">←</kbd> <kbd class="px-2 py-1 bg-slate-50 border border-slate-300 rounded mx-1 shadow-sm font-sans">→</kbd> 로 이동 가능
+            </div>
+            <button onclick="nextSlide()" id="next-btn" class="px-5 py-2.5 rounded-lg font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition-colors flex items-center gap-2" style="opacity: 1; cursor: pointer;" data-editor-nav-bound="true" data-el-id="el-30">
+                다음 
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </button>
+        </div>
+    </footer></div>
+    </div>
+
+    <div class="fixed bottom-4 right-4 z-50 flex items-center space-x-2 bg-slate-900/80 backdrop-blur border border-slate-700 px-3 py-1.5 rounded-full text-xs text-slate-300 shadow-xl">
+        <button onclick="prevSlide()" class="hover:text-white px-2">← 이전</button>
+        <span id="page-indicator">1 / 18</span>
+        <button onclick="nextSlide()" class="hover:text-white px-2">다음 →</button>
+    </div>
+    <script>
+        let currentSlideIndex = 0;
+        const _disabled_totalSlides = 18; // 슬라이드 0 ~ 17
+
+        function updateUI() {
+            // 모든 슬라이드 숨김 처리
+            document.querySelectorAll('.slide').forEach(slide => {
+                slide.classList.remove('active');
+            });
+            // 현재 슬라이드 활성화 
+            const activeSlide = document.getElementById(`slide-${currentSlideIndex}`);
+            if(activeSlide) activeSlide.classList.add('active');
+            
+            // 버튼 비활성화 상태 업데이트
+            document.getElementById('prev-btn').disabled = currentSlideIndex === 0;
+            document.getElementById('next-btn').disabled = currentSlideIndex === totalSlides - 1;
+
+            // 카운터 및 프로그레스 바 업데이트
+            document.getElementById('slide-counter').innerText = `${currentSlideIndex + 1} / ${totalSlides}`;
+            const progress = (currentSlideIndex / (totalSlides - 1)) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+        }
+
+        function _disabled_nextSlide() {
+            if (currentSlideIndex < totalSlides - 1) {
+                currentSlideIndex++;
+                updateUI();
+            }
+        }
+
+        function _disabled_prevSlide() {
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+                updateUI();
+            }
+        }
+
+        // 키보드 네비게이션
+        document.addEventListener("disabled_keydown", (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+
+        // 슬라이드 16 인터랙티브 뷰 토글 함수
+        function toggleAgencyView(view) {
+            const btnRisk = document.getElementById('btn-agency-risk');
+            const btnDirection = document.getElementById('btn-agency-direction');
+            const viewRisk = document.getElementById('view-agency-risk');
+            const viewDirection = document.getElementById('view-agency-direction');
+
+            if(view === 'risk') {
+                btnRisk.className = "flex-1 py-2 text-sm font-bold bg-white text-rose-600 rounded-lg shadow-sm transition-all";
+                btnDirection.className = "flex-1 py-2 text-sm font-bold text-slate-500 hover:text-emerald-500 transition-all bg-transparent";
+                
+                viewDirection.classList.add('hidden');
+                viewRisk.classList.remove('hidden');
+            } else {
+                btnDirection.className = "flex-1 py-2 text-sm font-bold bg-white text-emerald-600 rounded-lg shadow-sm transition-all";
+                btnRisk.className = "flex-1 py-2 text-sm font-bold text-slate-500 hover:text-rose-500 transition-all bg-transparent";
+                
+                viewRisk.classList.add('hidden');
+                viewDirection.classList.remove('hidden');
+            }
+        }
+
+        // 초기 화면 렌더링
+        updateUI();
+    </script>
+    <script>
+        (function() {
+            let sc_currentIdx = 0;
+            const sc_totalSlides = 18;
+            const sc_slides = document.querySelectorAll('.slide-page');
+            const sc_indicator = document.getElementById('page-indicator');
+
+            function updatePageNumbers(pageIdx) {
+                const currentZeroIdx = pageIdx - 1;
+                const isFirst = (currentZeroIdx === 0);
+                const isLast = (currentZeroIdx === sc_totalSlides - 1);
+
+                const headerEl = document.getElementById('export-header-container');
+                const footerEl = document.getElementById('export-footer-container');
+                [headerEl, footerEl].forEach(container => {
+                    if (!container) return;
+                    const pageEls = container.querySelectorAll('[data-page-current], .page-current, .current-page, #current-page, .page-num, .slide-num, .slide-number');
+                    pageEls.forEach(el => { el.textContent = pageIdx; });
+                    const totalEls = container.querySelectorAll('[data-page-total], .page-total, .total-pages, #total-pages, .total-num, .slide-total');
+                    totalEls.forEach(el => { el.textContent = sc_totalSlides; });
+
+                    const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, null, false);
+                    let node;
+                    while (node = walker.nextNode()) {
+                        let val = node.nodeValue;
+                        if (!val || val.trim().length === 0) continue;
+                        if (/\b\d+\s*[\/\-]\s*\d+\b/.test(val)) {
+                            node.nodeValue = val.replace(/\b\d+(\s*[\/\-]\s*)\d+\b/, pageIdx + '$1' + sc_totalSlides);
+                        } else if (/\b(Page|페이지|Slide|슬라이드)\s*\d+\s*(of|\/|\-)\s*\d+\b/i.test(val)) {
+                            node.nodeValue = val.replace(/(\b(?:Page|페이지|Slide|슬라이드)\s*)\d+(\s*(?:of|\/|\-)\s*)\d+/i, '$1' + pageIdx + '$2' + sc_totalSlides);
+                        }
+                    }
+
+                    // 이전 / 다음 버튼 바인딩 및 활성화 상태 동기화
+                    const allNavEls = container.querySelectorAll('button, a, [role="button"]');
+                    allNavEls.forEach(el => {
+                        const txt = el.textContent.trim().toLowerCase();
+                        const onclickStr = el.getAttribute('onclick') || '';
+                        const classStr = el.className ? String(el.className).toLowerCase() : '';
+                        const idStr = el.id ? String(el.id).toLowerCase() : '';
+
+                        const isPrev = onclickStr.includes('prev') || classStr.includes('prev') || idStr.includes('prev') ||
+                                       txt === '이전' || txt === 'prev' || txt === 'previous' || txt === '←' || txt === '← 이전';
+                        const isNext = onclickStr.includes('next') || classStr.includes('next') || idStr.includes('next') ||
+                                       txt === '다음' || txt === 'next' || txt === '→' || txt === '→ 다음';
+
+                        if (isPrev) {
+                            if (isFirst) {
+                                el.style.opacity = '0.35';
+                                el.style.cursor = 'not-allowed';
+                                el.setAttribute('disabled', 'true');
+                            } else {
+                                el.style.opacity = '1';
+                                el.style.cursor = 'pointer';
+                                el.removeAttribute('disabled');
+                            }
+                            if (!el.dataset.navBound) {
+                                el.dataset.navBound = 'true';
+                                el.onclick = (e) => { e.preventDefault(); window.prevSlide(); };
+                            }
+                        }
+                        if (isNext) {
+                            if (isLast) {
+                                el.style.opacity = '0.35';
+                                el.style.cursor = 'not-allowed';
+                                el.setAttribute('disabled', 'true');
+                            } else {
+                                el.style.opacity = '1';
+                                el.style.cursor = 'pointer';
+                                el.removeAttribute('disabled');
+                            }
+                            if (!el.dataset.navBound) {
+                                el.dataset.navBound = 'true';
+                                el.onclick = (e) => { e.preventDefault(); window.nextSlide(); };
+                            }
+                        }
+                    });
+                });
+            }
+
+            window.showSlide = function(index) {
+                sc_slides.forEach((s, idx) => {
+                    const isActive = (idx === index);
+                    s.classList.toggle('active', isActive);
+                    s.style.display = isActive ? 'block' : 'none';
+
+                    // 내부 슬라이드 요소(.slide, section 등) 표시 활성화
+                    const innerEls = s.querySelectorAll('.slide, section');
+                    innerEls.forEach(el => {
+                        el.classList.toggle('active', isActive);
+                        if (isActive && window.getComputedStyle(el).display === 'none') {
+                            el.style.display = 'block';
+                        }
+                    });
+                });
+                sc_currentIdx = index;
+                if (sc_indicator) sc_indicator.textContent = (index + 1) + ' / ' + sc_totalSlides;
+                updatePageNumbers(index + 1);
+            };
+            window.prevSlide = function() { if (sc_currentIdx > 0) window.showSlide(sc_currentIdx - 1); };
+            window.nextSlide = function() { if (sc_currentIdx < sc_totalSlides - 1) window.showSlide(sc_currentIdx + 1); };
+
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') window.nextSlide();
+                if (e.key === 'ArrowLeft' || e.key === 'PageUp') window.prevSlide();
+            });
+            window.showSlide(0);
+        })();
+    </script>
+</body>
+</html>
