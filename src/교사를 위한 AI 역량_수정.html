@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="ko" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SlideCraft AI - Presentation Export</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+        body { font-family: 'Inter', 'Pretendard', sans-serif; }
+        .slide { display: none; }
+        .slide.active { display: flex; animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
+        
+        .hover-card { transition: all 0.3s ease; }
+        .hover-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
+    </style>
+<style>
+        html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; }
+        .slide-layout-wrapper { width: 100vw; height: 100vh; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; box-sizing: border-box; }
+        .slide-layout-wrapper > header { flex-shrink: 0; z-index: 10; }
+        .slide-layout-wrapper > main { flex: 1; overflow: auto; position: relative; width: 100%; }
+        .slide-layout-wrapper > footer { flex-shrink: 0; z-index: 10; }
+        .slide-page { display: none; width: 100%; height: 100%; }
+        .slide-page.active { display: block !important; }
+        .slide-page.active > * { display: block !important; }
+    </style>
+    <style>
+        html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; }
+        .slide-layout-wrapper { width: 100vw; height: 100vh; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; box-sizing: border-box; }
+        .slide-layout-wrapper > header { flex-shrink: 0; z-index: 10; }
+        .slide-layout-wrapper > main { flex: 1; overflow: auto; position: relative; width: 100%; }
+        .slide-layout-wrapper > footer { flex-shrink: 0; z-index: 10; }
+        .slide-page { display: none; width: 100%; height: 100%; }
+        .slide-page.active { display: block !important; }
+        .slide-page.active > * { display: block !important; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 h-screen flex flex-col overflow-hidden" style="">
+    <div class="slide-layout-wrapper">
+        <div id="export-header-container"><header class="bg-white shadow-sm z-10 flex-shrink-0">
+        <div class="h-1 w-full bg-slate-200">
+            <div id="progress-bar" class="h-1 bg-indigo-600 transition-all duration-300" style="width: 0%;"></div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <span class="bg-indigo-100 text-indigo-700 p-2 rounded-lg">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                </span>
+                <h1 class="text-xl font-bold text-slate-700">교사 AI 역량 프레임워크 연수</h1>
+            </div>
+            <span id="slide-counter" class="text-sm font-medium text-slate-500 bg-slate-100 px-3 py-1 rounded-full border border-slate-200">1 / 20</span>
+        </div>
+    </header></div>
+        <main class="flex-grow relative overflow-hidden flex items-center justify-center p-4 lg:p-6 w-full max-w-7xl mx-auto flex-1 overflow-auto relative flex-1 overflow-auto relative">
+                    <div class="slide-page active" id="slide-page-0">
+                        <div class="slide active flex-col items-center justify-center w-full h-full text-center" id="slide-0">
+            <div class="inline-block mb-4 px-5 py-1.5 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-700 font-semibold text-sm tracking-wide shadow-sm">
+                도입: AI 시대, 교사의 새로운 역할과 권리
+            </div>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 mb-6 leading-tight tracking-tight">
+                교사를 위한 인공지능(AI) 역량 프레임워크:<br> <span class="text-indigo-600">안전하고 효과적인 AI 교육의 설계자</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed font-medium">
+                현직 초등 교원을 위한 AI 윤리 및 교수법(Pedagogy) 통합 가이드
+            </p>
+            <button onclick="nextSlide()" class="px-8 py-4 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 text-lg flex items-center gap-2 mx-auto">
+                연수 시작하기 
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </button>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-1">
+                        <div class="slide w-full h-full flex-col" id="slide-1">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">2</span>
+                프레임워크의 필요성과 교사의 주체성
+            </h2>
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-center">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-indigo-50 p-6 rounded-xl border border-indigo-100 hover-card">
+                        <div class="text-4xl mb-4">🔄</div>
+                        <h3 class="font-bold text-indigo-900 text-xl mb-3">역동적인 3자 관계</h3>
+                        <p class="text-slate-700 leading-relaxed">AI는 학생과 교사의 전통적인 관계를 '교사-AI-학생'의 역동적인 3자 관계로 변화시키고 있습니다.</p>
+                    </div>
+                    <div class="bg-emerald-50 p-6 rounded-xl border border-emerald-100 hover-card">
+                        <div class="text-4xl mb-4">🛡️</div>
+                        <h3 class="font-bold text-emerald-900 text-xl mb-3">깊이 있는 이해와 통제</h3>
+                        <p class="text-slate-700 leading-relaxed">기술이 교사의 자율성과 의사결정 능력을 빼앗지 않도록, 교사는 AI의 기술적·윤리적·교육적 차원을 깊이 이해하고 통제할 수 있어야 합니다.</p>
+                    </div>
+                </div>
+            </div>
+<div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-emerald-500 flex flex-col justify-center">
+<h3 class="text-xl font-bold text-indigo-800 mb-4">핵심 원리</h3>
+<ol class="list-decimal pl-5 text-slate-600 text-sm space-y-1">
+<li>포용적인 디지털 미래 보장</li>
+<li>인간 중심의 인공지능 접근 방식</li>
+<li>교사의 권리 보호 및 교사 역할의 지속적인 (재)정의</li>
+<li>교육을 위한 신뢰할 수 있고 환경적으로 지속 가능한 인공지능 진흥</li>
+<li>모든 교사를 위한 현장 적용성 확보 및 디지털 발전 양상 반영</li>
+<li>교사를 위한 평생 전문성 학습</li>
+                        </ol>
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-2">
+                        <div class="slide w-full h-full flex-col" id="slide-2">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">3</span>
+                핵심 원칙 2.2, 2.3: 인간 중심 접근과 교사 권리 보호
+            </h2>
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-center">
+                <ul class="space-y-6">
+                    <li class="flex items-start gap-4">
+                        <div class="bg-blue-100 p-3 rounded-lg text-blue-600 shrink-0"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg></div>
+                        <div>
+                            <h3 class="font-bold text-lg text-slate-800">정당한 책임과 역할의 보호</h3>
+                            <p class="text-slate-600 mt-1 text-lg">AI 도입 시 교사의 권리를 보호하기 위한 법적 보호 장치가 마련되어야 하며, AI 도구가 교사의 정당한 책임과 역할을 대체하도록 설계되어서는 안 됩니다.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <div class="bg-amber-100 p-3 rounded-lg text-amber-600 shrink-0"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg></div>
+                        <div>
+                            <h3 class="font-bold text-lg text-slate-800">역할의 재정의</h3>
+                            <p class="text-slate-600 mt-1 text-lg">교사는 지식의 단순 전달자를 넘어 학습의 매개자이자 AI 시대의 시민성을 안내하는 역할로 재정의되어야 합니다.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-3">
+                        <div class="slide w-full h-full flex-col" id="slide-3">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">4</span>
+                핵심 원칙 2.4: 신뢰할 수 있고 지속 가능한 AI
+            </h2>
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-center">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 hover-card">
+                        <h3 class="font-bold text-indigo-800 text-lg mb-3">엄격한 검증 (Validation)</h3>
+                        <p class="text-slate-700 text-lg">교육 현장에 대규모로 도입되기 전, AI 도구의 안전성, 편향성, 데이터 프라이버시, 연령 적합성을 엄격하게 검증(Validation)해야 합니다.</p>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 hover-card">
+                        <h3 class="font-bold text-emerald-800 text-lg mb-3">환경적 비용 인지</h3>
+                        <p class="text-slate-700 text-lg">AI 모델 훈련이 기후 위기에 미치는 환경적 비용(탄소 배출 등)을 비판적으로 인지해야 합니다.</p>
+                    </div>
+                </div>
+            </div>
+<!-- 통합 섹션: AI 시대 교사 역량 강화를 위한 3대 핵심 원칙 -->
+<h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+    <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">
+5
+    </span>
+    핵심 원칙 2.1·2.5·2.6 : 미래 교육과 교사의 지속적 성장
+</h2>
+
+<div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-center">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- 2.1 포용적인 디지털 미래 보장 -->
+        <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 hover-card flex flex-col justify-between">
+            <div>
+                <span class="inline-block px-3 py-1 bg-indigo-100 text-indigo-700 text-xs font-semibold rounded-full mb-3">원칙 2.1</span>
+                <h3 class="font-bold text-indigo-900 text-lg mb-3">포용적 디지털 미래 &amp; 교사의 중재 역할</h3>
+                <p class="text-slate-700 text-base leading-relaxed">
+                    AI 시대의 포용적 미래는 인간 중심 기반 위에 구축됩니다. 교사는 기술과 지식, 학습 간의 균형을 잡는 <b>핵심 중재자</b>로서 포용적 환경을 만듭니다.
+                </p>
+            </div>
+        </div>
+
+        <!-- 2.5 모든 교사를 위한 현장 적용성 확보 -->
+        <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 hover-card flex flex-col justify-between">
+            <div>
+                <span class="inline-block px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-semibold rounded-full mb-3">원칙 2.5</span>
+                <h3 class="font-bold text-emerald-900 text-lg mb-3">보편적 적용성 &amp; 점진적 역량 개발</h3>
+                <p class="text-slate-700 text-base leading-relaxed">
+                    AI 역량은 모든 교사의 기본권입니다. 선행 지식 수준과 관계없이 <b>기초부터 고도화 단계까지 차근차근 성장</b>할 수 있는 연수 체계를 제공합니다.
+                </p>
+            </div>
+        </div>
+
+        <!-- 2.6 교사를 위한 평생 전문성 학습 -->
+        <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 hover-card flex flex-col justify-between">
+            <div>
+                <span class="inline-block px-3 py-1 bg-sky-100 text-sky-700 text-xs font-semibold rounded-full mb-3">원칙 2.6</span>
+                <h3 class="font-bold text-sky-900 text-lg mb-3">평생 여정으로서의 전인적 학습 지원</h3>
+                <p class="text-slate-700 text-base leading-relaxed">
+                    교사의 전문성 개발은 단발성 이벤트가 아닌 <b>교직 전 생애에 걸친 평생 여정</b>입니다. 기술 변화에 지속적으로 적응하도록 종합 지원합니다.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-4">
+                        <div class="slide w-full h-full flex-col" id="slide-4">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">5</span>
+                구조: 교사 AI 역량 프레임워크 매트릭스
+            </h2>
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-center items-center">
+                <div class="text-center max-w-3xl mb-8">
+                    <p class="text-xl text-slate-700">이 프레임워크는 <strong>5가지 역량 영역(Aspects)</strong>과 <strong>3가지 발달 단계(Progression levels)</strong>가 교차하는 15개의 역량 블록으로 구성됩니다.</p>
+                </div>
+                <div class="flex flex-col md:flex-row gap-8 items-center justify-center w-full">
+                    <div class="bg-indigo-100 text-indigo-800 font-bold p-6 rounded-full w-48 h-48 flex items-center justify-center text-center shadow-lg text-xl border-4 border-indigo-200">
+                        5가지<br>역량 영역<br>(Aspects)
+                    </div>
+                    <div class="text-4xl text-slate-400">✖</div>
+                    <div class="bg-emerald-100 text-emerald-800 font-bold p-6 rounded-full w-48 h-48 flex items-center justify-center text-center shadow-lg text-xl border-4 border-emerald-200">
+                        3가지<br>발달 단계<br>(Levels)
+                    </div>
+                    <div class="text-4xl text-slate-400">🟰</div>
+                    <div class="bg-amber-100 text-amber-800 font-bold p-6 rounded-2xl w-48 h-48 flex items-center justify-center text-center shadow-lg text-2xl border-4 border-amber-200 mb-5">
+                        15개<br>역량 블록
+                    </div>
+                </div>
+<img src="src_img/frame.png">
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-5">
+                        <div class="slide w-full h-full flex-col" id="slide-5">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">6</span>
+                5가지 역량 영역 (Aspects)
+            </h2>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 overflow-y-auto flex flex-col justify-center">
+                <ul class="space-y-4 text-lg">
+<li class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex items-center gap-3">
+    <span class="bg-slate-200 p-2 rounded-lg text-slate-600">1</span>
+    <span class="font-semibold text-slate-800">인간 중심적 사고방식 (Human-centred mindset) : 인간의 권리와 주체성을 최우선에 두고 AI의 이점과 위험을 비판적으로 평가하는 태도</span>
+</li>
+
+<li class="bg-indigo-50 p-4 rounded-xl border-2 border-indigo-300 shadow-md flex items-center gap-3 transform scale-105 my-2">
+    <span class="bg-indigo-600 text-white p-2 rounded-lg">2</span>
+    <span class="font-bold text-indigo-900 text-xl">AI의 윤리 (Ethics of AI) - 핵심 강조 영역 : 안전하고 책임감 있는 AI 활용을 위한 윤리적 규범 이해 및 적용 역량</span>
+</li>
+
+<li class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex items-center gap-3">
+    <span class="bg-slate-200 p-2 rounded-lg text-slate-600">3</span>
+    <span class="font-semibold text-slate-800">AI 기초 및 응용 (AI foundations and applications) : AI의 작동 원리 이해와 수업 목적에 맞는 적절한 AI 도구 선택·커스터마이징 능력</span>
+</li>
+
+<li class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex items-center gap-3">
+    <span class="bg-slate-200 p-2 rounded-lg text-slate-600">4</span>
+    <span class="font-semibold text-slate-800">AI 기반 교수법 (AI pedagogy) : 수업 준비·설계·평가 등 교육 전반에 AI를 효과적이고 윤리적으로 결합하는 교수 역량</span>
+</li>
+
+<li class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex items-center gap-3">
+    <span class="bg-slate-200 p-2 rounded-lg text-slate-600">5</span>
+    <span class="font-semibold text-slate-800">전문성 개발을 위한 AI (AI for professional development) : 교사 자신의 평생 학습, 학습 데이터 분석, 동료 협업 강화를 위한 AI 활용 능력</span>
+</li>
+                </ul>
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-6">
+                        <div class="slide w-full h-full flex-col" id="slide-6">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">7</span>
+                3가지 발달 단계 (Progression levels)
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 h-full">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col hover-card">
+                    <div class="bg-blue-100 text-blue-800 font-bold px-4 py-2 rounded-lg inline-block self-start mb-4 text-lg">습득 (Acquire)</div>
+                    <p class="text-slate-700 leading-relaxed text-lg">교육에서 AI를 평가, 선택, 사용할 때 필요한 필수적인 AI 리터러시 및 윤리적 인식.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col hover-card">
+                    <div class="bg-emerald-100 text-emerald-800 font-bold px-4 py-2 rounded-lg inline-block self-start mb-4 text-lg">심화 (Deepen)</div>
+                    <p class="text-slate-700 leading-relaxed text-lg">인권을 옹호하고 인간의 책무성(Human accountability)을 유지하며 AI를 교수법에 능숙하게 통합하는 역량.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col hover-card">
+                    <div class="bg-amber-100 text-amber-800 font-bold px-4 py-2 rounded-lg inline-block self-start mb-4 text-lg">창조 (Create)</div>
+                    <p class="text-slate-700 leading-relaxed text-lg">사회적 책임감을 바탕으로 윤리적 표준을 공동 창조하고, 혁신적인 교육용 AI 도구를 설계/수정하는 전문가 역량.</p>
+                </div>
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-7">
+                        <div class="slide w-full h-full flex-col" id="slide-7">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">8</span>
+                [Part 2: 심층 탐구] 영역 2: AI 윤리(Ethics of AI) 개요
+            </h2>
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-center">
+                <div class="space-y-6 text-lg">
+                    <p class="bg-slate-50 p-5 rounded-xl border border-slate-200">
+                        <span class="font-bold text-indigo-800">역할:</span> 교사는 AI의 윤리적 원칙, 규정, 제도적 법률 및 실천적 규칙을 이해하고 적용하며 적응에 참여해야 합니다.
+                    </p>
+                    <div class="bg-indigo-50 p-5 rounded-xl border border-indigo-200">
+                        <h3 class="font-bold text-indigo-900 mb-4">발전 3단계:</h3>
+                        <ol class="list-decimal pl-6 space-y-3 text-slate-700">
+                            <li><strong>'윤리적 원칙(Acquire)'</strong>.</li>
+                            <li><strong>'안전하고 책임감 있는 사용(Deepen)'</strong>.</li>
+                            <li><strong>'윤리적 규칙의 공동 창조(Create)'</strong>.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-8">
+                        <div class="slide w-full h-full flex-col" id="slide-8">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">9</span>
+                [Level 1: 습득 (Acquire)] 윤리적 원칙 - 역량 및 교육과정 목표
+            </h2>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 overflow-y-auto">
+                <div class="mb-6 bg-blue-50 p-5 rounded-xl border-l-4 border-blue-500">
+                    <h3 class="font-bold text-blue-900 text-lg mb-2">교사 역량</h3>
+                    <p class="text-slate-700">인권 보호, 인간의 주체성, 언어/문화적 다양성 증진, 포용성 및 환경적 지속가능성을 포함하여 윤리적인 인간-AI 상호작용에 필요한 원칙을 기본적으로 이해합니다.</p>
+                </div>
+                
+                <h3 class="font-bold text-slate-800 text-lg mb-3">교육과정 목표 (CG)</h3>
+                <ul class="list-disc pl-6 space-y-2 text-slate-700">
+                    <li>구체적인 AI 도구 사용 사례를 통해 윤리적 논란을 표면화합니다.</li>
+                    <li>6가지 핵심 원칙(피해 금지, 비례성, 비차별성, 지속가능성, 인간의 결정권, 투명성과 설명 가능성)을 이해합니다.</li>
+                    <li>윤리적 원칙과 현지 규제 프레임워크를 연계하여 이해합니다.</li>
+                    <li>장애 학생 및 소외계층 학생을 특별히 고려하여 AI 사용의 포용성을 지지하고 위험 완화 방법을 논의합니다.</li>
+                </ul>
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-9">
+                        <div class="slide w-full h-full flex-col" id="slide-9">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">10</span>
+                [Level 1: 습득 (Acquire)] 윤리적 원칙 - 학습 목표 및 활동
+            </h2>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 overflow-y-auto">
+                <div class="mb-6">
+                    <h3 class="font-bold text-slate-800 text-lg mb-2">학습 목표 (LO)</h3>
+                    <p class="text-slate-700 bg-slate-50 p-4 rounded-lg border border-slate-200">구체적인 AI 도구의 윤리적 논란을 예시로 들고, 핵심 윤리 원칙을 설명하며, 형평성/포용성에 미치는 부정적 영향을 최소화할 조치를 우선순위화합니다.</p>
+                </div>
+                
+                <h3 class="font-bold text-indigo-900 text-lg mb-3">맥락적 활동 (Contextual Activities)</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="bg-indigo-50 p-4 rounded-xl border border-indigo-100">
+                        <h4 class="font-bold text-indigo-800 mb-1">윤리적 딜레마 관점 취하기</h4>
+                        <p class="text-sm text-slate-700">프라이버시, 형평성 등 다중 딜레마를 바탕으로 윤리적 관점을 채택합니다.</p>
+                    </div>
+                    <div class="bg-indigo-50 p-4 rounded-xl border border-indigo-100">
+                        <h4 class="font-bold text-indigo-800 mb-1">윤리적 원칙 지식 매핑</h4>
+                        <p class="text-sm text-slate-700">핵심 원칙과 규정, 학교 내 AI 도구 간의 연결성을 시각화(개념도 작성)합니다.</p>
+                    </div>
+                    <div class="bg-indigo-50 p-4 rounded-xl border border-indigo-100">
+                        <h4 class="font-bold text-indigo-800 mb-1">현지 규정 개인 관찰</h4>
+                        <p class="text-sm text-slate-700">현지 규정이 AI 발전을 따라가는지 관찰하고 평가합니다.</p>
+                    </div>
+                    <div class="bg-indigo-50 p-4 rounded-xl border border-indigo-100">
+                        <h4 class="font-bold text-indigo-800 mb-1">AI 도구의 편향성 인식</h4>
+                        <p class="text-sm text-slate-700">AI 도구의 편향성을 주의 깊게 살피고 기관 책임자에게 보고합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-10">
+                        <div class="slide w-full h-full flex-col" id="slide-10">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-emerald-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">11</span>
+                [Level 2: 심화 (Deepen)] 안전하고 책임감 있는 사용 - 역량 및 교육과정 목표
+            </h2>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 overflow-y-auto">
+                <div class="mb-6 bg-emerald-50 p-5 rounded-xl border-l-4 border-emerald-500">
+                    <h3 class="font-bold text-emerald-900 text-lg mb-2">교사 역량</h3>
+                    <p class="text-slate-700">데이터 프라이버시, 지적 재산권 및 기타 법적 프레임워크 존중을 포함하여 안전하고 책임감 있는 AI 사용을 위한 필수 윤리 규칙을 내재화하고 평가/활용에 습관적으로 적용합니다.</p>
+                </div>
+                
+                <h3 class="font-bold text-slate-800 text-lg mb-3">교육과정 목표 (CG)</h3>
+                <ul class="list-disc pl-6 space-y-3 text-slate-700">
+                    <li>'설계에 의한 안전'과 '사용에 의한 안전', 기관 및 개인적 수준에서 AI 안전 위협을 깊이 이해합니다.</li>
+                    <li>저작권, 프라이버시 침해, 허위 정보, 혐오 표현 등 AI 사용 시의 법적 의무와 결과에 대한 분석을 촉진합니다.</li>
+                    <li>현지 맥락에 맞는 기관/학급/개인의 AI 안전 규칙 초안을 직접 작성하도록 지원합니다.</li>
+                </ul>
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-11">
+                        <div class="slide w-full h-full flex-col" id="slide-11">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-emerald-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">12</span>
+                [Level 2: 심화 (Deepen)] 안전하고 책임감 있는 사용 - 학습 목표 및 활동
+            </h2>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 overflow-y-auto">
+                <div class="mb-6">
+                    <h3 class="font-bold text-slate-800 text-lg mb-2">학습 목표 (LO)</h3>
+                    <p class="text-slate-700 bg-slate-50 p-4 rounded-lg border border-slate-200">전형적인 AI 안전 문제를 설명하고, 현지 적용 규정을 숙지하며, 데이터 프라이버시 보호 조치를 실행하고, 교사/학생의 책임 있는 사용 지침을 적용합니다.</p>
+                </div>
+                
+                <h3 class="font-bold text-emerald-900 text-lg mb-3">맥락적 활동 (Contextual Activities)</h3>
+                <div class="space-y-3">
+                    <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-100 flex items-start gap-4">
+                        <div class="text-2xl">🔍</div>
+                        <div>
+                            <h4 class="font-bold text-emerald-800">개인 AI 안전 추적기</h4>
+                            <p class="text-sm text-slate-700">빈번한 AI 사고 원인과 위협, 완화 조치를 보여주는 개념도를 작성하고 업데이트합니다.</p>
+                        </div>
+                    </div>
+                    <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-100 flex items-start gap-4">
+                        <div class="text-2xl">🛡️</div>
+                        <div>
+                            <h4 class="font-bold text-emerald-800">교육용 AI 도구 화이트리스트</h4>
+                            <p class="text-sm text-slate-700">개인 AI 도구 모음의 설계 윤리, 데이터 출처, 포용성 등을 검토하여 안전성을 평가합니다.</p>
+                        </div>
+                    </div>
+                    <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-100 flex items-start gap-4">
+                        <div class="text-2xl">📝</div>
+                        <div>
+                            <h4 class="font-bold text-emerald-800">'해야 할 것'과 '하지 말아야 할 것'의 반복 업데이트</h4>
+                            <p class="text-sm text-slate-700">고위험 사례를 평가하고 지침을 지속적으로 수정합니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-12">
+                        <div class="slide w-full h-full flex-col" id="slide-12">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-amber-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">13</span>
+                [Level 3: 창조 (Create)] 윤리적 규칙의 공동 창조 - 역량 및 교육과정 목표
+            </h2>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 overflow-y-auto">
+                <div class="mb-6 bg-amber-50 p-5 rounded-xl border-l-4 border-amber-500">
+                    <h3 class="font-bold text-amber-900 text-lg mb-2">교사 역량</h3>
+                    <p class="text-slate-700">설계 및 사용 시의 환경/사회문화적 우려를 다루는 논의를 이끌고, 비판적 옹호를 통해 AI 윤리를 주도하며, 교육 내 AI 실천 윤리 규칙의 공동 창조에 기여합니다.</p>
+                </div>
+                
+                <h3 class="font-bold text-slate-800 text-lg mb-3">교육과정 목표 (CG)</h3>
+                <ul class="list-disc pl-6 space-y-3 text-slate-700">
+                    <li>지역 경제, 사회 정의, 기후 변화 및 언어/문화적 다양성에 대한 AI의 사회적 영향 연구를 장려합니다.</li>
+                    <li>AI 제공업체의 사용자 지침(가이던스)에 내재된 차별 위험 및 취약성을 비판적으로 검토하고 개선안을 작성합니다.</li>
+                    <li>새로운 AI 규정 채택 이면의 다중 이해관계자 협상을 검토하고, 모의 토론을 통해 규제 프레임워크 수정에 참여합니다.</li>
+                </ul>
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-13">
+                        <div class="slide w-full h-full flex-col" id="slide-13">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-amber-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">14</span>
+                [Level 3: 창조 (Create)] 윤리적 규칙의 공동 창조 - 학습 목표 및 활동
+            </h2>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 h-full overflow-y-auto">
+                <div class="mb-5">
+                    <h3 class="font-bold text-slate-800 text-lg mb-2">학습 목표 (LO)</h3>
+                    <p class="text-slate-700 bg-slate-50 p-4 rounded-lg border border-slate-200">AI의 사회적 영향을 비판적으로 분석하고, 특정 AI 도구 지침의 적절성을 평가/권고하며, 기관 및 현지 규제 프레임워크 개발에 옹호자로서 참여합니다.</p>
+                </div>
+                
+                <h3 class="font-bold text-amber-900 text-lg mb-3">맥락적 활동 (Contextual Activities)</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="bg-amber-50 p-4 rounded-xl border border-amber-100">
+                        <h4 class="font-bold text-amber-800 mb-1">AI 사회적 영향에 대한 지역화된 글로벌 뷰</h4>
+                        <p class="text-sm text-slate-700">글로벌 관점을 지역적 맥락으로 변환하여 사회에 미치는 영향을 총체적으로 검토합니다.</p>
+                    </div>
+                    <div class="bg-amber-50 p-4 rounded-xl border border-amber-100">
+                        <h4 class="font-bold text-amber-800 mb-1">사용자 지침의 윤리적 격차 조명</h4>
+                        <p class="text-sm text-slate-700">AI 제공업체의 주장을 감사하고 잠재적 위협을 모니터링하여 불만 사항을 보고합니다.</p>
+                    </div>
+                    <div class="bg-amber-50 p-4 rounded-xl border border-amber-100">
+                        <h4 class="font-bold text-amber-800 mb-1">AI 윤리의 옹호자로서의 마스터 교사</h4>
+                        <p class="text-sm text-slate-700">윤리 캠페인 시작, 규정 지식 공유, 안전 대화 촉진 및 윤리 표준 공동 창조에 참여합니다.</p>
+                    </div>
+                    <div class="bg-amber-50 p-4 rounded-xl border border-amber-100">
+                        <h4 class="font-bold text-amber-800 mb-1">교육용 AI 도구의 윤리적 프로토타입 공동 설계</h4>
+                        <p class="text-sm text-slate-700">학생, 기술자와 협력하여 윤리적 AI 도구를 공동 설계합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-14">
+                        <div class="slide w-full h-full flex-col" id="slide-14">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-slate-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">15</span>
+                [Part 3: 이행 전략] 5.1 AI 규제 및 신뢰할 수 있는 도구 보장
+            </h2>
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-center">
+                <ul class="space-y-6 text-lg">
+                    <li class="flex items-start gap-4">
+                        <div class="bg-slate-100 p-2 rounded text-slate-600">✔</div>
+                        <p class="text-slate-700">교육 시스템에 대규모로 도입되기 전, AI 시스템이나 소프트웨어를 엄격히 검증해야 합니다.</p>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <div class="bg-slate-100 p-2 rounded text-slate-600">✔</div>
+                        <p class="text-slate-700">보안, 편향성, 출력의 정확성, 데이터 프라이버시에 대한 인간의 책무성, 설명 가능성, 사용자 연령/능력의 적절성 등을 포함한 <strong>최소 검증 기준(Validation criteria)</strong>이 필요합니다.</p>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <div class="bg-slate-100 p-2 rounded text-slate-600">✔</div>
+                        <p class="text-slate-700">'설계에 의한 윤리' 원칙을 준수하는 도구를 합법적으로 <strong>화이트리스트(Whitelisting)화</strong>하여 교사의 과도한 책임 부담을 덜어주어야 합니다.</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-15">
+                        <div class="slide w-full h-full flex-col" id="slide-15">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-slate-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">16</span>
+                [5.2] 교육 내 AI 사용을 위한 지원 정책 및 조건 구축
+            </h2>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 overflow-y-auto">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 h-full items-center">
+                    <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 text-center hover-card h-full flex flex-col justify-center">
+                        <div class="text-4xl mb-4">📊</div>
+                        <h3 class="font-bold text-slate-800 mb-3">비용-편익 분석</h3>
+                        <p class="text-sm text-slate-600">도입 전 기술 의존과 관계없는 다른 시급한 교육 문제 해결 옵션과 AI의 비용-편익을 분석해야 합니다.</p>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 text-center hover-card h-full flex flex-col justify-center">
+                        <div class="text-4xl mb-4">🏆</div>
+                        <h3 class="font-bold text-slate-800 mb-3">동기부여 전략</h3>
+                        <p class="text-sm text-slate-600">교사의 AI 사용을 동기부여하기 위해 업무량 부담 완화, 자금/연수 지원, 혁신 교사 포상 등의 전략이 필요합니다.</p>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 text-center hover-card h-full flex flex-col justify-center">
+                        <div class="text-4xl mb-4">🌐</div>
+                        <h3 class="font-bold text-slate-800 mb-3">포용성 지원</h3>
+                        <p class="text-sm text-slate-600">인터넷 접근성 보장, 신뢰할 수 있는 도구 제공 및 인프라 업그레이드를 통해 AI의 포용적 접근과 경제성을 지원해야 합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-16">
+                        <div class="slide w-full h-full flex-col" id="slide-16">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-slate-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">17</span>
+                [5.3] 교사를 위한 현지 AI 역량 프레임워크 공식화 및 채택
+            </h2>
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-center">
+                <ul class="space-y-6 text-lg">
+                    <li class="flex items-start gap-4">
+                        <div class="bg-slate-100 p-2 rounded text-slate-600">📌</div>
+                        <p class="text-slate-700">이 프레임워크(AI CFT)는 국가 및 기관의 특정 상황, 디지털 준비도 및 교사들의 기존 역량 수준에 맞게 <strong>현지화(Tailored)</strong>되어야 합니다.</p>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <div class="bg-slate-100 p-2 rounded text-slate-600">📌</div>
+                        <p class="text-slate-700">도입 전 학생과 교사가 사용할 수 있는 도구 및 현재 역량 수준을 파악하는 <strong>AI 준비도(Readiness) 평가</strong>가 선행되어야 합니다.</p>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <div class="bg-slate-100 p-2 rounded text-slate-600">📌</div>
+                        <p class="text-slate-700">지속 가능하고 의미 있는 사용을 위해 학계나 기업이 아닌 <strong>정부 기관의 주도적 공식화 및 인증</strong>이 중요합니다.</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-17">
+                        <div class="slide w-full h-full flex-col" id="slide-17">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-slate-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">18</span>
+                [5.4] AI 역량 연수 및 지원 프로그램 설계와 체계화
+            </h2>
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-center">
+                <div class="space-y-8">
+                    <p class="text-lg text-slate-700 bg-slate-50 p-5 rounded-xl border border-slate-200">
+                        AI CFT의 '교육과정 목표'는 각 역량 블록의 지식, 기술, 가치 요소를 프레이밍하고 관련 연수 방법을 제안하는 데 활용됩니다.
+                    </p>
+                    <div class="flex flex-wrap gap-4 items-center justify-center">
+                        <div class="bg-indigo-100 px-6 py-4 rounded-xl font-bold text-indigo-800 text-center">교사 양성<br><span class="font-normal text-sm">(Pre-service)</span></div>
+                        <span class="text-slate-400">➕</span>
+                        <div class="bg-emerald-100 px-6 py-4 rounded-xl font-bold text-emerald-800 text-center">현직 연수<br><span class="font-normal text-sm">(In-service)</span></div>
+                        <span class="text-slate-400">➕</span>
+                        <div class="bg-amber-100 px-6 py-4 rounded-xl font-bold text-amber-800 text-center">학교 기반 지원<br><span class="font-normal text-sm">(School-based)</span></div>
+                        <span class="text-slate-400">➕</span>
+                        <div class="bg-rose-100 px-6 py-4 rounded-xl font-bold text-rose-800 text-center">동료 멘토링<br><span class="font-normal text-sm">(Mentoring)</span></div>
+                    </div>
+                    <p class="text-center font-semibold text-slate-800">
+                        👉 교사 경력의 모든 단계에 걸쳐 일관성 있게 체계화되어야 합니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-18">
+                        <div class="slide w-full h-full flex-col" id="slide-18">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-slate-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">19</span>
+                [5.5] 맥락적 성과 기반 평가 도구 개발
+            </h2>
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-center">
+                <p class="text-xl text-slate-700 mb-6 border-b pb-4">
+                    프레임워크의 상세한 목표를 활용하여 교사의 AI 역량을 평가하는 기관 평가 도구나 자가 진단 도구를 설계할 수 있습니다.
+                </p>
+                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                    <h3 class="font-bold text-slate-800 mb-4 text-lg">💡 평가 도구 예시</h3>
+                    <p class="text-slate-700 text-lg leading-relaxed">
+                        예를 들어, '습득(Acquire)' 단계의 인간 주체성 역량을 평가하기 위해 <strong class="text-indigo-700">"특정 AI 도구의 이점, 한계, 위험성에 대한 에세이 작성"</strong> 또는 <strong class="text-indigo-700">"일상적인 교사 자율성 증진 팁 목록 작성"</strong> 등의 과제를 부여할 수 있습니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+                    </div>
+                
+                    <div class="slide-page " id="slide-page-19">
+                        <div class="slide w-full h-full flex-col" id="slide-19">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-slate-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">20</span>
+                [5.6] 결론 (Conclusion)
+            </h2>
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-center items-center text-center">
+                <div class="text-6xl mb-6">👩‍🏫 🌟</div>
+                <ul class="space-y-6 text-xl text-slate-700 max-w-3xl text-left mx-auto">
+                    <li class="flex items-start gap-4">
+                        <div class="text-indigo-500 font-bold">1.</div>
+                        <p>교사는 교육 내 윤리적이고 효과적인 AI 채택을 보장하는 핵심 주체입니다.</p>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <div class="text-indigo-500 font-bold">2.</div>
+                        <p>이 프레임워크는 규범적 청사진이 아닌, 기술 발전과 현지 맥락에 맞춰 지속적으로 조정되어야 하는 '마스터 프레임워크(Master framework)'입니다.</p>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <div class="text-indigo-500 font-bold">3.</div>
+                        <p>교사, 정책 입안자, 기관 모두가 협력하여 교사의 평생 전문성 학습을 지원하고 AI 역량 프레임워크를 지속적으로 발전시켜야 합니다.</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+                    </div>
+                </main>
+        <div id="export-footer-container"><footer class="bg-white border-t border-slate-200 p-4 flex-shrink-0 z-10">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <button onclick="prevSlide()" id="prev-btn" class="px-5 py-2.5 rounded-lg font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2" disabled="">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                이전
+            </button>
+            <div class="text-sm text-slate-500 hidden sm:block">
+                키보드 <kbd class="px-2 py-1 bg-slate-50 border border-slate-300 rounded mx-1 shadow-sm font-sans">←</kbd> <kbd class="px-2 py-1 bg-slate-50 border border-slate-300 rounded mx-1 shadow-sm font-sans">→</kbd> 로 이동 가능
+            </div>
+            <button onclick="nextSlide()" id="next-btn" class="px-5 py-2.5 rounded-lg font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition-colors flex items-center gap-2">
+                다음 
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </button>
+        </div>
+    </footer></div>
+    </div>
+
+    <div class="fixed bottom-4 right-4 z-50 flex items-center space-x-2 bg-slate-900/80 backdrop-blur border border-slate-700 px-3 py-1.5 rounded-full text-xs text-slate-300 shadow-xl">
+        <button onclick="prevSlide()" class="hover:text-white px-2">← 이전</button>
+        <span id="page-indicator">1 / 20</span>
+        <button onclick="nextSlide()" class="hover:text-white px-2">다음 →</button>
+    </div>
+    <script>
+        let currentSlideIndex = 0;
+        const _disabled_totalSlides = 20;
+
+        function updateUI() {
+            document.querySelectorAll('.slide').forEach(slide => {
+                slide.classList.remove('active');
+            });
+            const activeSlide = document.getElementById(`slide-${currentSlideIndex}`);
+            if(activeSlide) activeSlide.classList.add('active');
+            
+            document.getElementById('prev-btn').disabled = currentSlideIndex === 0;
+            document.getElementById('next-btn').disabled = currentSlideIndex === totalSlides - 1;
+
+            document.getElementById('slide-counter').innerText = `${currentSlideIndex + 1} / ${totalSlides}`;
+            const progress = (currentSlideIndex / (totalSlides - 1)) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+        }
+
+        function _disabled_nextSlide() {
+            if (currentSlideIndex < totalSlides - 1) {
+                currentSlideIndex++;
+                updateUI();
+            }
+        }
+
+        function _disabled_prevSlide() {
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+                updateUI();
+            }
+        }
+
+        document.addEventListener("disabled_keydown", (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+
+        updateUI();
+    </script>
+<script>
+        (function() {
+            let sc_currentIdx = 0;
+            const sc_totalSlides = 20;
+            const sc_slides = document.querySelectorAll('.slide-page');
+            const sc_indicator = document.getElementById('page-indicator');
+
+            function _disabled_updatePageNumbers(pageIdx) {
+                const currentZeroIdx = pageIdx - 1;
+                const isFirst = (currentZeroIdx === 0);
+                const isLast = (currentZeroIdx === sc_totalSlides - 1);
+
+                const headerEl = document.getElementById('export-header-container');
+                const footerEl = document.getElementById('export-footer-container');
+                [headerEl, footerEl].forEach(container => {
+                    if (!container) return;
+                    const pageEls = container.querySelectorAll('[data-page-current], .page-current, .current-page, #current-page, .page-num, .slide-num, .slide-number');
+                    pageEls.forEach(el => { el.textContent = pageIdx; });
+                    const totalEls = container.querySelectorAll('[data-page-total], .page-total, .total-pages, #total-pages, .total-num, .slide-total');
+                    totalEls.forEach(el => { el.textContent = sc_totalSlides; });
+
+                    const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, null, false);
+                    let node;
+                    while (node = walker.nextNode()) {
+                        let val = node.nodeValue;
+                        if (!val || val.trim().length === 0) continue;
+                        if (/\b\d+\s*[\/\-]\s*\d+\b/.test(val)) {
+                            node.nodeValue = val.replace(/\b\d+(\s*[\/\-]\s*)\d+\b/, pageIdx + '$1' + sc_totalSlides);
+                        } else if (/\b(Page|페이지|Slide|슬라이드)\s*\d+\s*(of|\/|\-)\s*\d+\b/i.test(val)) {
+                            node.nodeValue = val.replace(/(\b(?:Page|페이지|Slide|슬라이드)\s*)\d+(\s*(?:of|\/|\-)\s*)\d+/i, '$1' + pageIdx + '$2' + sc_totalSlides);
+                        }
+                    }
+
+                    // 이전 / 다음 버튼 바인딩 및 활성화 상태 동기화
+                    const allNavEls = container.querySelectorAll('button, a, [role="button"]');
+                    allNavEls.forEach(el => {
+                        const txt = el.textContent.trim().toLowerCase();
+                        const onclickStr = el.getAttribute('onclick') || '';
+                        const classStr = el.className ? String(el.className).toLowerCase() : '';
+                        const idStr = el.id ? String(el.id).toLowerCase() : '';
+
+                        const isPrev = onclickStr.includes('prev') || classStr.includes('prev') || idStr.includes('prev') ||
+                                       txt === '이전' || txt === 'prev' || txt === 'previous' || txt === '←' || txt === '← 이전';
+                        const isNext = onclickStr.includes('next') || classStr.includes('next') || idStr.includes('next') ||
+                                       txt === '다음' || txt === 'next' || txt === '→' || txt === '→ 다음';
+
+                        if (isPrev) {
+                            if (isFirst) {
+                                el.style.opacity = '0.35';
+                                el.style.cursor = 'not-allowed';
+                                el.setAttribute('disabled', 'true');
+                            } else {
+                                el.style.opacity = '1';
+                                el.style.cursor = 'pointer';
+                                el.removeAttribute('disabled');
+                            }
+                            if (!el.dataset.navBound) {
+                                el.dataset.navBound = 'true';
+                                el.onclick = (e) => { e.preventDefault(); window.prevSlide(); };
+                            }
+                        }
+                        if (isNext) {
+                            if (isLast) {
+                                el.style.opacity = '0.35';
+                                el.style.cursor = 'not-allowed';
+                                el.setAttribute('disabled', 'true');
+                            } else {
+                                el.style.opacity = '1';
+                                el.style.cursor = 'pointer';
+                                el.removeAttribute('disabled');
+                            }
+                            if (!el.dataset.navBound) {
+                                el.dataset.navBound = 'true';
+                                el.onclick = (e) => { e.preventDefault(); window.nextSlide(); };
+                            }
+                        }
+                    });
+                });
+            }
+
+            window.showSlide = function(index) {
+                sc_slides.forEach((s, idx) => {
+                    const isActive = (idx === index);
+                    s.classList.toggle('active', isActive);
+                    s.style.display = isActive ? 'block' : 'none';
+
+                    // 내부 슬라이드 요소(.slide, section 등) 표시 활성화
+                    const innerEls = s.querySelectorAll('.slide, section');
+                    innerEls.forEach(el => {
+                        el.classList.toggle('active', isActive);
+                        if (isActive && window.getComputedStyle(el).display === 'none') {
+                            el.style.display = 'block';
+                        }
+                    });
+                });
+                sc_currentIdx = index;
+                if (sc_indicator) sc_indicator.textContent = (index + 1) + ' / ' + sc_totalSlides;
+                updatePageNumbers(index + 1);
+            };
+            window.prevSlide = function() { if (sc_currentIdx > 0) window.showSlide(sc_currentIdx - 1); };
+            window.nextSlide = function() { if (sc_currentIdx < sc_totalSlides - 1) window.showSlide(sc_currentIdx + 1); };
+
+            window.addEventListener("disabled_keydown", (e) => {
+                if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') window.nextSlide();
+                if (e.key === 'ArrowLeft' || e.key === 'PageUp') window.prevSlide();
+            });
+            window.// _disabled_showSlide(0);
+        })();
+    </script>
+    <script>
+        (function() {
+            let sc_currentIdx = 0;
+            const sc_totalSlides = 20;
+            const sc_slides = document.querySelectorAll('.slide-page');
+            const sc_indicator = document.getElementById('page-indicator');
+
+            function updatePageNumbers(pageIdx) {
+                const currentZeroIdx = pageIdx - 1;
+                const isFirst = (currentZeroIdx === 0);
+                const isLast = (currentZeroIdx === sc_totalSlides - 1);
+
+                const headerEl = document.getElementById('export-header-container');
+                const footerEl = document.getElementById('export-footer-container');
+                [headerEl, footerEl].forEach(container => {
+                    if (!container) return;
+                    const pageEls = container.querySelectorAll('[data-page-current], .page-current, .current-page, #current-page, .page-num, .slide-num, .slide-number');
+                    pageEls.forEach(el => { el.textContent = pageIdx; });
+                    const totalEls = container.querySelectorAll('[data-page-total], .page-total, .total-pages, #total-pages, .total-num, .slide-total');
+                    totalEls.forEach(el => { el.textContent = sc_totalSlides; });
+
+                    const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, null, false);
+                    let node;
+                    while (node = walker.nextNode()) {
+                        let val = node.nodeValue;
+                        if (!val || val.trim().length === 0) continue;
+                        if (/\b\d+\s*[\/\-]\s*\d+\b/.test(val)) {
+                            node.nodeValue = val.replace(/\b\d+(\s*[\/\-]\s*)\d+\b/, pageIdx + '$1' + sc_totalSlides);
+                        } else if (/\b(Page|페이지|Slide|슬라이드)\s*\d+\s*(of|\/|\-)\s*\d+\b/i.test(val)) {
+                            node.nodeValue = val.replace(/(\b(?:Page|페이지|Slide|슬라이드)\s*)\d+(\s*(?:of|\/|\-)\s*)\d+/i, '$1' + pageIdx + '$2' + sc_totalSlides);
+                        }
+                    }
+
+                    // 이전 / 다음 버튼 바인딩 및 활성화 상태 동기화
+                    const allNavEls = container.querySelectorAll('button, a, [role="button"]');
+                    allNavEls.forEach(el => {
+                        const txt = el.textContent.trim().toLowerCase();
+                        const onclickStr = el.getAttribute('onclick') || '';
+                        const classStr = el.className ? String(el.className).toLowerCase() : '';
+                        const idStr = el.id ? String(el.id).toLowerCase() : '';
+
+                        const isPrev = onclickStr.includes('prev') || classStr.includes('prev') || idStr.includes('prev') ||
+                                       txt === '이전' || txt === 'prev' || txt === 'previous' || txt === '←' || txt === '← 이전';
+                        const isNext = onclickStr.includes('next') || classStr.includes('next') || idStr.includes('next') ||
+                                       txt === '다음' || txt === 'next' || txt === '→' || txt === '→ 다음';
+
+                        if (isPrev) {
+                            if (isFirst) {
+                                el.style.opacity = '0.35';
+                                el.style.cursor = 'not-allowed';
+                                el.setAttribute('disabled', 'true');
+                            } else {
+                                el.style.opacity = '1';
+                                el.style.cursor = 'pointer';
+                                el.removeAttribute('disabled');
+                            }
+                            if (!el.dataset.navBound) {
+                                el.dataset.navBound = 'true';
+                                el.onclick = (e) => { e.preventDefault(); window.prevSlide(); };
+                            }
+                        }
+                        if (isNext) {
+                            if (isLast) {
+                                el.style.opacity = '0.35';
+                                el.style.cursor = 'not-allowed';
+                                el.setAttribute('disabled', 'true');
+                            } else {
+                                el.style.opacity = '1';
+                                el.style.cursor = 'pointer';
+                                el.removeAttribute('disabled');
+                            }
+                            if (!el.dataset.navBound) {
+                                el.dataset.navBound = 'true';
+                                el.onclick = (e) => { e.preventDefault(); window.nextSlide(); };
+                            }
+                        }
+                    });
+                });
+            }
+
+            window.showSlide = function(index) {
+                sc_slides.forEach((s, idx) => {
+                    const isActive = (idx === index);
+                    s.classList.toggle('active', isActive);
+                    s.style.display = isActive ? 'block' : 'none';
+
+                    // 내부 슬라이드 요소(.slide, section 등) 표시 활성화
+                    const innerEls = s.querySelectorAll('.slide, section');
+                    innerEls.forEach(el => {
+                        el.classList.toggle('active', isActive);
+                        if (isActive && window.getComputedStyle(el).display === 'none') {
+                            el.style.display = 'block';
+                        }
+                    });
+                });
+                sc_currentIdx = index;
+                if (sc_indicator) sc_indicator.textContent = (index + 1) + ' / ' + sc_totalSlides;
+                updatePageNumbers(index + 1);
+            };
+            window.prevSlide = function() { if (sc_currentIdx > 0) window.showSlide(sc_currentIdx - 1); };
+            window.nextSlide = function() { if (sc_currentIdx < sc_totalSlides - 1) window.showSlide(sc_currentIdx + 1); };
+
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') window.nextSlide();
+                if (e.key === 'ArrowLeft' || e.key === 'PageUp') window.prevSlide();
+            });
+            window.showSlide(0);
+        })();
+    </script>
+</body>
+</html>
