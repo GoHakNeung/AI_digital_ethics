@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>바이브 코딩 3차시: 배포와 실전 프로젝트</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', 'Pretendard', sans-serif; }
+        .slide { display: none; }
+        .slide.active { display: flex; animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* 스크롤바 꾸미기 */
+        ::-webkit-scrollbar { width: 10px; height: 10px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+        pre { white-space: pre-wrap; word-wrap: break-word; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 h-screen flex flex-col overflow-hidden font-sans">
+
+    <!-- 상단 헤더 -->
+    <header class="bg-indigo-600 text-white px-8 py-4 flex justify-between items-center shadow-md shrink-0 z-10">
+        <h1 class="text-xl font-extrabold tracking-tight">디지털 인공지능 윤리: 바이브 코딩 3차시</h1>
+        <div class="text-sm font-bold bg-indigo-800 px-4 py-1.5 rounded-full shadow-inner">
+            <span id="current-page">1</span> / 12
+        </div>
+    </header>
+
+    <!-- 프로그레스 바 -->
+    <div class="h-1.5 w-full bg-slate-200 shrink-0">
+        <div id="progress-bar" class="h-1.5 bg-indigo-500 transition-all duration-300" style="width: 0%;"></div>
+    </div>
+
+    <!-- 슬라이드 메인 영역 -->
+    <main class="flex-grow relative overflow-hidden flex items-center justify-center w-full max-w-7xl mx-auto p-4">
+        
+        <!-- ==============================================
+             슬라이드 1: 표지 (Cover)
+        =============================================== -->
+        <div class="slide active flex-col items-center justify-center w-full h-full text-center" id="slide-1">
+            <div class="inline-block mb-6 px-4 py-1.5 rounded-full bg-indigo-100 text-indigo-700 font-extrabold text-base shadow-sm border border-indigo-200">
+                3차시 수업 자료
+            </div>
+            <h1 class="text-5xl font-extrabold text-slate-900 mb-6 leading-tight">
+                웹앱 배포와 <br> <span class="text-indigo-600">실전 프로젝트 완성</span>
+            </h1>
+            <p class="text-xl text-slate-600 mb-10 max-w-3xl mx-auto font-medium leading-relaxed">
+                만든 프로그램을 학생들에게 <strong>전달하는 방법</strong>을 배우고,<br>
+                디지털 윤리 웹앱을 <strong>점진적으로 고도화</strong>하며 완성해 봅니다.
+            </p>
+            <button onclick="nextSlide()" class="px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold rounded-2xl shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1 text-xl">
+                수업 시작하기 &rarr;
+            </button>
+        </div>
+
+        <!-- ==============================================
+             슬라이드 2: 배포 방식 비교
+        =============================================== -->
+        <div class="slide w-full h-full p-4 gap-8" id="slide-2">
+            <div class="w-1/2 bg-white rounded-3xl shadow-sm border border-slate-200 p-8 overflow-y-auto flex flex-col justify-center">
+                <h2 class="text-2xl font-extrabold text-slate-800 mb-6 border-b-2 border-indigo-100 pb-3">1. 우리가 만든 자료, 어떻게 배포할까?</h2>
+                <div class="space-y-6">
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 shadow-sm">
+                        <h3 class="font-extrabold text-lg text-slate-700 mb-3 flex items-center gap-2"><span class="text-xl">📁</span> 방식 A: .html 파일 직접 제공</h3>
+                        <ul class="list-disc pl-6 text-base text-slate-600 space-y-1.5">
+                            <li><strong>장점:</strong> 인터넷 없이도 실행 가능.</li>
+                            <li><strong class="text-red-500">단점 (갤럭시 탭 환경):</strong> 학생들이 '내 파일'에서 다운로드 폴더를 찾아 실행하기가 <strong>매우 어렵습니다.</strong></li>
+                            <li><strong>보안 문제:</strong> 파일 직접 실행 시 보안 정책으로 인해 <strong>이미지가 깨지는 현상</strong> 발생.</li>
+                            <li><strong>유지보수:</strong> 오타 하나를 고쳐도 <strong>파일을 처음부터 다시 배포</strong>해야 함.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-indigo-50 p-5 rounded-2xl border-2 border-indigo-200 shadow-md">
+                        <h3 class="font-extrabold text-lg text-indigo-800 mb-3 flex items-center gap-2"><span class="text-xl">🌐</span> 방식 B: 서버에 업로드 (URL 링크 제공)</h3>
+                        <ul class="list-disc pl-6 text-base text-indigo-900 space-y-1.5">
+                            <li><strong>장점:</strong> 탭에서 <strong>링크(URL) 클릭 한 번</strong>으로 즉시 실행!</li>
+                            <li><strong>장점:</strong> 교사가 코드를 수정하면 <strong>새로고침 시 전원 동시 반영!</strong></li>
+                            <li><strong>장점:</strong> 이미지 깨짐 등의 복잡한 보안 에러가 없음.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="w-1/2 bg-slate-800 rounded-3xl flex items-center justify-center p-8 shadow-lg relative overflow-hidden">
+                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+                <div class="text-center space-y-4 relative z-10">
+                    <div class="text-7xl mb-4">🎯</div>
+                    <h3 class="text-2xl font-extrabold text-white leading-tight">학교 현장에서는<br><span class="text-indigo-400">'서버에 업로드 이후 - 링크(URL/QR코드) 배포'</span>를 추천합니다.</h3>
+                  <ul class="list-disc pl-5">
+                    <li class="text-lg text-slate-300 font-medium mt-3">학생들에게 다운로드 링크를 제공하는 것...</li>
+                    <li class="text-lg text-slate-300 font-medium mt-3">다운로드 이후 태블릿에서 html 파일을 찾는 것...</li>
+                    <li class="text-lg text-slate-300 font-medium mt-3">갑자기 수정할 수도 있는 것... </li>
+                    </ul>
+                  <p class="text-lg text-slate-300 font-medium mt-3">등의 이유로 서버를 통한 링크 배포가 좋습니다.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==============================================
+             슬라이드 3: 깃허브 배포
+        =============================================== -->
+        <div class="slide w-full h-full p-4 gap-8" id="slide-3">
+            <div class="w-1/2 bg-white rounded-3xl shadow-sm border border-slate-200 p-8 overflow-y-auto flex flex-col justify-center">
+                <h2 class="text-2xl font-extrabold text-slate-800 mb-6 border-b-2 border-indigo-100 pb-3">2. 서버 배포: GitHub Pages 활용</h2>
+                <p class="text-base text-slate-600 mb-6 leading-relaxed">
+                    무료 서비스인 <strong>GitHub Pages</strong>를 활용하면, 내 컴퓨터의 HTML 코드를 렌더링 하여<strong>진짜 웹사이트</strong>로 배포할 수 있습니다.
+                </p>
+                <div class="bg-blue-50 border-l-8 border-blue-500 p-5 mb-6 rounded-r-2xl shadow-sm">
+                    <h4 class="font-extrabold text-lg text-blue-800 flex items-center gap-2">💡 배포 필수 프롬프트</h4>
+                    <p class="text-base text-blue-900 mt-2 font-medium leading-relaxed">"배포하기 쉽도록 모든 CSS는 &lt;style&gt; 태그 안에, 자바스크립트는 &lt;script&gt; 태그 안에 넣어서 <strong>HTML 파일 딱 한 개로 병합</strong>해 줘."</p>
+                </div>
+                <div class="bg-amber-50 border-l-8 border-amber-500 p-5 rounded-r-2xl shadow-sm">
+                    <h4 class="font-extrabold text-lg text-amber-800 flex items-center gap-2">⚠️ 데이터 수집의 한계</h4>
+                    <p class="text-base text-amber-900 mt-2 font-medium leading-relaxed">단순 HTML 파일 배포로는 학생의 점수를 선생님 컴퓨터로 모을 수 없습니다. 이를 위해서는 <b>데이터베이스 등 추가적인 기능</b>이 구현되어야 합니다. html 수준에서 수집이 필요하다면 HTML 안에 <strong>구글 설문지(iframe)</strong>를 포함하라고 지시하세요.</p>
+                </div>
+            </div>
+            <div class="w-1/2 bg-white rounded-3xl shadow-sm border border-slate-200 flex flex-col justify-center p-10 gap-10 text-center">
+                <div class="flex justify-between items-center text-slate-600 font-extrabold text-xl w-full">
+                    <div class="flex flex-col items-center gap-3 bg-slate-50 p-5 rounded-2xl border border-slate-200 flex-1"><span class="text-5xl">💻</span><span>내 컴퓨터</span></div>
+                    <span class="text-3xl px-3 text-indigo-400">➡️</span>
+                    <div class="flex flex-col items-center gap-3 bg-indigo-50 p-5 rounded-2xl border border-indigo-200 flex-1"><span class="text-5xl">☁️</span><span>GitHub 서버</span></div>
+                    <span class="text-3xl px-3 text-indigo-400">➡️</span>
+                    <div class="flex flex-col items-center gap-3 bg-slate-50 p-5 rounded-2xl border border-slate-200 flex-1"><span class="text-5xl">📱</span><span>학생 탭 (URL)</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==============================================
+             슬라이드 4: 주제1 (러프)
+        =============================================== -->
+        <div class="slide w-full h-full p-4 gap-8" id="slide-4">
+            <div class="w-1/2 bg-white rounded-3xl shadow-sm border border-slate-200 p-8 overflow-y-auto flex flex-col">
+                <div class="mb-3 inline-block bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full font-bold text-xs w-max">실습 1. 윤리 서약서 만들기</div>
+                <h2 class="text-2xl font-extrabold text-slate-800 mb-4">1단계: 러프한 프롬프트 던지기</h2>
+                <div class="bg-slate-100 p-5 rounded-2xl mb-4 border-l-8 border-slate-400 shadow-inner">
+                    <p class="text-lg text-slate-800 font-bold leading-relaxed">
+                        "디지털 윤리 서약서를 만들어줘. 체크박스 3개가 있고, 다 체크해야 제출 버튼을 누를 수 있게 해 줘."
+                    </p>
+                </div>
+                <p class="text-base text-slate-600 mb-4 bg-yellow-50 p-3 rounded-lg border border-yellow-200"><strong>🎯 목표:</strong> HTML/CSS 용어 없이 원하는 <strong>'기능'</strong>만 일상어로 지시하여 뼈대를 잡습니다.</p>
+                
+                <!-- 수정: div에서 pre 태그로 변경하여 줄바꿈 적용 -->
+                <pre class="bg-slate-800 text-green-400 p-5 rounded-2xl text-sm font-mono overflow-x-auto shadow-lg flex-grow whitespace-pre-wrap">
+&lt;!-- AI가 짜준 핵심 코드 --&gt;
+&lt;input type="checkbox" id="chk1"&gt; 비방하지 않기&lt;br&gt;
+&lt;input type="checkbox" id="chk2"&gt; 저작권 지키기&lt;br&gt;
+&lt;input type="checkbox" id="chk3"&gt; 개인정보 보호&lt;br&gt;
+&lt;button onclick="checkAll()"&gt;제출하기&lt;/button&gt;
+                </pre>
+            </div>
+            <div class="w-1/2 bg-white rounded-3xl shadow-sm border border-slate-200 p-8 bg-[url('https://www.transparenttextures.com/patterns/notebook.png')]">
+                <div class="bg-black text-white text-[10px] font-bold px-2 py-1 rounded mb-4 inline-block tracking-widest uppercase shadow">▶ 브라우저 실행 화면 (투박함)</div>
+                <div class="p-5 bg-white border-2 border-dashed border-gray-300 rounded-xl h-[calc(100%-3rem)]">
+                    <h1 class="text-2xl font-bold mb-4 border-b pb-2">디지털 윤리 서약서</h1>
+                    <div class="text-lg space-y-3 mb-6">
+                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="ex1-chk1" class="w-5 h-5"> 남을 비방하지 않겠습니다.</label>
+                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="ex1-chk2" class="w-5 h-5"> 저작권을 지키겠습니다.</label>
+                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="ex1-chk3" class="w-5 h-5"> 개인정보를 보호하겠습니다.</label>
+                    </div>
+                    <button class="bg-gray-200 border-2 border-gray-400 px-4 py-2 text-base font-bold rounded shadow hover:bg-gray-300 transition" onclick="if(document.getElementById('ex1-chk1').checked && document.getElementById('ex1-chk2').checked && document.getElementById('ex1-chk3').checked) alert('제출 완료!'); else alert('모든 항목에 동의해주세요.');">제출하기</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==============================================
+             슬라이드 5: 주제1 (HTML 수정)
+        =============================================== -->
+        <div class="slide w-full h-full p-4 gap-8" id="slide-5">
+            <div class="w-1/2 bg-white rounded-3xl shadow-sm border border-slate-200 p-8 overflow-y-auto flex flex-col">
+                <div class="mb-3 inline-block bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full font-bold text-xs w-max">실습 1. 윤리 서약서 만들기</div>
+                <h2 class="text-2xl font-extrabold text-slate-800 mb-4">2단계: HTML 구조 개입하기</h2>
+                <div class="bg-indigo-50 p-5 rounded-2xl mb-4 border-l-8 border-indigo-500 shadow-sm">
+                    <p class="text-lg text-indigo-900 font-bold leading-relaxed">
+                        "체크박스들이 너무 흩어져 있어. 전체 내용을 &lt;fieldset&gt; 태그로 묶어주고, 항목들은 리스트 태그(&lt;ul&gt;, &lt;li&gt;)를 써서 깔끔하게 정리해 줘. 맨 아래에는 서명용 &lt;input&gt; 칸을 추가해 줘."
+                    </p>
+                </div>
+                <p class="text-base text-slate-600 mb-4 bg-yellow-50 p-3 rounded-lg border border-yellow-200"><strong>🎯 목표:</strong> 문서를 문서답게 묶어주고 <strong>뼈대를 구체적으로 통제</strong>합니다.</p>
+                
+                <!-- 수정: div에서 pre 태그로 변경 -->
+                <pre class="bg-slate-800 text-green-400 p-5 rounded-2xl text-sm font-mono overflow-x-auto shadow-lg flex-grow whitespace-pre-wrap">
+&lt;!-- AI가 수정한 HTML 구조 --&gt;
+&lt;fieldset&gt;
+  &lt;legend&gt;서약 내용&lt;/legend&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;input type="checkbox"&gt; 내용 1&lt;/li&gt;
+    &lt;li&gt;&lt;input type="checkbox"&gt; 내용 2&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;p&gt;서명: &lt;input type="text" placeholder="이름 입력"&gt;&lt;/p&gt;
+&lt;/fieldset&gt;
+                </pre>
+            </div>
+            <div class="w-1/2 bg-white rounded-3xl shadow-sm border border-slate-200 p-8 bg-[url('https://www.transparenttextures.com/patterns/notebook.png')]">
+                <div class="bg-black text-white text-[10px] font-bold px-2 py-1 rounded mb-4 inline-block tracking-widest uppercase shadow">▶ 브라우저 실행 화면 (구조화됨)</div>
+                <div class="p-5 bg-white border border-gray-300 rounded-xl h-[calc(100%-3rem)] shadow-sm">
+                    <h1 class="text-xl font-bold mb-3">디지털 시민 윤리 서약서</h1>
+                    <fieldset class="border-2 border-gray-400 p-4 rounded mb-4">
+                        <legend class="px-2 font-bold text-base text-gray-700">서약 내용</legend>
+                        <ul class="list-disc pl-6 mb-4 text-base space-y-2">
+                            <li><input type="checkbox" class="mr-2 w-4 h-4"> 올바른 언어를 사용하겠습니다.</li>
+                            <li><input type="checkbox" class="mr-2 w-4 h-4"> 출처를 명확히 밝히겠습니다.</li>
+                            <li><input type="checkbox" class="mr-2 w-4 h-4"> 개인정보를 유출하지 않겠습니다.</li>
+                        </ul>
+                        <p class="text-base font-bold bg-gray-50 p-2 rounded">서명: <input type="text" class="border border-gray-400 px-2 py-1 ml-2 font-normal rounded w-40" placeholder="이름 입력"></p>
+                    </fieldset>
+                    <button class="bg-gray-200 border-2 border-gray-400 px-4 py-2 text-base font-bold rounded shadow hover:bg-gray-300">서약서 제출하기</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==============================================
+             슬라이드 6: 주제1 (CSS 수정)
+        =============================================== -->
+        <div class="slide w-full h-full p-4 gap-8" id="slide-6">
+            <div class="w-1/2 bg-white rounded-3xl shadow-sm border border-slate-200 p-8 overflow-y-auto flex flex-col">
+                <div class="mb-3 inline-block bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full font-bold text-xs w-max">실습 1. 윤리 서약서 만들기</div>
+                <h2 class="text-2xl font-extrabold text-slate-800 mb-4">3단계: CSS 디자인 입히기</h2>
+                <div class="bg-pink-50 p-5 rounded-2xl mb-4 border-l-8 border-pink-500 shadow-sm">
+                    <p class="text-lg text-pink-900 font-bold leading-relaxed">
+                        "진짜 공식 서약서처럼 꾸며줘. 전체 배경은 누런색(아이보리)으로 하고, 전체 테두리(border)에 두꺼운 실선을 넣어 줘. 제목 글씨는 크고 가운데 정렬해 줘. 스타일은 &lt;style&gt;로 작성해 줘."
+                    </p>
+                </div>
+                <p class="text-base text-slate-600 mb-4 bg-yellow-50 p-3 rounded-lg border border-yellow-200"><strong>🎯 목표:</strong> 뼈대 위에 예쁜 <strong>'옷'</strong>을 입혀 완성도를 높입니다.</p>
+                
+                <!-- 수정: div에서 pre 태그로 변경 -->
+                <pre class="bg-slate-800 text-green-400 p-5 rounded-2xl text-sm font-mono overflow-x-auto shadow-lg flex-grow whitespace-pre-wrap">
+&lt;!-- AI가 생성한 디자인 코드 --&gt;
+&lt;style&gt;
+  .pledge-box {
+    background-color: #fdfbf7;
+    border: 4px solid #333;
+    padding: 30px;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  h1 { text-align: center; color: #2c3e50; }
+&lt;/style&gt;
+                </pre>
+            </div>
+            <div class="w-1/2 bg-gray-800 rounded-3xl shadow-inner border border-slate-200 flex items-center justify-center relative p-6">
+                <div class="absolute top-6 left-8 bg-black text-white text-[10px] font-bold px-2 py-1 rounded tracking-widest uppercase shadow z-10">▶ 브라우저 실행 화면 (디자인 완성!)</div>
+                
+                <div style="background-color: #fdfbf7; border: 5px solid #2c3e50; padding: 30px; width: 90%; max-width: 400px; font-family: 'Times New Roman', serif; box-shadow: 0 15px 20px -5px rgba(0, 0, 0, 0.5);">
+                    <h1 style="text-align: center; color: #2c3e50; font-size: 24px; font-weight: 900; margin-bottom: 20px; border-bottom: 2px solid #2c3e50; padding-bottom: 10px;">디지털 시민 서약서</h1>
+                    <ul style="line-height: 2; list-style: none; padding: 0; margin-bottom: 20px; font-size: 16px; color: #333; font-weight: bold;">
+                        <li><input type="checkbox" style="transform: scale(1.3); margin-right: 10px;"> 올바른 언어를 사용하겠습니다.</li>
+                        <li><input type="checkbox" style="transform: scale(1.3); margin-right: 10px;"> 출처를 명확히 밝히겠습니다.</li>
+                    </ul>
+                    <p style="margin-bottom: 20px; font-size: 16px; font-weight: bold; text-align: right;">
+                        서명: <input type="text" placeholder="이름 입력" style="border: none; border-bottom: 2px solid #000; background: transparent; outline: none; font-size: 16px; width: 100px; text-align: center;">
+                    </p>
+                    <button style="width: 100%; padding: 12px; background-color: #27ae60; color: white; border: none; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">서약서 제출하기</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==============================================
+             슬라이드 7: 주제2 (러프)
+        =============================================== -->
+        <div class="slide w-full h-full p-4 gap-8" id="slide-7">
+            <div class="w-1/2 bg-white rounded-3xl shadow-sm border border-slate-200 p-8 overflow-y-auto flex flex-col">
+                <div class="mb-3 inline-block bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full font-bold text-xs w-max">실습 2. 딜레마 극장</div>
+                <h2 class="text-2xl font-extrabold text-slate-800 mb-4">1단계: 러프한 프롬프트 던지기</h2>
+                <div class="bg-slate-100 p-5 rounded-2xl mb-4 border-l-8 border-slate-400 shadow-sm">
+                    <p class="text-lg text-slate-800 font-bold leading-relaxed">
+                        "저작권 딜레마 상황을 하나 주고, A버튼(불법 다운로드)과 B버튼(정품 구매) 중 하나를 고르는 퀴즈를 만들어 줘. 밑에 '설명 보기' 버튼을 누르면 왜 그런지 해설이 나오게 해 줘."
+                    </p>
+                </div>
+                
+                <!-- 수정: div에서 pre 태그로 변경 -->
+                <pre class="bg-slate-800 text-green-400 p-5 rounded-2xl text-sm font-mono overflow-x-auto shadow-lg flex-grow whitespace-pre-wrap">
+&lt;p&gt;상황: 내일 당장 발표인데...&lt;/p&gt;
+&lt;button&gt;A. 그냥 쓴다&lt;/button&gt;
+&lt;button&gt;B. 정품을 산다&lt;/button&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;button onclick="alert('저작권법 위반...')"&gt;
+  설명 보기
+&lt;/button&gt;
+                </pre>
+            </div>
+            <div class="w-1/2 bg-white rounded-3xl shadow-sm border border-slate-200 p-8 flex flex-col">
+                <div class="bg-black text-white text-[10px] font-bold px-2 py-1 rounded mb-4 inline-block tracking-widest uppercase shadow w-max">▶ 브라우저 실행 화면</div>
+                <div class="p-6 bg-slate-50 border-2 border-dashed border-gray-300 rounded-xl flex-grow">
+                    <h3 class="text-xl font-bold mb-3 text-red-600">Q. 딜레마 상황</h3>
+                    <p class="mb-6 text-lg leading-relaxed font-medium bg-white p-3 border rounded shadow-sm">내일 당장 발표인데, 발표 자료에 딱 어울리는 유료 폰트를 인터넷 블로그에서 무료로 구했습니다. 어떻게 할까요?</p>
+                    
+                    <div class="space-x-3 mb-8">
+                        <button class="bg-gray-200 border-2 border-gray-400 px-4 py-2 text-base font-bold rounded shadow hover:bg-gray-300">A. 그냥 쓴다</button>
+                        <button class="bg-gray-200 border-2 border-gray-400 px-4 py-2 text-base font-bold rounded shadow hover:bg-gray-300">B. 정품을 산다</button>
+                    </div>
+                    
+                    <hr class="border-gray-300 mb-4">
+                    <button class="bg-blue-100 border-2 border-blue-400 text-blue-800 px-4 py-2 text-base font-bold rounded shadow" onclick="alert('저작권법 위반으로 처벌받을 수 있습니다.')">정답 및 설명 보기</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==============================================
+             슬라이드 8: 주제2 (HTML/JS 수정)
+        =============================================== -->
+        <div class="slide w-full h-full p-4 gap-8" id="slide-8">
+            <div class="w-1/2 bg-white rounded-3xl shadow-sm border border-slate-200 p-8 overflow-y-auto flex flex-col">
+                <div class="mb-3 inline-block bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full font-bold text-xs w-max">실습 2. 딜레마 극장</div>
+                <h2 class="text-2xl font-extrabold text-slate-800 mb-4">2단계: HTML/JS 동작 개선</h2>
+                <div class="bg-indigo-50 p-5 rounded-2xl mb-4 border-l-8 border-indigo-500 shadow-sm">
+                    <p class="text-lg text-indigo-900 font-bold leading-relaxed">
+                        "설명 버튼을 누르면 알림창(alert)이 뜨는 대신, 숨겨져 있던 &lt;div id="explanation"&gt; 상자가 화면 아래에 짠 하고 나타나도록 자바스크립트(display: block)와 HTML 구조를 수정해 줘."
+                    </p>
+                </div>
+                <p class="text-base text-slate-600 mb-4 bg-yellow-50 p-3 rounded-lg border border-yellow-200"><strong>🎯 목표:</strong> 팝업 경고창 대신 <strong>자연스러운 토글(Toggle) UI</strong>로 변경합니다.</p>
+                
+                <!-- 수정: div에서 pre 태그로 변경 -->
+                <pre class="bg-slate-800 text-green-400 p-5 rounded-2xl text-sm font-mono overflow-x-auto shadow-lg flex-grow whitespace-pre-wrap">
+&lt;!-- 요소를 숨겨두고 클릭 시 보이게 함 --&gt;
+&lt;button id="showBtn"&gt;상황 설명 보기&lt;/button&gt;
+&lt;div id="explanation" style="display: none;"&gt;
+  💡 해설: 무료 폰트라도 상업적 사용은...
+&lt;/div&gt;
+
+&lt;script&gt;
+  document.getElementById("showBtn")
+    .addEventListener("click", function() {
+      document.getElementById("explanation")
+        .style.display = "block";
+  });
+&lt;/script&gt;
+                </pre>
+            </div>
+            <div class="w-1/2 bg-white rounded-3xl shadow-sm border border-slate-200 p-8 flex flex-col">
+                <div class="bg-black text-white text-[10px] font-bold px-2 py-1 rounded mb-4 inline-block tracking-widest uppercase shadow w-max">▶ 브라우저 실행 화면 (화면 내 토글)</div>
+                <div class="p-6 bg-slate-50 border border-gray-300 rounded-xl flex-grow shadow-sm">
+                    <p class="mb-4 text-lg font-bold text-slate-700">상황: 유료 폰트를 무료로 구했습니다.</p>
+                    <div class="space-x-2 mb-6">
+                        <button class="bg-white border-2 border-gray-300 px-3 py-1.5 text-base font-bold rounded shadow-sm">A. 쓴다</button>
+                        <button class="bg-white border-2 border-gray-300 px-3 py-1.5 text-base font-bold rounded shadow-sm">B. 안 쓴다</button>
+                    </div>
+                    
+                    <button id="ex2-btn" class="bg-indigo-600 text-white px-4 py-2 text-base font-bold rounded shadow hover:bg-indigo-700 w-full mb-3">상황 설명 보기</button>
+                    
+                    <div id="ex2-exp" class="p-4 bg-amber-100 border-l-4 border-amber-500 hidden rounded shadow-sm text-base font-bold text-amber-900">
+                        💡 해설: 무료로 공유된 폰트라도 상업적/공식적 발표에 무단 사용하면 저작권 침해가 될 수 있습니다!
+                    </div>
+                    <script>
+                        document.getElementById("ex2-btn").addEventListener("click", function() {
+                            document.getElementById("ex2-exp").style.display = "block";
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==============================================
+             슬라이드 9: 주제2 (CSS 수정)
+        =============================================== -->
+        <div class="slide w-full h-full p-4 gap-8" id="slide-9">
+            <div class="w-1/2 bg-white rounded-3xl shadow-sm border border-slate-200 p-8 overflow-y-auto flex flex-col">
+                <div class="mb-3 inline-block bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full font-bold text-xs w-max">실습 2. 딜레마 극장</div>
+                <h2 class="text-2xl font-extrabold text-slate-800 mb-4">3단계: CSS 인터랙션 디자인</h2>
+                <div class="bg-pink-50 p-5 rounded-2xl mb-4 border-l-8 border-pink-500 shadow-sm">
+                    <p class="text-lg text-pink-900 font-bold leading-relaxed">
+                        "A, B 선택지 버튼을 예쁜 카드 모양으로 만들어줘. 버튼에 마우스를 올리면(:hover) 카드가 위로 살짝 떠오르고(transform) 테두리 색상이 파란색으로 변하게 부드러운 움직임(transition)을 CSS로 추가해 줘."
+                    </p>
+                </div>
+                
+                <!-- 수정: div에서 pre 태그로 변경 -->
+                <pre class="bg-slate-800 text-green-400 p-5 rounded-2xl text-sm font-mono overflow-x-auto shadow-lg flex-grow whitespace-pre-wrap">
+&lt;style&gt;
+  .choice-card {
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease; /* 부드러운 전환 */
+  }
+  .choice-card:hover {
+    transform: translateY(-5px); /* 공중 부양 */
+    border-color: #3b82f6;       /* 파란 테두리 */
+  }
+&lt;/style&gt;
+                </pre>
+            </div>
+            <div class="w-1/2 bg-slate-100 rounded-3xl shadow-inner border border-slate-200 flex flex-col justify-center items-center relative p-8">
+                <div class="absolute top-6 left-8 bg-black text-white text-[10px] font-bold px-2 py-1 rounded tracking-widest uppercase shadow z-10">▶ 마우스를 올려보세요!</div>
+                
+                <style>
+                    .choice-card-demo {
+                        width: 100%; max-width: 350px; padding: 20px;
+                        border: 3px solid #cbd5e1; border-radius: 12px;
+                        background-color: white; cursor: pointer;
+                        transition: all 0.3s ease; text-align: center; 
+                        margin-bottom: 15px; font-size: 18px; font-weight: 800; color: #475569;
+                        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+                    }
+                    .choice-card-demo:hover {
+                        transform: translateY(-5px) scale(1.02);
+                        border-color: #3b82f6; color: #2563eb;
+                        box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3);
+                        background-color: #eff6ff;
+                    }
+                </style>
+                <div class="choice-card-demo">A. 그냥 다운받아 쓴다</div>
+                <div class="choice-card-demo">B. 상업용 무료 폰트를 찾는다</div>
+            </div>
+        </div>
+
+        <!-- ==============================================
+             슬라이드 10: 주제3 (러프)
+        =============================================== -->
+        <div class="slide w-full h-full p-4 gap-8" id="slide-10">
+            <div class="w-1/2 bg-white rounded-3xl shadow-sm border border-slate-200 p-8 overflow-y-auto flex flex-col">
+                <div class="mb-3 inline-block bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full font-bold text-xs w-max">실습 3. 피싱/스미싱 감별사</div>
+                <h2 class="text-2xl font-extrabold text-slate-800 mb-4">1단계: 러프한 프롬프트 던지기</h2>
+                <div class="bg-slate-100 p-5 rounded-2xl mb-4 border-l-8 border-slate-400 shadow-sm">
+                    <p class="text-lg text-slate-800 font-bold leading-relaxed">
+                        "택배 기사를 사칭하는 스미싱 문자 화면을 만들어 줘. 파란색 링크를 클릭하면 '위험! 피싱 사이트입니다'라고 뜨게 해 줘."
+                    </p>
+                </div>
+                <p class="text-base text-slate-600 mb-3 bg-yellow-50 p-2 rounded-lg border border-yellow-200"><strong>설명:</strong> 기능은 확실하게 작동하지만, 시각적으로 너무 1차원적이라 몰입감이 떨어집니다.</p>
+                
+                <!-- 수정: div에서 pre 태그로 변경 -->
+                <pre class="bg-slate-800 text-green-400 p-5 rounded-2xl text-sm font-mono overflow-x-auto shadow-lg flex-grow whitespace-pre-wrap">
+&lt;p&gt;택배 배송 불가 아래 링크로 확인요망&lt;/p&gt;
+&lt;a href="#" onclick="alert('위험! 피싱입니다.')"&gt;
+  http://fake.com/check
+&lt;/a&gt;
+                </pre>
+            </div>
+            <div class="w-1/2 bg-white rounded-3xl shadow-sm border border-slate-200 p-8 flex flex-col">
+                <div class="bg-black text-white text-[10px] font-bold px-2 py-1 rounded mb-4 inline-block tracking-widest uppercase shadow w-max">▶ 브라우저 실행 화면</div>
+                <div class="p-6 border-2 border-dashed border-gray-300 rounded-xl flex-grow flex flex-col justify-center">
+                    <p class="mb-3 text-xl font-bold text-gray-800">[Web발신] 택배 배송 불가 (주소지 오류) 아래 링크로 확인바랍니다.</p>
+                    <a href="javascript:void(0);" class="text-blue-600 underline text-xl font-bold" onclick="alert('🚨 위험! 피싱 사이트입니다.')">http://fake-delivery.com/check</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==============================================
+             슬라이드 11: 주제3 (HTML 수정)
+        =============================================== -->
+        <div class="slide w-full h-full p-4 gap-8" id="slide-11">
+            <div class="w-1/2 bg-white rounded-3xl shadow-sm border border-slate-200 p-8 overflow-y-auto flex flex-col">
+                <div class="mb-3 inline-block bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full font-bold text-xs w-max">실습 3. 피싱/스미싱 감별사</div>
+                <h2 class="text-2xl font-extrabold text-slate-800 mb-4">2단계: 스마트폰 HTML 뼈대 세우기</h2>
+                <div class="bg-indigo-50 p-5 rounded-2xl mb-4 border-l-8 border-indigo-500 shadow-sm">
+                    <p class="text-lg text-indigo-900 font-bold leading-relaxed">
+                        "진짜 스마트폰 앱처럼 보이게 HTML 뼈대를 다시 짜 줘. 전체 화면을 감싸는 &lt;div id="phone"&gt; 상자를 만들고, 그 안에 상대방 말풍선 구역과 하단의 키보드 입력 구역을 각각의 &lt;div&gt;로 확실히 나눠 줘."
+                    </p>
+                </div>
+                
+                <!-- 수정: div에서 pre 태그로 변경 -->
+                <pre class="bg-slate-800 text-green-400 p-5 rounded-2xl text-sm font-mono overflow-x-auto shadow-lg flex-grow whitespace-pre-wrap">
+&lt;div id="phone"&gt;
+  &lt;!-- 상단바 --&gt;
+  &lt;div id="header"&gt;택배 기사님&lt;/div&gt;
+  
+  &lt;!-- 채팅 영역 --&gt;
+  &lt;div id="chat-area"&gt;
+    &lt;div class="msg-other"&gt;주소 오류...&lt;/div&gt;
+  &lt;/div&gt;
+  
+  &lt;!-- 하단 입력 --&gt;
+  &lt;div id="input-area"&gt;메시지 입력...&lt;/div&gt;
+&lt;/div&gt;
+                </pre>
+            </div>
+            <div class="w-1/2 bg-white rounded-3xl shadow-sm border border-slate-200 p-8 flex flex-col">
+                <div class="bg-black text-white text-[10px] font-bold px-2 py-1 rounded mb-4 inline-block tracking-widest uppercase shadow w-max">▶ 브라우저 실행 화면 (구역만 나눔)</div>
+                <div class="p-5 border border-gray-300 rounded-xl flex-grow bg-slate-50 flex flex-col shadow-inner">
+                    <div class="border-2 border-gray-400 p-2 mb-3 bg-white font-bold text-lg text-center">택배 기사님 (헤더 구역)</div>
+                    <div class="border-2 border-gray-400 p-3 mb-3 flex-grow bg-white">
+                        <div class="border-2 border-red-300 p-2 bg-red-50 text-red-800 font-bold text-base inline-block">주소 오류로 배송지연. 확인요망. [링크]</div>
+                    </div>
+                    <div class="border-2 border-gray-400 p-2 bg-white text-gray-500 font-bold text-base">메시지를 입력하세요... (입력 구역)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==============================================
+             슬라이드 12: 주제3 (CSS 수정)
+        =============================================== -->
+        <div class="slide w-full h-full p-4 gap-8" id="slide-12">
+            <div class="w-1/2 bg-white rounded-3xl shadow-sm border border-slate-200 p-8 overflow-y-auto flex flex-col">
+                <div class="mb-3 inline-block bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full font-bold text-xs w-max">실습 3. 피싱/스미싱 감별사</div>
+                <h2 class="text-2xl font-extrabold text-slate-800 mb-4">3단계: CSS 모바일 UI 완성</h2>
+                <div class="bg-pink-50 p-5 rounded-2xl mb-4 border-l-8 border-pink-500 shadow-sm">
+                    <p class="text-lg text-pink-900 font-bold leading-relaxed">
+                        "전체 상자(#phone)의 너비를 350px로 고정하고 비율을 스마트폰처럼 세로로 길게 해 줘. 테두리는 둥글게 깎아줘. 상대방 말풍선(msg-other)은 회색 바탕으로 왼쪽에 붙게 하고, 모서리를 둥글게 처리해 줘."
+                    </p>
+                </div>
+                
+                <!-- 수정: div에서 pre 태그로 변경 -->
+                <pre class="bg-slate-800 text-green-400 p-5 rounded-2xl text-sm font-mono overflow-x-auto shadow-lg flex-grow whitespace-pre-wrap">
+&lt;style&gt;
+  #phone {
+    width: 350px; height: 600px;
+    border: 15px solid #1f2937; /* 스마트폰 베젤 */
+    border-radius: 40px;
+    background-color: #9bbbd4;  /* 대화방 배경 */
+  }
+  .msg-other {
+    background-color: white; padding: 15px;
+    border-radius: 20px; max-width: 80%;
+  }
+&lt;/style&gt;
+                </pre>
+            </div>
+            <div class="w-1/2 bg-slate-800 rounded-3xl shadow-inner border border-slate-200 flex justify-center items-center relative py-4">
+                <div class="absolute top-4 left-6 bg-black text-white text-[10px] font-bold px-2 py-1 rounded tracking-widest uppercase shadow z-10">▶ 모바일 UI 시뮬레이션 완성</div>
+                
+                <!-- 폰 UI 목업 -->
+                <div style="width: 280px; height: 500px; border: 12px solid #1e293b; border-radius: 30px; background-color: #9bbbd4; display: flex; flex-direction: column; overflow: hidden; position: relative; box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);">
+                    <!-- 스피커/카메라 노치 -->
+                    <div style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100px; height: 20px; background-color: #1e293b; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; z-index: 20;"></div>
+                    
+                    <!-- 헤더 -->
+                    <div style="background-color: rgba(255,255,255,0.9); padding: 20px 10px 10px; text-align: center; font-weight: 900; font-size: 14px; border-bottom: 1px solid #cbd5e1; color: #334155; z-index: 10;">CJ 대한통운 기사님</div>
+                    
+                    <!-- 대화 영역 -->
+                    <div style="flex-grow: 1; padding: 15px 10px; overflow-y: auto; display: flex; flex-direction: column;">
+                        
+                        <!-- 날짜 선 -->
+                        <div style="text-align: center; margin-bottom: 15px;"><span style="background-color: rgba(0,0,0,0.1); color: white; padding: 4px 10px; border-radius: 15px; font-size: 10px; font-weight: bold;">2024년 10월 25일 금요일</span></div>
+                        
+                        <!-- 상대방 말풍선 -->
+                        <div style="background-color: white; padding: 12px; border-radius: 15px; border-top-left-radius: 5px; margin-bottom: 12px; display: inline-block; max-width: 85%; font-size: 14px; font-weight: 600; color: #334155; box-shadow: 0 2px 4px rgba(0,0,0,0.1); line-height: 1.4; align-self: flex-start;">
+                            [Web발신]<br>주소지 오류로 배송이 지연되고 있습니다.<br>정확한 주소를 다시 입력하여 주시기 바랍니다.<br><br>
+                            <a href="javascript:void(0);" onclick="alert('🚨 위험! 스마트폰에 악성 앱이 설치되는 피싱 사이트입니다!')" style="color: #2563eb; text-decoration: underline; word-break: break-all;">http://cj-han-jin-check.com/update</a>
+                        </div>
+                    </div>
+                    
+                    <!-- 입력창 영역 -->
+                    <div style="background-color: #f8fafc; padding: 10px; border-top: 1px solid #cbd5e1; display: flex; gap: 8px; align-items: center;">
+                        <div style="background-color: white; border: 1px solid #cbd5e1; border-radius: 15px; padding: 8px 12px; flex-grow: 1; color: #94a3b8; font-size: 12px; font-weight: bold;">메시지 보내기...</div>
+                        <div style="width: 28px; height: 28px; background-color: #fbbf24; border-radius: 50%; flex-shrink: 0;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- 하단 네비게이션 -->
+    <footer class="bg-white border-t border-slate-200 px-8 py-4 flex justify-between items-center shrink-0 z-10">
+        <button id="prevBtn" class="bg-slate-100 border border-slate-300 hover:bg-slate-200 text-slate-700 px-6 py-2.5 rounded-xl font-extrabold text-base transition-colors disabled:opacity-30 disabled:cursor-not-allowed shadow-sm">&larr; 이전 화면</button>
+        <div class="text-slate-400 font-bold text-xs hidden md:block">
+            키보드 좌(←) 우(→) 방향키로 이동 가능합니다.
+        </div>
+        <button id="nextBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl font-extrabold text-base transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-0.5">&rarr; 다음 화면</button>
+    </footer>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 12; // 표지 포함 12장
+
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const pageIndicator = document.getElementById('current-page');
+        const slides = document.querySelectorAll('.slide');
+
+        function updateSlides() {
+            slides.forEach((slide, index) => {
+                if(index + 1 === currentSlide) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+            
+            pageIndicator.innerText = currentSlide;
+            prevBtn.disabled = currentSlide === 1;
+            nextBtn.disabled = currentSlide === totalSlides;
+            
+            // 프로그레스 바 너비 계산
+            const progress = ((currentSlide - 1) / (totalSlides - 1)) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        function goNext() {
+            if(currentSlide < totalSlides) {
+                currentSlide++;
+                updateSlides();
+            }
+        }
+
+        function goPrev() {
+            if(currentSlide > 1) {
+                currentSlide--;
+                updateSlides();
+            }
+        }
+
+        prevBtn.addEventListener('click', goPrev);
+        nextBtn.addEventListener('click', goNext);
+        
+        // 키보드 방향키 이동 추가
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                goNext();
+            } else if (e.key === 'ArrowLeft') {
+                goPrev();
+            }
+        });
+
+        // 글로벌 스코프로 nextSlide, prevSlide 함수 노출 (표지 버튼용)
+        window.nextSlide = goNext;
+        window.prevSlide = goPrev;
+
+        // 초기화
+        updateSlides();
+    </script>
+</body>
+</html>

@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>인공지능 디지털 윤리: Moral Machine과 AI 도시를 부탁해</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', 'Pretendard', sans-serif; }
+        .slide { display: none; }
+        .slide.active { display: flex; animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 스크롤바 커스텀 */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
+        
+        /* 커스텀 애니메이션 및 인터랙션 요소 */
+        .hover-card { transition: all 0.3s ease; }
+        .hover-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
+        
+        .bar-chart-fill { transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); width: 0; }
+        .slide.active .bar-korea { width: 90%; }
+        .slide.active .bar-global { width: 60%; }
+        .slide.active .bar-korea-low { width: 30%; }
+        .slide.active .bar-global-high { width: 70%; }
+
+        /* 맥박 애니메이션 */
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+        .animate-pulse-soft { animation: pulse-soft 2s infinite; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 h-screen flex flex-col overflow-hidden">
+
+    <header class="bg-white shadow-sm z-10 flex-shrink-0">
+        <div class="h-1 w-full bg-slate-200">
+            <div id="progress-bar" class="h-1 bg-indigo-600 transition-all duration-300" style="width: 0%;"></div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <span class="bg-indigo-100 text-indigo-700 p-2 rounded-lg">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                </span>
+                <h1 class="text-xl font-bold text-slate-700">인공지능 디지털 윤리 교원 연수</h1>
+            </div>
+            <span id="slide-counter" class="text-sm font-medium text-slate-500 bg-slate-100 px-3 py-1 rounded-full border border-slate-200">1 / 8</span>
+        </div>
+    </header>
+
+    <main class="flex-grow relative overflow-hidden flex items-center justify-center p-4 lg:p-6 w-full max-w-7xl mx-auto">
+        
+        <div class="slide active flex-col items-center justify-center w-full h-full text-center" id="slide-0">
+            <div class="inline-block mb-4 px-5 py-1.5 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-700 font-semibold text-sm tracking-wide shadow-sm">
+                딜레마 토론 기반 인공지능 윤리 교육
+            </div>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 mb-6 leading-tight tracking-tight">
+                Moral Machine과 <br> <span class="text-indigo-600">AI 도시를 부탁해</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+                초등 교육 현장의 문제점을 보완하고, 학생들의 실질적인 <br class="hidden md:block">AI 윤리 역량을 기르기 위한 새로운 교육 모델을 소개합니다.
+            </p>
+            <button onclick="nextSlide()" class="px-8 py-4 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 text-lg flex items-center gap-2 mx-auto">
+                강의 시작하기 
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </button>
+        </div>
+
+
+      
+        <div class="slide w-full h-full flex-col" id="slide-1">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">1</span>
+                딜레마 상황과 학생들의 이해
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-indigo-500 shrink-0">
+                        <h3 class="text-lg font-bold text-indigo-800 mb-2">딜레마(Dilemma)란?</h3>
+                        <p class="text-slate-700 text-sm leading-relaxed">
+                            둘 중 어느 것을 선택해도 바람직하지 못한 결과가 나오는 곤란한 상황을 의미합니다. 윤리적 문제 상황을 인지하고 깊은 사고와 논의를 유도하는 핵심 장치입니다.
+                        </p>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0">
+                        <h3 class="text-lg font-bold text-slate-200 mb-2 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            교육적 효과
+                        </h3>
+                        <ul class="list-disc pl-5 text-slate-300 text-sm space-y-2 mt-3">
+                            <li>학생들의 <span class="text-white font-bold bg-indigo-500/30 px-1 rounded">도덕적 사고력</span>과 <span class="text-white font-bold bg-indigo-500/30 px-1 rounded">판단력</span>을 증진시키는 데 효과적입니다.</li>
+                            <li>자신이 직면한 상황을 <strong>타인의 관점</strong>에서 바라보는 능력을 길러줍니다.</li>
+                            <li>정답이 없는 문제에 대해 합리적인 근거를 마련하는 과정을 거칩니다.</li>
+                        </ul>
+                    </div>
+                </div>
+
+              
+                <div class="bg-slate-100 rounded-2xl shadow-inner border border-slate-200 p-6 flex flex-col items-center justify-center relative overflow-hidden">
+                    <h3 class="text-lg font-bold text-slate-600 mb-8 z-10 bg-white/80 px-4 py-2 rounded-full backdrop-blur-sm">어떤 선택을 하시겠습니까?</h3>
+                  
+                    <div class="flex flex-col md:flex-row gap-8 w-full max-w-md z-10">
+                        <img src = "https://i0.wp.com/itmanual.net/wp-content/uploads/2022/06/3404.jpg?resize=1536%2C828&ssl=1")
+                          </img>
+                        
+                      
+                    </div>               
+                    <div class="flex flex-col md:flex-row gap-8 w-full max-w-md z-10">
+                        <div class="flex-1 bg-white p-6 rounded-xl shadow-md border-2 border-transparent hover:border-red-400 hover:shadow-lg transition-all cursor-pointer group text-center">
+                            <div class="text-4xl mb-3 group-hover:scale-110 transition-transform">📉</div>
+                            <h4 class="font-bold text-slate-800">선택 A</h4>
+                            <p class="text-xs text-slate-500 mt-2">소수의 큰 피해</p>
+                        </div>
+                        <div class="flex-1 bg-white p-6 rounded-xl shadow-md border-2 border-transparent hover:border-blue-400 hover:shadow-lg transition-all cursor-pointer group text-center">
+                            <div class="text-4xl mb-3 group-hover:scale-110 transition-transform">📊</div>
+                            <h4 class="font-bold text-slate-800">선택 B</h4>
+                            <p class="text-xs text-slate-500 mt-2">다수의 작은 피해</p>
+                        </div>
+                    </div>
+                    <!-- 장식용 배경 요소 -->
+                    <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-indigo-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse-soft"></div>
+                    <div class="absolute -top-10 -left-10 w-40 h-40 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse-soft" style="animation-delay: 1s;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide w-full h-full flex-col" id="slide-2">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">2</span>
+                
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-indigo-500 shrink-0">
+                        <h3 class="text-lg font-bold text-indigo-800 mb-2">트롤리 딜레마의 AI 버전</h3>
+                        <p class="text-slate-700 text-sm leading-relaxed">
+                            MIT에서 개발한 Moral machine은 <strong>자율주행 자동차의 사고 딜레마 상황(13개)</strong>을 제시하는 온라인 플랫폼입니다. 브레이크가 고장 난 상황에서 누구를 희생시킬 것인가에 대한 판단을 요구합니다.
+                        </p>
+                    </div>
+                    <div class="bg-emerald-50 p-5 rounded-2xl shadow-sm border border-emerald-100 border-l-4 border-l-emerald-500 shrink-0">
+                        <h3 class="text-lg font-bold text-emerald-800 mb-2">개입 및 고려 변인</h3>
+                        <div class="flex flex-wrap gap-2 mt-3">
+                            <span class="px-3 py-1 bg-white border border-emerald-200 text-emerald-700 rounded-full text-xs font-semibold shadow-sm">동물 vs 사람</span>
+                            <span class="px-3 py-1 bg-white border border-emerald-200 text-emerald-700 rounded-full text-xs font-semibold shadow-sm">탑승자 vs 보행자</span>
+                            <span class="px-3 py-1 bg-white border border-emerald-200 text-emerald-700 rounded-full text-xs font-semibold shadow-sm">사회적 지위</span>
+                            <span class="px-3 py-1 bg-white border border-emerald-200 text-emerald-700 rounded-full text-xs font-semibold shadow-sm">연령대 (노인 vs 아이)</span>
+                            <span class="px-3 py-1 bg-white border border-emerald-200 text-emerald-700 rounded-full text-xs font-semibold shadow-sm">사람의 수</span>
+                            <span class="px-3 py-1 bg-white border border-emerald-200 text-emerald-700 rounded-full text-xs font-semibold shadow-sm">법규 준수 여부</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-slate-800 rounded-2xl shadow-inner border border-slate-700 p-6 flex flex-col items-center justify-center relative overflow-hidden">
+                    <!-- 자율주행차 딜레마 시각화 -->
+                    <div class="w-full max-w-sm">
+                        <img src = "https://miro.medium.com/v2/resize:fit:1400/format:webp/0*noWpPCqJoB2yM_pf.jpg">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide w-full h-full flex-col" id="slide-3">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">3</span>
+                Nature 논문 연구 결과 (Edmond Awad 등, 2018)
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-indigo-500 shrink-0">
+                        <h3 class="text-lg font-bold text-indigo-800 mb-2">글로벌 4천만 건 데이터 분석</h3>
+                        <p class="text-slate-700 text-sm leading-relaxed mb-3">
+                            사람들의 윤리적 판단은 <strong>국가, 문화, 경제 상황</strong>에 따라 크게 다르게 나타났습니다. 놀랍게도 '사람의 수'가 판단의 절대적인 결정 요인은 아니었습니다.
+                        </p>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0">
+                        <h3 class="text-lg font-bold text-slate-200 mb-3 flex items-center gap-2">
+                            <span class="text-xl">🇰🇷</span> 대한민국 응답자의 특징
+                        </h3>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-xs text-slate-300 mb-1">
+                                    <span>동물보다 사람 보호 성향</span>
+                                    <span class="text-emerald-400 font-bold">세계 평균 대비 월등히 높음</span>
+                                </div>
+                                <div class="h-2 w-full bg-slate-600 rounded-full overflow-hidden">
+                                    <div class="h-full bg-emerald-500 bar-chart-fill bar-korea"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs text-slate-300 mb-1">
+                                    <span>사회적 지위 / 젊은 층 우대 성향</span>
+                                    <span class="text-rose-400 font-bold">세계 평균 대비 상대적 낮음</span>
+                                </div>
+                                <div class="h-2 w-full bg-slate-600 rounded-full overflow-hidden flex flex-col justify-center">
+                                    <div class="h-full bg-rose-500 bar-chart-fill bar-korea-low"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col justify-center gap-6">
+                    <h4 class="font-bold text-slate-700 text-center border-b pb-2">가치관의 문화적 차이 비교</h4>
+                    
+                    <!-- 차트 시각화 -->
+                    <div class="space-y-6">
+                      
+                        <p><b>· 서구권(북미/유럽): </b>개개인의 생명 가치와 소수보다 다수를 구하는 응용주의적 선택(더 많은 사람 구하기)을 강하게 선호.</p>
+                        <p><b>· 동양권(한국, 중국, 일본 등): </b>노인이나 사회적 약자에 대한 존중이 상대적으로 높고, 탑승자보다 보행자를 우선시하는 경향.</p>
+                        <p><b>· 남미/영어권: </b>젊은 층과 신체적 지위가 높은 사람을 우선 구하는 경향.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide w-full h-full flex-col" id="slide-4">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">4</span>
+                교육 시 고려할 점 (초등 현장의 문제점)
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500 shrink-0">
+                        <h3 class="text-lg font-bold text-blue-800 mb-2 flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path></svg>
+                            긍정적 측면
+                        </h3>
+                        <p class="text-slate-700 text-sm leading-relaxed">
+                            학생들에게 인공지능 윤리에 대해 <strong>사고할 기회</strong>를 제공하며, 흥미로운 소재를 통해 높은 <strong>수업 몰입도</strong>를 이끌어냅니다.
+                        </p>
+                    </div>
+                    <div class="bg-rose-50 p-5 rounded-2xl shadow-sm border border-rose-200 border-l-4 border-l-rose-500 shrink-0">
+                        <h3 class="text-lg font-bold text-rose-800 mb-2 flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                            부정적 영향 및 한계
+                        </h3>
+                        <p class="text-slate-700 text-sm leading-relaxed">
+                            인공지능 기기가 <strong>'생명을 해치는 상황'</strong>을 반복적으로 간접 경험하게 합니다. 이는 특히 초등학생에게 인공지능을 <strong>'위험한 기술'로 인식하게 하는 부작용</strong>(공포감 조성 등)을 초래하는 것으로 연구결과 확인되었습니다.
+                        </p>
+                    </div>
+                    <div class="bg-indigo-50 p-4 rounded-xl border border-indigo-100 mt-auto text-center">
+                        <p class="text-sm font-bold text-indigo-700">
+                            💡 결론: 기존의 장점은 살리되, 부정적(극단적) 요소를 제거한 <br>새로운 교육 도구의 도입이 절실합니다.
+                        </p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col items-center justify-center relative">
+                    <!-- 인터랙티브 토글 뷰 -->
+                    <div class="flex gap-4 w-full bg-slate-100 p-1 rounded-xl mb-8 relative z-10">
+                        <button onclick="toggleEduView('pros')" id="btn-pros" class="flex-1 py-2 text-sm font-bold bg-white text-blue-600 rounded-lg shadow-sm transition-all">교사의 시선 (참여도)</button>
+                        <button onclick="toggleEduView('cons')" id="btn-cons" class="flex-1 py-2 text-sm font-bold text-slate-500 hover:text-rose-500 transition-all">학생의 시선 (심리)</button>
+                    </div>
+
+                    <div id="view-pros" class="text-center w-full transition-all duration-300">
+                        <div class="text-6xl mb-4">🙋‍♂️🙋‍♀️</div>
+                        <h4 class="font-bold text-xl text-slate-800 mb-2">"재밌어요! 몰입돼요!"</h4>
+                        <p class="text-sm text-slate-500">높은 참여도와 활발한 토론 발생</p>
+                    </div>
+
+                    <div id="view-cons" class="text-center w-full hidden transition-all duration-300">
+                        <div class="text-6xl mb-4">😨🤖</div>
+                        <h4 class="font-bold text-xl text-slate-800 mb-2">"AI가 사람을 죽일까 봐 무서워요."</h4>
+                        <p class="text-sm text-rose-500 font-medium">기술에 대한 과도한 두려움과 부정적 태도 형성</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide w-full h-full flex-col" id="slide-5">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">5</span>
+                대안 플랫폼: AI 도시를 부탁해 <a href="https://aiethics.kr" target="_blank" class="text-indigo-600 hover:text-indigo-800 hover:underline ml-1">(aiethics.kr)</a>
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 shrink-0">
+                        <h3 class="text-lg font-bold text-indigo-800 mb-2"><a href = "https://ai.kisdi.re.kr/aieth/main/contents.do?menuNo=400029" target="_blank" > 대한민국 인공지능 윤리 기준 기반</a></h3>
+                        <p class="text-slate-700 text-sm leading-relaxed mb-4">
+                            교육부의 '사람이 중심이 되는 인공지능 윤리 기준'을 완벽하게 반영하여 설계된 국내 맞춤형 교육 플랫폼입니다.
+                        </p>
+                        <div class="bg-slate-50 rounded-lg p-4 border border-slate-200">
+                            <h4 class="font-bold text-slate-800 text-sm mb-2 text-center border-b pb-2">3대 기본 원칙</h4>
+                            <div class="flex justify-between mt-3 text-xs font-semibold">
+                                <span class="bg-indigo-100 text-indigo-700 px-3 py-2 rounded-lg flex-1 text-center mx-1">인간 존엄성</span>
+                                <span class="bg-emerald-100 text-emerald-700 px-3 py-2 rounded-lg flex-1 text-center mx-1">사회 공공선</span>
+                                <span class="bg-amber-100 text-amber-700 px-3 py-2 rounded-lg flex-1 text-center mx-1">기술 합목적성</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0">
+                        <h3 class="text-lg font-bold text-slate-200 mb-3 text-center">10대 핵심 요건</h3>
+                        <div class="grid grid-cols-2 gap-2 text-center">
+                            <div class="bg-slate-700 text-slate-300 py-1.5 rounded text-xs font-medium border border-slate-600 hover:bg-slate-600 transition">인권 보장</div>
+                            <div class="bg-slate-700 text-slate-300 py-1.5 rounded text-xs font-medium border border-slate-600 hover:bg-slate-600 transition">프라이버시 보호</div>
+                            <div class="bg-slate-700 text-slate-300 py-1.5 rounded text-xs font-medium border border-slate-600 hover:bg-slate-600 transition">다양성 존중</div>
+                            <div class="bg-slate-700 text-slate-300 py-1.5 rounded text-xs font-medium border border-slate-600 hover:bg-slate-600 transition">침해 금지</div>
+                            <div class="bg-slate-700 text-slate-300 py-1.5 rounded text-xs font-medium border border-slate-600 hover:bg-slate-600 transition">공공성</div>
+                            <div class="bg-slate-700 text-slate-300 py-1.5 rounded text-xs font-medium border border-slate-600 hover:bg-slate-600 transition">연대성</div>
+                            <div class="bg-slate-700 text-slate-300 py-1.5 rounded text-xs font-medium border border-slate-600 hover:bg-slate-600 transition">데이터 관리</div>
+                            <div class="bg-slate-700 text-slate-300 py-1.5 rounded text-xs font-medium border border-slate-600 hover:bg-slate-600 transition">책임성</div>
+                            <div class="bg-slate-700 text-slate-300 py-1.5 rounded text-xs font-medium border border-slate-600 hover:bg-slate-600 transition">안전성</div>
+                            <div class="bg-slate-700 text-slate-300 py-1.5 rounded text-xs font-medium border border-slate-600 hover:bg-slate-600 transition">투명성</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 3원칙 그래픽 -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col justify-center items-center relative">
+                    <div class="w-full h-full flex flex-col justify-between max-w-sm py-4">
+                        <!-- 지붕 (Humanity) -->
+                        <div class="w-full bg-slate-800 text-white text-center py-3 rounded-t-xl font-bold text-lg shadow-md z-10">
+                            사람 중심의 인공지능 (Humanity)
+                        </div>
+                        <!-- 기둥 (3원칙) -->
+                        <div class="flex justify-between px-4 py-4 flex-grow relative">
+                            <div class="absolute top-1/2 left-0 w-full h-0.5 bg-slate-200 -z-10"></div>
+                            
+                            <div class="w-1/4 bg-indigo-50 border-2 border-indigo-300 rounded-lg flex flex-col items-center justify-center text-center shadow-sm p-2 hover-card">
+                                <span class="text-2xl mb-2">👤</span>
+                                <span class="text-xs font-bold text-indigo-800">인간<br>존엄성</span>
+                            </div>
+                            <div class="w-1/4 bg-emerald-50 border-2 border-emerald-300 rounded-lg flex flex-col items-center justify-center text-center shadow-sm p-2 hover-card">
+                                <span class="text-2xl mb-2">🌍</span>
+                                <span class="text-xs font-bold text-emerald-800">사회<br>공공선</span>
+                            </div>
+                            <div class="w-1/4 bg-amber-50 border-2 border-amber-300 rounded-lg flex flex-col items-center justify-center text-center shadow-sm p-2 hover-card">
+                                <span class="text-2xl mb-2">⚙️</span>
+                                <span class="text-xs font-bold text-amber-800">기술<br>합목적성</span>
+                            </div>
+                        </div>
+                        <!-- 기반 (10대 요건) -->
+                        <div class="w-full bg-slate-200 text-slate-600 text-center py-2 rounded-b-xl text-xs font-bold border border-slate-300 shadow-inner">
+                            10대 핵심 요건 (인권, 프라이버시, 투명성 등)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide w-full h-full flex-col" id="slide-6">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">6</span>
+                'AI 도시를 부탁해'의 특징
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-indigo-500 shrink-0">
+                        <h3 class="text-lg font-bold text-indigo-800 mb-2">일상적이고 균형 잡힌 딜레마</h3>
+                        <p class="text-slate-700 text-sm leading-relaxed mb-2">
+                            극단적인 생명 위협 사례에서 벗어나, <strong>주요 가치가 상충하는 9개의 일상적 딜레마 상황</strong>을 다룹니다.
+                        </p>
+                        <ul class="list-disc pl-5 text-slate-600 text-sm space-y-1">
+                            <li>인간 존엄성 <strong>VS</strong> 사회 공공선</li>
+                            <li>사회 공공선 <strong>VS</strong> 기술 합목적성</li>
+                            <li>기술 합목적성 <strong>VS</strong> 인간 존엄성</li>
+                        </ul>
+                    </div>
+                    <div class="bg-amber-50 p-5 rounded-2xl border border-amber-100 border-l-4 border-l-amber-500 shrink-0">
+                        <h3 class="text-lg font-bold text-amber-800 mb-2">다면적 사고 유도</h3>
+                        <p class="text-slate-700 text-sm leading-relaxed">
+                            인공지능 기술의 <strong>긍정적인 면(편리함, 공익)과 부정적인 면(프라이버시 침해, 소외)</strong>을 종합적으로 고려하여 균형 잡힌 AI 윤리 의식을 함양하도록 설계되었습니다.
+                        </p>
+                    </div>
+                </div>
+                <div class="bg-slate-100 rounded-2xl shadow-inner border border-slate-200 p-6 flex flex-col gap-4 overflow-y-auto">
+                    <h4 class="font-bold text-slate-600 text-sm mb-2">딜레마 사례 예시 (9개 중 일부)</h4>
+                    
+                    <!-- 딜레마 카드 1 -->
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center gap-4 hover-card cursor-pointer">
+                        <div class="bg-indigo-100 p-3 rounded-lg text-2xl">🔊</div>
+                        <div>
+                            <h5 class="font-bold text-slate-800 text-sm">AI 스피커를 활용한 안전망 도입</h5>
+                            <p class="text-xs text-slate-500 mt-1">취약계층 보호(공공선) vs 사생활 침해(존엄성)</p>
+                        </div>
+                    </div>
+
+                    <!-- 딜레마 카드 2 -->
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center gap-4 hover-card cursor-pointer">
+                        <div class="bg-emerald-100 p-3 rounded-lg text-2xl">📷</div>
+                        <div>
+                            <h5 class="font-bold text-slate-800 text-sm">안면인식 CCTV 활용 수사</h5>
+                            <p class="text-xs text-slate-500 mt-1">범죄 예방(공공선) vs 개인정보 침해(프라이버시)</p>
+                        </div>
+                    </div>
+
+                    <!-- 딜레마 카드 3 -->
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center gap-4 hover-card cursor-pointer">
+                        <div class="bg-amber-100 p-3 rounded-lg text-2xl">🤖</div>
+                        <div>
+                            <h5 class="font-bold text-slate-800 text-sm">부모님과 똑닮은 돌봄 로봇</h5>
+                            <p class="text-xs text-slate-500 mt-1">돌봄의 효율성(합목적성) vs 인간 고유의 정서(존엄성)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide w-full h-full flex-col" id="slide-7">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-6 flex items-center shrink-0">
+                <span class="bg-indigo-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl shadow-md">7</span>
+                딜레마 토론 기반 윤리교육 모델 (4단계)
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-3 overflow-y-auto pr-2 pb-2">
+                    <!-- 단계별 설명 아코디언/카드 형식 -->
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 border-l-4 border-l-indigo-400">
+                        <h3 class="text-md font-bold text-slate-800 flex justify-between"><span>1. 딜레마 설정</span> <span class="text-indigo-600 text-xs bg-indigo-50 px-2 py-1 rounded">상황지각</span></h3>
+                        <p class="text-slate-600 text-xs mt-2 leading-relaxed">AI 기술의 긍정적 사례 탐색 후 이면에 숨겨진 윤리적 문제를 학생 스스로 발견하여 딜레마로 구성합니다.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 border-l-4 border-l-emerald-400">
+                        <h3 class="text-md font-bold text-slate-800 flex justify-between"><span>2. 딜레마 이해</span> <span class="text-emerald-600 text-xs bg-emerald-50 px-2 py-1 rounded">결과/공감지각</span></h3>
+                        <p class="text-slate-600 text-xs mt-2 leading-relaxed">자신의 선택이 가져올 잠재적 결과를 예측하고, 영향을 받는 타인의 감정에 공감하는 활동을 진행합니다.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 border-l-4 border-l-amber-400">
+                        <h3 class="text-md font-bold text-slate-800 flex justify-between"><span>3. 토론</span> <span class="text-amber-600 text-xs bg-amber-50 px-2 py-1 rounded">윤리적 판단력</span></h3>
+                        <p class="text-slate-600 text-xs mt-2 leading-relaxed">자신의 입장을 정당화하고, 플랫폼을 통해 타 집단의 찬반 비율 및 근거를 확인하며 폭넓은 토론을 진행합니다.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 border-l-4 border-l-rose-400">
+                        <h3 class="text-md font-bold text-slate-800 flex justify-between"><span>4. 실천 동기 강화</span> <span class="text-rose-600 text-xs bg-rose-50 px-2 py-1 rounded">책임지각</span></h3>
+                        <p class="text-slate-600 text-xs mt-2 leading-relaxed">선택으로 인한 부작용을 최소화할 수 있는 실천 방안을 모색하며 윤리적 책임을 다짐합니다.</p>
+                    </div>
+                </div>
+                <div class="bg-slate-800 rounded-2xl shadow-inner border border-slate-700 p-6 flex items-center justify-center">
+                    <!-- 수직 스텝퍼 시각화 -->
+                    <div class="relative w-full max-w-xs mx-auto">
+                        <div class="absolute left-6 top-6 bottom-6 w-1 bg-slate-600 rounded-full"></div>
+                        
+                        <div class="relative z-10 flex items-center mb-10 group">
+                            <div class="w-12 h-12 bg-indigo-500 rounded-full flex items-center justify-center font-bold text-white shadow-[0_0_15px_rgba(99,102,241,0.5)] border-4 border-slate-800 z-10 group-hover:scale-110 transition">1</div>
+                            <div class="ml-6 bg-slate-700 p-3 rounded-lg flex-1 shadow-md border border-slate-600 group-hover:border-indigo-400 transition">
+                                <h4 class="font-bold text-white text-sm">상황지각</h4>
+                            </div>
+                        </div>
+
+                        <div class="relative z-10 flex items-center mb-10 group">
+                            <div class="w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center font-bold text-white shadow-[0_0_15px_rgba(16,185,129,0.5)] border-4 border-slate-800 z-10 group-hover:scale-110 transition">2</div>
+                            <div class="ml-6 bg-slate-700 p-3 rounded-lg flex-1 shadow-md border border-slate-600 group-hover:border-emerald-400 transition">
+                                <h4 class="font-bold text-white text-sm">결과 및 공감지각</h4>
+                            </div>
+                        </div>
+
+                        <div class="relative z-10 flex items-center mb-10 group">
+                            <div class="w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center font-bold text-white shadow-[0_0_15px_rgba(245,158,11,0.5)] border-4 border-slate-800 z-10 group-hover:scale-110 transition">3</div>
+                            <div class="ml-6 bg-slate-700 p-3 rounded-lg flex-1 shadow-md border border-slate-600 group-hover:border-amber-400 transition">
+                                <h4 class="font-bold text-white text-sm">윤리적 판단력</h4>
+                            </div>
+                        </div>
+
+                        <div class="relative z-10 flex items-center group">
+                            <div class="w-12 h-12 bg-rose-500 rounded-full flex items-center justify-center font-bold text-white shadow-[0_0_15px_rgba(244,63,94,0.5)] border-4 border-slate-800 z-10 group-hover:scale-110 transition">4</div>
+                            <div class="ml-6 bg-slate-700 p-3 rounded-lg flex-1 shadow-md border border-slate-600 group-hover:border-rose-400 transition">
+                                <h4 class="font-bold text-white text-sm">책임지각</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-white border-t border-slate-200 p-4 flex-shrink-0 z-10">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <button onclick="prevSlide()" id="prev-btn" class="px-5 py-2.5 rounded-lg font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2" disabled>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                이전
+            </button>
+            <div class="text-sm text-slate-500 hidden sm:block">
+                키보드 <kbd class="px-2 py-1 bg-slate-50 border border-slate-300 rounded mx-1 shadow-sm font-sans">&larr;</kbd> <kbd class="px-2 py-1 bg-slate-50 border border-slate-300 rounded mx-1 shadow-sm font-sans">&rarr;</kbd> 로 이동 가능
+            </div>
+            <button onclick="nextSlide()" id="next-btn" class="px-5 py-2.5 rounded-lg font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition-colors flex items-center gap-2">
+                다음 
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </button>
+        </div>
+    </footer>
+
+    <script>
+        let currentSlideIndex = 0;
+        const totalSlides = 8; // 슬라이드 0 ~ 7
+
+        function updateUI() {
+            // 모든 슬라이드 숨김 처리
+            document.querySelectorAll('.slide').forEach(slide => {
+                slide.classList.remove('active');
+            });
+            // 현재 슬라이드 활성화 (애니메이션 트리거 포함)
+            const activeSlide = document.getElementById(`slide-${currentSlideIndex}`);
+            activeSlide.classList.add('active');
+            
+            // 버튼 비활성화 상태 업데이트
+            document.getElementById('prev-btn').disabled = currentSlideIndex === 0;
+            // 마지막 슬라이드에서는 다음 버튼을 숨기거나 텍스트 변경 (여기선 disabled)
+            document.getElementById('next-btn').disabled = currentSlideIndex === totalSlides - 1;
+
+            // 카운터 및 프로그레스 바 업데이트
+            document.getElementById('slide-counter').innerText = `${currentSlideIndex + 1} / ${totalSlides}`;
+            const progress = (currentSlideIndex / (totalSlides - 1)) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+        }
+
+        function nextSlide() {
+            if (currentSlideIndex < totalSlides - 1) {
+                currentSlideIndex++;
+                updateUI();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+                updateUI();
+            }
+        }
+
+        // 키보드 네비게이션
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+
+        // 슬라이드 4 인터랙티브 뷰 토글 함수
+        function toggleEduView(view) {
+            const btnPros = document.getElementById('btn-pros');
+            const btnCons = document.getElementById('btn-cons');
+            const viewPros = document.getElementById('view-pros');
+            const viewCons = document.getElementById('view-cons');
+
+            if(view === 'pros') {
+                // 버튼 스타일
+                btnPros.className = "flex-1 py-2 text-sm font-bold bg-white text-blue-600 rounded-lg shadow-sm transition-all";
+                btnCons.className = "flex-1 py-2 text-sm font-bold text-slate-500 hover:text-rose-500 transition-all bg-transparent";
+                // 뷰 표시
+                viewCons.classList.add('hidden');
+                viewPros.classList.remove('hidden');
+            } else {
+                // 버튼 스타일
+                btnCons.className = "flex-1 py-2 text-sm font-bold bg-white text-rose-600 rounded-lg shadow-sm transition-all";
+                btnPros.className = "flex-1 py-2 text-sm font-bold text-slate-500 hover:text-blue-500 transition-all bg-transparent";
+                // 뷰 표시
+                viewPros.classList.add('hidden');
+                viewCons.classList.remove('hidden');
+            }
+        }
+
+        // 초기 화면 렌더링
+        updateUI();
+    </script>
+</body>
+</html>

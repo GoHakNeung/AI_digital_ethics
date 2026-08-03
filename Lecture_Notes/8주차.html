@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>바이브 코딩 2차시: CSS 디자인과 JS 동작</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 구글 웹폰트 (나눔펜스크립트, 인터) 불러오기 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', 'Pretendard', sans-serif; }
+        .slide { display: none; }
+        .slide.active { display: flex; animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* 예쁜 스크롤바 */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
+        
+        /* 미리보기를 위한 커스텀 클래스들 */
+        .preview-content { font-family: 'Inter', sans-serif; }
+        .nanum-font { font-family: 'Nanum Pen Script', cursive; font-size: 2rem; }
+        
+        /* 슬라이드 14 (부드러운 움직임) */
+        .hover-grow { transition: all 0.5s ease; cursor: pointer; }
+        .hover-grow:hover { transform: scale(1.2) rotate(10deg); background-color: #fef08a; }
+        
+        /* 슬라이드 16 (마우스 상호작용) */
+        .interactive-card { transition: 0.3s; cursor: pointer; border: 2px solid transparent; }
+        .interactive-card:hover { border-color: #3b82f6; transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 h-screen flex flex-col overflow-hidden">
+
+    <header class="bg-white shadow-sm z-10 flex-shrink-0">
+        <div class="h-1 w-full bg-slate-200">
+            <div id="progress-bar" class="h-1 bg-blue-600 transition-all duration-300" style="width: 0%;"></div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-slate-700">디지털 인공지능 윤리: 바이브 코딩 2차시</h1>
+            <span id="slide-counter" class="text-sm font-medium text-slate-500 bg-slate-100 px-3 py-1 rounded-full">1 / 20</span>
+        </div>
+    </header>
+
+    <main class="flex-grow relative overflow-hidden flex items-center justify-center p-4 lg:p-6 w-full max-w-7xl mx-auto">
+        
+        <!-- 표지 슬라이드 -->
+        <div class="slide active flex-col items-center justify-center w-full h-full text-center" id="slide-0">
+            <div class="inline-block mb-4 px-4 py-1.5 rounded-full bg-blue-100 text-blue-700 font-semibold text-sm">
+                2차시 수업 자료
+            </div>
+            <h1 class="text-5xl font-extrabold text-slate-900 mb-6 leading-tight">
+                디자인 입문과 동작 제어 <br> <span class="text-blue-600">CSS & JavaScript 기초</span>
+            </h1>
+            <p class="text-xl text-slate-600 mb-10 max-w-2xl mx-auto">
+                뼈대에 옷을 입히고 생명을 불어넣어, 학생들과 상호작용하는 웹 프로그램을 만듭니다.
+            </p>
+            <button onclick="nextSlide()" class="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 text-lg">
+                수업 시작하기 &rarr;
+            </button>
+        </div>
+
+        <div class="slide w-full h-full flex-col" id="slide-1">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-4 flex items-center shrink-0">
+                <span class="bg-blue-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl">1</span>
+                HTML 요소 복습 및 개발자 도구
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500 shrink-0">
+                        <h3 class="text-lg font-bold text-blue-800 mb-2">1. 설명</h3>
+                        <p class="text-slate-700 text-sm mb-2">HTML은 웹의 '뼈대'입니다. <code>&lt;header&gt;</code>(상단), <code>&lt;main&gt;</code>(본문), <code>&lt;footer&gt;</code>(하단)로 나뉘며, 그 안에 버튼이나 글이 배치됩니다.</p>
+                        <p class="text-blue-700 font-bold text-sm bg-blue-50 p-2 rounded">💡 꿀팁: 브라우저에서 <kbd class="bg-slate-200 px-1 rounded text-black">F12</kbd>를 누르면 '개발자 도구'가 열립니다. 여기서 HTML 구조와 적용된 CSS를 직접 확인할 수 있습니다.</p>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-green-400 font-mono leading-relaxed">
+&lt;main&gt;
+  &lt;h1&gt;퀴즈&lt;/h1&gt;
+  &lt;button&gt;시작&lt;/button&gt;
+&lt;/main&gt;</pre>
+                    </div>
+                    <div class="bg-green-50 p-5 rounded-2xl border border-green-100 border-l-4 border-l-green-500 shrink-0">
+                        <h3 class="text-lg font-bold text-green-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"기본적인 HTML 뼈대 구조를 만들어주고, 본문(main) 영역에 퀴즈 시작 버튼을 하나 넣어줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center justify-between shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">▶ 실행 미리보기</span>
+                        <span class="text-xs text-slate-400 border border-slate-300 px-2 rounded bg-white">F12 개발자 도구 시뮬레이션</span>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col bg-slate-50 overflow-y-auto">
+                        <div class="border-2 border-dashed border-slate-300 bg-white p-4 text-center">
+                            <h1 class="text-2xl font-bold mb-2">퀴즈</h1>
+                            <button class="border border-slate-400 px-4 py-1 bg-slate-100 rounded">시작</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide w-full h-full flex-col" id="slide-2">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-4 flex items-center shrink-0">
+                <span class="bg-blue-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl">2</span>
+                CSS란 무엇인가?
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500 shrink-0">
+                        <h3 class="text-lg font-bold text-blue-800 mb-2">1. 설명</h3>
+                        <p class="text-slate-700 text-sm">CSS(Cascading Style Sheets)는 HTML 뼈대 위에 입히는 <strong>옷과 피부(스타일)</strong>입니다. 디자인을 예쁘게 꾸며 학생들의 학습 몰입도를 높여줍니다.</p>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-green-400 font-mono leading-relaxed">
+&lt;!-- [적용 후] --&gt;
+&lt;style&gt;
+  h1 { color: blue; text-align: center; }
+&lt;/style&gt;
+&lt;h1&gt;디지털 윤리 퀴즈&lt;/h1&gt;</pre>
+                    </div>
+                    <div class="bg-green-50 p-5 rounded-2xl border border-green-100 border-l-4 border-l-green-500 shrink-0">
+                        <h3 class="text-lg font-bold text-green-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"앞서 만든 HTML 뼈대에 CSS를 추가해서, 학생들이 보기에 지루하지 않고 깔끔한 디자인으로 꾸며줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">▶ 실행 미리보기</span>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col items-center justify-center bg-white gap-8">
+                        <div class="w-full text-left">
+                            <span class="text-xs font-bold text-slate-400 uppercase">CSS 적용 전</span>
+                            <h1 class="text-2xl font-normal text-black mt-1">디지털 윤리 퀴즈</h1>
+                        </div>
+                        <div class="w-full border-t border-dashed border-slate-300"></div>
+                        <div class="w-full">
+                            <span class="text-xs font-bold text-blue-500 uppercase">CSS 적용 후</span>
+                            <h1 class="text-3xl font-bold text-blue-600 text-center mt-1">디지털 윤리 퀴즈</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide w-full h-full flex-col" id="slide-3">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-4 flex items-center shrink-0">
+                <span class="bg-blue-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl">3</span>
+                CSS를 적용하는 방법
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500 shrink-0">
+                        <h3 class="text-lg font-bold text-blue-800 mb-2">1. 설명</h3>
+                        <p class="text-slate-700 text-sm">태그에 직접 붙이기, 별도 파일 만들기 등이 있지만, 바이브 코딩으로 실습할 때는 복사하기 편하게 <strong>HTML의 &lt;head&gt; 안에 &lt;style&gt; 태그로 넣는 방식(Internal)</strong>을 주로 씁니다.</p>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-green-400 font-mono leading-relaxed">
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;style&gt;
+      p { color: red; } 
+    &lt;/style&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p&gt;이 글씨는 빨간색이 됩니다.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+                    </div>
+                    <div class="bg-green-50 p-5 rounded-2xl border border-green-100 border-l-4 border-l-green-500 shrink-0">
+                        <h3 class="text-lg font-bold text-green-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"파일을 나누면 복사하기 귀찮으니까, CSS 코드는 별도 파일로 만들지 말고 HTML의 head 태그 안에 &lt;style&gt; 블록을 만들어서 작성해 줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">▶ 실행 미리보기</span>
+                    </div>
+                    <div class="p-6 flex-grow flex items-center justify-center bg-white relative">
+                        <!-- 가상의 에디터와 브라우저 구조 -->
+                        <div class="w-full h-full flex flex-col border border-slate-300 rounded shadow-sm overflow-hidden">
+                            <div class="bg-slate-200 px-2 py-1 text-xs text-slate-600 font-mono border-b border-slate-300">index.html (하나의 파일)</div>
+                            <div class="p-4 flex-grow bg-slate-50">
+                                <p class="text-red-500 font-medium">이 글씨는 빨간색이 됩니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide w-full h-full flex-col" id="slide-4">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-4 flex items-center shrink-0">
+                <span class="bg-blue-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl">4</span>
+                선택자 (누구를 꾸밀 것인가?)
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500 shrink-0">
+                        <h3 class="text-lg font-bold text-blue-800 mb-2">1. 설명</h3>
+                        <ul class="list-disc pl-5 text-slate-700 text-sm space-y-1">
+                            <li><strong>태그:</strong> 화면의 모든 해당 태그를 바꿈 (예: <code>button { }</code>)</li>
+                            <li><strong>클래스(.):</strong> 점으로 시작. 묶어서 바꿈 (예: <code>.btn { }</code>)</li>
+                            <li><strong>아이디(#):</strong> 샵으로 시작. 화면에서 유일한 하나만 바꿈 (예: <code>#score { }</code>)</li>
+                        </ul>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-green-400 font-mono leading-relaxed">
+&lt;style&gt;
+  .correct-btn { color: green; } /* 클래스 */
+  #total { font-size: 20px; color: red; }    /* 아이디 */
+&lt;/style&gt;
+&lt;button class="correct-btn"&gt;정답 1&lt;/button&gt;
+&lt;button class="correct-btn"&gt;정답 2&lt;/button&gt;
+&lt;button class="wrong-btn"&gt;오답&lt;/button&gt;
+&lt;p id="total"&gt;100점&lt;/p&gt;</pre>
+                    </div>
+                    <div class="bg-green-50 p-5 rounded-2xl border border-green-100 border-l-4 border-l-green-500 shrink-0">
+                        <h3 class="text-lg font-bold text-green-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"정답 버튼들은 묶어서 클래스명(class='correct')을 주고 초록색으로 칠해줘. 최종 점수 칸은 하나뿐이니 아이디(id='total')를 주고 크게 해줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">▶ 실행 미리보기</span>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col items-center justify-center bg-white gap-4">
+                        <div class="flex gap-4">
+                            <button class="text-green-600 border border-green-600 bg-green-50 px-4 py-2 rounded">정답 1</button>
+                            <button class="text-green-600 border border-green-600 bg-green-50 px-4 py-2 rounded">정답 2</button>
+                        </div>
+                        <button class="text-slate-600 border border-slate-400 bg-slate-100 px-4 py-2 rounded">오답</button>
+                        <hr class="w-full border-slate-200 my-2">
+                        <p style = "font-size : 20px ; color : red;">최종 점수: <span>100점</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide w-full h-full flex-col" id="slide-5">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-4 flex items-center shrink-0">
+                <span class="bg-blue-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl">5</span>
+                박스 모델 (Padding과 Margin)
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500 shrink-0">
+                        <h3 class="text-lg font-bold text-blue-800 mb-2">1. 설명</h3>
+                        <p class="text-slate-700 text-sm mb-1">여백을 조절하여 답답함을 없앱니다.</p>
+                        <ul class="list-disc pl-5 text-slate-700 text-sm space-y-1">
+                            <li><strong>padding (안쪽 여백):</strong> 테두리와 글씨 사이. 뚱뚱해짐.</li>
+                            <li><strong>margin (바깥 여백):</strong> 테두리 바깥쪽. 남들과 멀어짐.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-green-400 font-mono leading-relaxed">
+&lt;style&gt;
+  .box {
+    padding: 20px; /* 안으로 20px 통통해짐 */
+    margin: 15px;  /* 밖으로 15px 띄어짐 */
+    border: 1px solid black;
+  }
+&lt;/style&gt;
+
+&lt;button class="box"&gt;버튼 1&lt;/button&gt;
+&lt;button class="box"&gt;버튼 2&lt;/button&gt;</pre>
+                    </div>
+                    <div class="bg-green-50 p-5 rounded-2xl border border-green-100 border-l-4 border-l-green-500 shrink-0">
+                        <h3 class="text-lg font-bold text-green-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"모바일에서 터치하기 편하게 버튼의 안쪽 여백(padding)을 늘려주고, 다닥다닥 붙지 않게 바깥 여백(margin)도 15px씩 띄워줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">▶ 실행 미리보기</span>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col items-center justify-center bg-white gap-6">
+                        <div class="text-center w-full">
+                          
+                            <span class="text-xs font-bold text-slate-400 block mb-1">여백 없음</span>
+                            <button class="bg-blue-200 border border-blue-500">버튼1</button><button class="bg-blue-200 border border-blue-500">버튼2</button>
+                        </div>
+                        <div class="text-center w-full border border-dashed border-red-300 bg-red-50 relative p-4 flex justify-center">
+                            <span class="absolute top-1 left-2 text-[10px] text-red-500 font-bold">Margin (바깥)</span>
+                            <button class="bg-blue-200 border-2 border-blue-500 px-6 py-4 mx-4 relative">
+                                버튼 1
+                                <span class="absolute bottom-0 left-0 w-full text-[10px] text-blue-700 bg-white/70">Padding</span>
+                            </button>
+                            <button class="bg-blue-200 border-2 border-blue-500 px-6 py-4 mx-4">버튼 2</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide w-full h-full flex-col" id="slide-6">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-4 flex items-center shrink-0">
+                <span class="bg-blue-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl">6</span>
+                색상과 테두리
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500 shrink-0">
+                        <h3 class="text-lg font-bold text-blue-800 mb-2">1. 설명</h3>
+                        <p class="text-slate-700 text-sm"><code>background-color</code>로 배경을 칠하고, <code>border</code>로 테두리 선을 긋고, <code>border-radius</code>로 모서리를 둥글게 깎아 부드럽게 만듭니다.</p>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-green-400 font-mono leading-relaxed">
+&lt;style&gt;
+  .quiz-box {
+    background-color: #f1f5f9; /* 연한 회색 배경 */
+    border: 2px solid #3b82f6; /* 파란색 실선 */
+    border-radius: 15px;       /* 둥근 모서리 */
+  }
+&lt;/style&gt;
+
+&lt;div class="quiz-box"&gt;Q. 퀴즈&lt;/div&gt;</pre>
+                    </div>
+                    <div class="bg-green-50 p-5 rounded-2xl border border-green-100 border-l-4 border-l-green-500 shrink-0">
+                        <h3 class="text-lg font-bold text-green-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"퀴즈 상자(div)의 배경색은 연한 회색으로 하고 파란색 테두리(border)를 그려줘. 그리고 딱딱해 보이지 않게 모서리를 둥글게(border-radius) 깎아줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">▶ 실행 미리보기</span>
+                    </div>
+                    <div class="p-6 flex-grow flex items-center justify-center bg-white">
+                        <div class="w-64 h-32 bg-[#f1f5f9] border-2 border-[#3b82f6] rounded-[15px] p-4 flex flex-col justify-center shadow-md">
+                            <span class="font-bold text-blue-800 mb-1">Q. 퀴즈</span>
+                            <p class="text-sm text-slate-600">이 상자는 둥근 모서리와 파란 테두리를 가졌습니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide w-full h-full flex-col" id="slide-7">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-4 flex items-center shrink-0">
+                <span class="bg-blue-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl">7</span>
+                글꼴과 정렬 (웹 폰트 적용)
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500 shrink-0">
+                        <h3 class="text-lg font-bold text-blue-800 mb-2">1. 설명</h3>
+                        <p class="text-slate-700 text-sm mb-2">텍스트를 좌/우/중앙으로 정렬(<code>text-align</code>)합니다. <strong>(중요)</strong> '나눔글꼴' 등을 어떤 기기에서나 띄우려면, PC에 폰트가 없어도 다운로드받아 보여주는 <strong>'구글 웹폰트'를 추가</strong>해 달라고 AI에게 요구해야 합니다.</p>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-green-400 font-mono leading-relaxed">
+&lt;style&gt;
+  /* 구글 폰트(나눔펜스크립트) 불러오기 */
+  @import url('https://fonts.googleapis.com/...');
+
+  h1 { 
+    font-family: 'Nanum Pen Script', cursive; 
+    text-align: center; 
+  }
+&lt;/style&gt;
+
+&lt;h1&gt;우리가 지키는 디지털 윤리&lt;/h1&gt;</pre>
+                    </div>
+                    <div class="bg-green-50 p-5 rounded-2xl border border-green-100 border-l-4 border-l-green-500 shrink-0">
+                        <h3 class="text-lg font-bold text-green-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"스마트폰에서도 예쁜 한글 폰트가 보이도록, 구글 폰트에서 '나눔 고딕'이나 '나눔 펜 스크립트' 웹 폰트를 불러와서(import) 적용해 주고, 글씨는 중앙 정렬해 줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">▶ 실행 미리보기</span>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col items-center justify-center bg-white gap-6">
+                        <div class="w-full border p-4 bg-slate-50 text-left">
+                            <span class="text-xs text-slate-400">기본 폰트 / 왼쪽 정렬</span>
+                            <h1 class="text-2xl mt-1 text-black font-sans">우리가 지키는 디지털 윤리</h1>
+                        </div>
+                        <div class="w-full border p-4 bg-[#fdf8e3] text-center shadow-sm transform rotate-1">
+                            <span class="text-xs text-amber-600 font-sans">웹 폰트 (Nanum Pen Script) / 중앙 정렬</span>
+                            <h1 class="nanum-font text-amber-900 mt-1">우리가 지키는 디지털 윤리</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide w-full h-full flex-col" id="slide-8">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-4 flex items-center shrink-0">
+                <span class="bg-blue-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl">8</span>
+                화면 배치 (Flexbox로 나란히)
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500 shrink-0">
+                        <h3 class="text-lg font-bold text-blue-800 mb-2">1. 설명</h3>
+                        <p class="text-slate-700 text-sm mb-1">위아래로 쌓이는 요소들을 가로로 나란히 배치할 때 쓰는 마법의 속성입니다.</p>
+                        <ul class="list-disc pl-5 text-slate-700 text-sm space-y-1">
+                            <li><code>display: flex;</code>: 가로 배치의 시작.</li>
+                            <li><code>justify-content: center;</code>: 가로축 중앙에 예쁘게 모음.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-green-400 font-mono leading-relaxed">
+&lt;style&gt;
+  .menu {
+    display: flex; 
+    justify-content: center; 
+    gap: 15px; /* 버튼 사이 간격 */
+  }
+&lt;/style&gt;
+
+&lt;div class="menu"&gt;
+  &lt;button&gt;버튼 1&lt;/button&gt;
+  &lt;button&gt;버튼 2&lt;/button&gt;
+&lt;/div&gt;</pre>
+                    </div>
+                    <div class="bg-green-50 p-5 rounded-2xl border border-green-100 border-l-4 border-l-green-500 shrink-0">
+                        <h3 class="text-lg font-bold text-green-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"메뉴 버튼 2개가 세로로 쌓여있는데, 이 상자에 display: flex를 써서 가로로 나란히 배치하고 justify-content로 화면 가운데로 예쁘게 모아줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">▶ 실행 미리보기</span>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col items-center justify-center bg-white gap-6">
+                        <div class="w-full border p-4 bg-slate-50 text-left">
+                            <span class="text-xs font-bold text-slate-400 mb-2 block">기본 (세로 쌓임)</span>
+                            <button class="bg-slate-300 px-4 py-2 mb-2 block w-24 text-sm">버튼 1</button>
+                            <button class="bg-slate-300 px-4 py-2 block w-24 text-sm">버튼 2</button>
+                        </div>
+                        <div class="w-full border border-blue-300 p-4 bg-blue-50">
+                            <span class="text-xs font-bold text-blue-500 mb-2 block">Flex 적용 (가로 중앙 배치)</span>
+                            <div class="flex justify-center gap-4">
+                                <button class="bg-blue-500 text-white px-4 py-2 rounded text-sm shadow">버튼 1</button>
+                                <button class="bg-blue-500 text-white px-4 py-2 rounded text-sm shadow">버튼 2</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide w-full h-full flex-col" id="slide-9">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-4 flex items-center shrink-0">
+                <span class="bg-blue-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl">9</span>
+                화면 분할 (Grid로 다단 나누기)
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500 shrink-0">
+                        <h3 class="text-lg font-bold text-blue-800 mb-2">1. 설명</h3>
+                        <p class="text-slate-700 text-sm mb-2">화면의 비율을 바둑판처럼 명확하게 쪼갤 때 사용합니다. 왼쪽엔 설명, 오른쪽엔 퀴즈를 넣는 등 2단 구성에 최고입니다.</p>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-green-400 font-mono leading-relaxed">
+&lt;style&gt;
+  .main-box {
+    display: grid;
+    /* 왼쪽 30%, 오른쪽 70%로 쪼갬 */
+    grid-template-columns: 30% 70%; 
+    gap: 20px;
+  }
+&lt;/style&gt;
+
+&lt;div class="main-box"&gt;
+  &lt;div&gt;왼쪽 영역&lt;/div&gt;
+  &lt;div&gt;오른쪽 영역&lt;/div&gt;
+&lt;/div&gt;</pre>
+                    </div>
+                    <div class="bg-green-50 p-5 rounded-2xl border border-green-100 border-l-4 border-l-green-500 shrink-0">
+                        <h3 class="text-lg font-bold text-green-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"메인 화면을 좌우 2단으로 나눠줘. display: grid를 써서 왼쪽 설명 구역은 30%, 오른쪽 퀴즈 구역은 70% 비율을 차지하게 구성해 줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">▶ 실행 미리보기</span>
+                    </div>
+                    <div class="p-6 flex-grow flex items-center justify-center bg-white w-full">
+                        <div class="w-full h-40 grid grid-cols-[30%_calc(70%-1rem)] gap-4 text-sm text-center font-bold">
+                            <div class="bg-indigo-100 border-2 border-indigo-300 text-indigo-700 rounded flex flex-col items-center justify-center p-2">
+                                <span>30%</span>
+                                <span class="text-xs font-normal mt-1">(왼쪽 영역)</span>
+                            </div>
+                            <div class="bg-emerald-100 border-2 border-emerald-300 text-emerald-700 rounded flex flex-col items-center justify-center p-2">
+                                <span>70%</span>
+                                <span class="text-xs font-normal mt-1">(오른쪽 영역 - 넓음)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide w-full h-full flex-col" id="slide-10">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-4 flex items-center shrink-0">
+                <span class="bg-blue-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl">10</span>
+                반응형 웹 (기기에 맞게 변신)
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500 shrink-0">
+                        <h3 class="text-lg font-bold text-blue-800 mb-2">1. 설명</h3>
+                        <p class="text-slate-700 text-sm">스마트폰처럼 좁은 화면으로 접속했을 때, 좌우 2단 배치(PC용)가 깨지지 않고 위아래 1단으로 자동으로 바뀌도록 지시합니다.</p>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-green-400 font-mono leading-relaxed">
+&lt;style&gt;
+  /* 기본은 가로 배치 */
+  .box { display: flex; } 
+
+  /* 폭이 600px 이하가 되면 세로(column) 배치로 덮어씀 */
+  @media (max-width: 600px) {
+    .box { flex-direction: column; }
+  }
+&lt;/style&gt;
+
+&lt;div class="box"&gt;
+  &lt;div&gt;구역 1&lt;/div&gt;
+  &lt;div&gt;구역 2&lt;/div&gt;
+&lt;/div&gt;</pre>
+                    </div>
+                    <div class="bg-green-50 p-5 rounded-2xl border border-green-100 border-l-4 border-l-green-500 shrink-0">
+                        <h3 class="text-lg font-bold text-green-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"이 퀴즈는 학생들이 스마트폰으로도 접속할 거야. 미디어 쿼리(Media Query)를 써서, 모바일 화면(600px 이하)에서는 2단 배치가 위아래 1단으로 쌓이게 반응형으로 짜줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">▶ 실행 미리보기 (시뮬레이션)</span>
+                    </div>
+                    <div class="p-6 flex-grow flex items-center justify-center bg-white gap-6">
+                        <!-- PC 화면 시뮬레이션 -->
+                        <div class="flex flex-col items-center">
+                            <span class="text-xs font-bold text-slate-500 mb-1">PC 화면 (가로)</span>
+                            <div class="w-32 h-20 border-4 border-slate-700 rounded flex gap-1 p-1 bg-slate-100">
+                                <div class="flex-1 bg-blue-300 rounded"></div>
+                                <div class="flex-1 bg-green-300 rounded"></div>
+                            </div>
+                        </div>
+                        <span class="text-2xl font-bold text-slate-300">&rarr;</span>
+                        <!-- 모바일 화면 시뮬레이션 -->
+                        <div class="flex flex-col items-center">
+                            <span class="text-xs font-bold text-slate-500 mb-1">스마트폰 화면 (세로)</span>
+                            <div class="w-16 h-28 border-4 border-slate-700 rounded-lg flex flex-col gap-1 p-1 bg-slate-100">
+                                <div class="flex-1 bg-blue-300 rounded"></div>
+                                <div class="flex-1 bg-green-300 rounded"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide w-full h-full flex-col" id="slide-11">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-4 flex items-center shrink-0">
+                <span class="bg-blue-600 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl">11</span>
+                무드 (Mood) 프롬프팅
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500 shrink-0">
+                        <h3 class="text-lg font-bold text-blue-800 mb-2">1. 설명</h3>
+                        <p class="text-slate-700 text-sm">바이브 코딩의 강력한 장점입니다. 하나하나 세세하게 지시하는 대신, 학습자 수준이나 목적에 맞는 '디자인 분위기' 키워드를 던져 AI의 감각을 빌립니다.</p>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드 (AI의 결과물)</h3>
+<pre class="text-pink-300 font-mono leading-relaxed">
+&lt;style&gt;
+  .box {
+    background: #ffe4e6; /* 파스텔 핑크 */
+    border: 3px dashed #f43f5e; 
+    border-radius: 20px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+  }
+&lt;/style&gt;
+
+&lt;div class="box"&gt;
+  &lt;h2&gt;재미있는 윤리 퀴즈&lt;/h2&gt;
+&lt;/div&gt;</pre>
+                    </div>
+                    <div class="bg-green-50 p-5 rounded-2xl border border-green-100 border-l-4 border-l-green-500 shrink-0">
+                        <h3 class="text-lg font-bold text-green-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"세세한 속성은 네가 알아서 조절해서, 전체적인 디자인을 초등학생이 좋아할 만한 <strong>귀엽고 둥글둥글한 파스텔톤</strong>으로 예쁘게 꾸며줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">▶ 실행 미리보기 (AI가 꾸민 결과)</span>
+                    </div>
+                    <div class="p-6 flex-grow flex items-center justify-center bg-white">
+                        <div class="bg-[#ffe4e6] border-[3px] border-dashed border-[#f43f5e] rounded-[20px] shadow-[2px_2px_10px_rgba(0,0,0,0.1)] p-8 text-center">
+                            <h2 class="text-2xl font-bold text-pink-600 mb-2">🌸 재미있는 윤리 퀴즈</h2>
+                            <p class="text-pink-800 font-medium bg-white rounded-full px-4 py-2 inline-block shadow-sm">시작해볼까요? 🚀</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: JS 개요 -->
+        <div class="slide w-full h-full flex-col" id="slide-12">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-4 flex items-center shrink-0">
+                <span class="bg-amber-500 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl">12</span>
+                JavaScript (웹앱의 근육과 뇌)
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-amber-500 shrink-0">
+                        <h3 class="text-lg font-bold text-amber-800 mb-2">1. 설명</h3>
+                        <p class="text-slate-700 text-sm">사용자의 클릭에 반응하거나 점수를 계산하는 '동작'을 담당합니다. <code>&lt;body&gt;</code>의 가장 아래에 <code>&lt;script&gt;</code> 태그를 열고 작성하는 것이 좋습니다.</p>
+                        <p class="text-slate-700 text-sm mt-2 font-bold">💡 기본 논리: "A(이벤트)를 하면 -> B를 찾아서 -> C로 바꿔라"</p>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드 (기본 구조)</h3>
+<pre class="text-amber-300 font-mono leading-relaxed">
+&lt;button id="myBtn"&gt;클릭&lt;/button&gt;
+&lt;div id="preview-msg-12" style="opacity: 0; "&gt;JS 코드가 동작했습니다!&lt;/div&gt;
+
+&lt;!-- body가 끝나기 직전 --&gt;
+&lt;script&gt;
+  // id가 myBtn인 요소를 찾아서 클릭 이벤트를 추가함
+document.getElementById("myBtn").addEventListener("click", function() {
+      // 버튼을 누르면 투명도를 1로 바꿔서 서서히 나타나게 함
+      document.getElementById("preview-msg-12").style.opacity = "1";
+  });
+&lt;/script&gt;</pre>
+                    </div>
+                    <div class="bg-amber-50 p-5 rounded-2xl border border-amber-100 border-l-4 border-l-amber-500 shrink-0">
+                        <h3 class="text-lg font-bold text-amber-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"파일을 나누지 말고, HTML 문서 안의 &lt;/body&gt; 직전에 &lt;script&gt; 블록을 만들어서 모든 자바스크립트 동작 코드를 넣어줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">▶ 실행 미리보기</span>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col items-center justify-center bg-white relative">
+                        <button id="preview-btn-12" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-6 rounded-lg shadow transition-colors">여기를 클릭해보세요</button>
+                        <div id="preview-msg-12" class="mt-4 font-bold text-amber-600 opacity-0 transition-opacity">JS 코드가 동작했습니다!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Position -->
+        <div class="slide w-full h-full flex-col" id="slide-13">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-4 flex items-center shrink-0">
+                <span class="bg-amber-500 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl">13</span>
+                요소의 자유로운 배치와 겹치기
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-amber-500 shrink-0">
+                        <h3 class="text-lg font-bold text-amber-800 mb-2">1. 설명</h3>
+                        <p class="text-slate-700 text-sm">시뮬레이션을 만들 때 필수인 CSS 개념입니다. <code>position: absolute</code>로 허공에 띄우고, <code>z-index</code>로 어떤 게 앞/뒤로 겹칠지 순서를 정합니다.</p>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-amber-300 font-mono leading-relaxed">
+&lt;style&gt;
+/* 1. 전체 시뮬레이션을 담을 부모 상자 (기준점 설정) */
+  .space-container {
+    position: relative; /* 자식 요소들이 이 상자를 기준으로 자리를 잡음 */
+    width: 300px;
+    height: 300px;
+    background-color: #0f172a; /* 우주 같은 어두운 배경 */
+    border-radius: 15px;
+  }
+
+  /* 2. 태양 스타일: 뒤쪽, 크고, 노란색 */
+  .sun {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    width: 120px;          /* 크기를 크게 지정 */
+    height: 120px;
+    background-color: #facc15; /* 노란색 */
+    border-radius: 50%;    /* 동그란 도형으로 만듦 */
+    z-index: 1;            /* 뒤쪽에 배치 */
+  }
+
+  /* 3. 달 스타일: 앞쪽, 작고, 회색 */
+  .moon {
+    position: absolute;
+    top: 90px;
+    left: 110px;           /* 태양과 살짝 겹치도록 위치 조정 */
+    width: 70px;           /* 태양보다 작게 지정 */
+    height: 70px;
+    background-color: #94a3b8; /* 회색 */
+    border-radius: 50%;    /* 동그란 도형으로 만듦 */
+    z-index: 99;           /* 숫자가 커서 태양보다 앞(위)쪽에 옴 */
+  }
+&lt;/style&gt;
+&lt;div class="space-container"&gt;
+&lt;div class="sun"&gt;태양&lt;/div&gt;
+&lt;div class="moon"&gt;달&lt;/div&gt;
+&lt;div&gt;
+</pre>
+                    </div>
+                    <div class="bg-amber-50 p-5 rounded-2xl border border-amber-100 border-l-4 border-l-amber-500 shrink-0">
+                        <h3 class="text-lg font-bold text-amber-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"태양계 시뮬레이션을 만들 거야. position: absolute를 써서 태양과 달이 겹치게 배치하고, 달이 태양 앞을 가리도록 달의 z-index 값을 더 높게 설정해 줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">▶ 실행 미리보기</span>
+                    </div>
+                    <div class="p-6 flex-grow bg-slate-900 relative overflow-hidden flex justify-center items-center">
+                        <div class="w-32 h-32 rounded-full bg-yellow-400 absolute z-10 shadow-[0_0_50px_#fde047]"></div>
+                        <div class="w-16 h-16 rounded-full bg-slate-400 absolute z-20 translate-x-12 translate-y-4 border border-slate-500 shadow-inner">
+                            <span class="text-[10px] text-white flex h-full items-center justify-center font-bold"></span>
+                        </div>
+                        <span class="absolute top-4 left-4 text-slate-300 text-xs">z-index 차이로 겹침 현상 구현</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: Transition -->
+        <div class="slide w-full h-full flex-col" id="slide-14">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-4 flex items-center shrink-0">
+                <span class="bg-amber-500 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl">14</span>
+                부드러운 움직임 (Transition)
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-amber-500 shrink-0">
+                        <h3 class="text-lg font-bold text-amber-800 mb-2">1. 설명</h3>
+                        <p class="text-slate-700 text-sm">요소의 크기(<code>scale</code>)나 각도(<code>rotate</code>)가 바뀔 때, 뚝뚝 끊기지 않고 <code>transition</code>을 통해 애니메이션처럼 부드럽게 변하도록 지시합니다.</p>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-amber-300 font-mono leading-relaxed">
+&lt;style&gt;
+  .box {
+    /* 변형이 생기면 0.5초 동안 부드럽게 이어라 */
+    transition: all 0.5s ease; 
+  }
+  .box:hover {
+    /* 1.2배 커지고 10도 회전 */
+    transform: scale(1.2) rotate(10deg); 
+  }
+&lt;/style&gt;
+
+&lt;div class="box"&gt;마우스 올려봐요&lt;/div&gt;</pre>
+                    </div>
+                    <div class="bg-amber-50 p-5 rounded-2xl border border-amber-100 border-l-4 border-l-amber-500 shrink-0">
+                        <h3 class="text-lg font-bold text-amber-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"마우스를 올리면 크기가 살짝 커지게 transform: scale을 넣고, 딱딱하게 끊기지 않도록 CSS에 transition 속성을 추가해서 0.5초 동안 스르륵 부드럽게 움직이게 해줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">▶ 실행 미리보기 (마우스를 올려보세요)</span>
+                    </div>
+                    <div class="p-6 flex-grow flex items-center justify-center bg-slate-50">
+                        <div class="w-32 h-32 bg-blue-500 text-white font-bold rounded-xl flex items-center justify-center shadow-lg hover-grow">
+                            마우스 올려봐요
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 15: Display none -->
+        <div class="slide w-full h-full flex-col" id="slide-15">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-4 flex items-center shrink-0">
+                <span class="bg-amber-500 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl">15</span>
+                요소 숨기기와 나타내기
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-amber-500 shrink-0">
+                        <h3 class="text-lg font-bold text-amber-800 mb-2">1. 설명</h3>
+                        <p class="text-slate-700 text-sm">'정답 해설'이나 '경고 팝업'처럼 평소엔 <code>display: none</code>으로 완전히 지워뒀다가, 버튼을 누르면 나타나게 하는 기법입니다.</p>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-amber-300 font-mono leading-relaxed">
+
+&lt;style&gt;
+  #hint { 
+    display: none; 
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #fef08a; /* 노란색 배경 */
+    border-left: 4px solid #eab308;
+  }
+&lt;/style&gt;
+
+&lt;button id="btn" &gt;힌트 보기&lt;/button&gt;
+&lt;div id="hint" &gt;💡 힌트: 저작권법 제28조를 떠올려보세요!&lt;/div&gt;
+
+
+&lt;script&gt;
+  // 버튼을 클릭했을 때
+  document.getElementById("btn").addEventListener("click", function() {
+    
+    // hint 요소의 현재 display 상태를 가져옴
+    const hintBox = document.getElementById("hint");
+    
+    // 만약 숨겨져(none) 있다면 보이게(block) 하고, 아니면 다시 숨김
+    if (hintBox.style.display === "none" || hintBox.style.display === "") {
+      hintBox.style.display = "block";
+      this.innerText = "힌트 숨기기"; // 버튼 글씨 변경
+    } else {
+      hintBox.style.display = "none";
+      this.innerText = "힌트 보기"; // 버튼 글씨 복구
+    }
+    
+  });
+&lt;/script &gt;
+
+</pre>
+                    </div>
+                    <div class="bg-amber-50 p-5 rounded-2xl border border-amber-100 border-l-4 border-l-amber-500 shrink-0">
+                        <h3 class="text-lg font-bold text-amber-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"학생이 힌트 버튼을 누르기 전까지는 힌트 상자가 안 보여야 해. CSS에 display: none을 줘서 숨겨두고, JS로 버튼을 눌렀을 때만 나타나게 해줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">▶ 실행 미리보기</span>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col items-center justify-start bg-white gap-4 pt-10">
+                        <button id="preview-btn-15" class="bg-slate-800 text-white px-4 py-2 rounded shadow">힌트 보기</button>
+                        <div id="preview-hint-15" class="hidden bg-yellow-100 border-l-4 border-yellow-500 p-4 mt-4 w-3/4 rounded shadow text-yellow-800">
+                            💡 힌트: 저작권법 제28조(공표된 저작물의 인용)를 떠올려보세요!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 16: Hover -->
+        <div class="slide w-full h-full flex-col" id="slide-16">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-4 flex items-center shrink-0">
+                <span class="bg-amber-500 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl">16</span>
+                마우스 피드백 (Hover & Cursor)
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-amber-500 shrink-0">
+                        <h3 class="text-lg font-bold text-amber-800 mb-2">1. 설명</h3>
+                        <p class="text-slate-700 text-sm">요소가 클릭 가능한지 시각적으로 알려주는 UX(사용자 경험) 기술입니다. 마우스를 올리면(<code>:hover</code>) 모양이 바뀌고 손가락 커서(<code>pointer</code>)가 나옵니다.</p>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-amber-300 font-mono leading-relaxed">
+&lt;style&gt;
+&lt;style&gt;
+  /* 예시 코드의 규칙 정의 */
+  .interactive-card {
+    cursor: pointer; /* 마우스를 올리면 손가락 모양으로 변경 */
+    border: 2px solid #e2e8f0; /* 기본 연한 회색 테두리 */
+    transition: border-color 0.2s; /* 테두리 색이 부드럽게 바뀌도록 설정 */
+  }
+  
+  /* 마우스를 올렸을 때(hover) 테두리가 파란색으로 변함 */
+  .interactive-card:hover {
+    border-color: blue; 
+  }
+&lt;/style&gt;
+
+&lt;div class="bg-white p-6 rounded-xl shadow-sm interactive-card w-64 text-center"&gt;
+    &lt;span class="text-2xl block mb-2"&gt;✋&lt;/span&gt;
+    &lt;span class="font-bold text-slate-700 block"&gt;경찰에 신고한다.&lt;/span&gt;
+    &lt;span class="text-xs text-slate-400 mt-2 block"&gt;(선택지 카드)&lt;/span&gt;
+&lt;/div&gt;
+</pre>
+                    </div>
+                    <div class="bg-amber-50 p-5 rounded-2xl border border-amber-100 border-l-4 border-l-amber-500 shrink-0">
+                        <h3 class="text-lg font-bold text-amber-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"학생들이 선택지 카드가 클릭 가능하다는 걸 알 수 있게 cursor: pointer를 넣고, 마우스를 올리면(:hover) 위로 살짝 떠오르면서 테두리가 생기게 액션을 줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">▶ 실행 미리보기 (올려보세요)</span>
+                    </div>
+                    <div class="p-6 flex-grow flex items-center justify-center bg-slate-100">
+                        <div class="bg-white p-6 rounded-xl shadow-sm interactive-card w-64 text-center">
+                            <span class="text-2xl block mb-2">✋</span>
+                            <span class="font-bold text-slate-700 block">경찰에 신고한다.</span>
+                            <span class="text-xs text-slate-400 mt-2 block">(선택지 카드)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 17: State Change -->
+        <div class="slide w-full h-full flex-col" id="slide-17">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-4 flex items-center shrink-0">
+                <span class="bg-amber-500 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl">17</span>
+                상태 변경 (화면의 무엇을 바꿀까?)
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-amber-500 shrink-0">
+                        <h3 class="text-lg font-bold text-amber-800 mb-2">1. 설명</h3>
+                        <p class="text-slate-700 text-sm">JS로 이벤트를 감지했다면, 글자(<code>innerText</code>)를 바꾸거나, CSS 색상(<code>style</code>)을 조작하라고 지시합니다.</p>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-amber-300 font-mono leading-relaxed">
+
+&lt;p id="preview-text-17"&gt;아직 풀지 않음&lt;/p&gt;
+&lt;button id="preview-btn-17"&gt;정답 제출하기&lt;/button&gt;
+
+
+&lt;script&gt;
+  // '정답 제출하기' 버튼을 클릭했을 때 이벤트 추가
+  document.getElementById("preview-btn-17").addEventListener("click", function() {
+    
+    // 대상 텍스트 요소를 찾음
+    let text = document.getElementById("preview-text-17");
+    
+    // 1. 글자 내용을 정답으로 변경
+    text.innerText = "정답입니다!";
+    
+    // 2. 글자 색상을 파란색으로 변경 (tailwind 대신 명확한 인라인 스타일 적용)
+    text.style.color = "blue";
+    
+  });
+&lt;/script&gt;
+
+</pre>
+                    </div>
+                    <div class="bg-amber-50 p-5 rounded-2xl border border-amber-100 border-l-4 border-l-amber-500 shrink-0">
+                        <h3 class="text-lg font-bold text-amber-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"버튼을 클릭하면, 결과 텍스트 칸의 글자 내용(innerText)을 '정답입니다'로 바꾸고 그 글자 색상(style)은 파란색으로 변경해 줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">▶ 실행 미리보기</span>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col items-center justify-center bg-white gap-6">
+                        <p id="preview-text-17" class="text-xl font-bold text-slate-400">아직 풀지 않음</p>
+                        <button id="preview-btn-17" class="bg-blue-100 text-blue-600 border border-blue-600 px-6 py-2 rounded-full font-bold hover:bg-blue-200">정답 제출하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 18: Conditions -->
+        <div class="slide w-full h-full flex-col" id="slide-18">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-4 flex items-center shrink-0">
+                <span class="bg-amber-500 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl">18</span>
+                조건 (If / Else): 판단하기
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-amber-500 shrink-0">
+                        <h3 class="text-lg font-bold text-amber-800 mb-2">1. 설명</h3>
+                        <p class="text-slate-700 text-sm">퀴즈나 시뮬레이션의 핵심 논리입니다. 학생의 행동(입력값)이 맞는지 틀린지 AI에게 규칙을 정해줍니다.</p>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-amber-300 font-mono leading-relaxed">
+&lt;div id="resultBox"&gt;결과&lt;/div&gt;
+
+&lt;script&gt;
+  let score = 100;
+  // 조건 확인
+  if (score == 100) {
+    resultBox.innerText = "완벽합니다!";
+  } else {
+    resultBox.innerText = "조금 더 노력해봐요.";
+  }
+&lt;/script&gt;</pre>
+                    </div>
+                    <div class="bg-amber-50 p-5 rounded-2xl border border-amber-100 border-l-4 border-l-amber-500 shrink-0">
+                        <h3 class="text-lg font-bold text-amber-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"JS 논리를 짤 때 조건을 걸어줘. 만약(if) 입력한 점수가 100점이면 '완벽합니다'를 띄우고, 그렇지 않으면(else) '노력해봐요'를 텍스트 칸에 띄워줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">▶ 실행 미리보기</span>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col items-center justify-center bg-white gap-4">
+                        <div class="flex gap-2 items-center">
+                            <label class="font-bold text-slate-600 text-sm">점수입력:</label>
+                            <input type="number" id="preview-input-18" value="80" class="border p-1 w-20 text-center rounded">
+                            <button id="preview-btn-18" class="bg-slate-700 text-white px-3 py-1 rounded">확인</button>
+                        </div>
+                        <div id="preview-result-18" class="bg-slate-100 border border-slate-300 w-full p-3 text-center text-sm font-bold text-slate-500 rounded h-12 flex items-center justify-center">
+                            결과가 여기에 표시됩니다.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 19: Timer -->
+        <div class="slide w-full h-full flex-col" id="slide-19">
+            <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-4 flex items-center shrink-0">
+                <span class="bg-amber-500 text-white w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center rounded-lg mr-3 text-lg lg:text-xl">19</span>
+                시간 제어 (타이머)
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-amber-500 shrink-0">
+                        <h3 class="text-lg font-bold text-amber-800 mb-2">1. 설명</h3>
+                        <p class="text-slate-700 text-sm">과학 시뮬레이션(지구 자전 등)을 만들 때 유용합니다. <code>setInterval</code>을 사용해 "일정 시간마다 반복해라"라고 요구할 수 있습니다.</p>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-amber-300 font-mono leading-relaxed">
+&lt;div id="earth"&gt;지구&lt;/div&gt;
+
+&lt;script&gt;
+  let degree = 0;
+  // 100ms(0.1초) 마다 5도씩 증가시킴
+  setInterval(function() {
+    degree += 5; 
+    earth.style.transform = `rotate(${degree}deg)`;
+  }, 100); 
+&lt;/script&gt;</pre>
+                    </div>
+                    <div class="bg-amber-50 p-5 rounded-2xl border border-amber-100 border-l-4 border-l-amber-500 shrink-0">
+                        <h3 class="text-lg font-bold text-amber-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"지구가 스스로 돌게 만들고 싶어. 타이머 기능(setInterval)을 써서 0.1초마다 지구 이미지의 회전 각도가 5도씩 계속 증가하도록 동작 코드를 짜줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center justify-between shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">▶ 실행 미리보기</span>
+                        <button id="preview-btn-19" class="text-xs bg-red-100 text-red-600 border border-red-300 px-2 py-1 rounded">정지/시작</button>
+                    </div>
+                    <div class="p-6 flex-grow flex items-center justify-center bg-slate-900 relative">
+                        <!-- JS로 회전시킬 요소 -->
+                        <div id="preview-earth-19" class="w-24 h-24 rounded-full bg-blue-500 flex items-center justify-center border-4 border-blue-300 relative shadow-[0_0_20px_rgba(59,130,246,0.5)]">
+                            <span class="text-white text-[10px] font-bold">지구 자전</span>
+                            <div class="w-2 h-8 bg-green-400 absolute top-2 left-4 rounded-full opacity-70"></div>
+                            <div class="w-3 h-6 bg-green-400 absolute bottom-4 right-4 rounded-full opacity-70"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-white border-t border-slate-200 p-4 flex-shrink-0">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <button onclick="prevSlide()" id="prev-btn" class="px-5 py-2.5 rounded-lg font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                &larr; 이전
+            </button>
+            <div class="text-sm text-slate-500 hidden sm:block">
+                키보드 <kbd class="px-2 py-1 bg-slate-100 border border-slate-300 rounded mx-1">←</kbd> <kbd class="px-2 py-1 bg-slate-100 border border-slate-300 rounded mx-1">→</kbd> 로 이동 가능
+            </div>
+            <button onclick="nextSlide()" id="next-btn" class="px-5 py-2.5 rounded-lg font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors">
+                다음 &rarr;
+            </button>
+        </div>
+    </footer>
+
+    <script>
+        let currentSlideIndex = 0;
+        const totalSlides = 20; // 표지(0) + 슬라이드(1~19)
+
+        function updateUI() {
+            document.querySelectorAll('.slide').forEach(slide => {
+                slide.classList.remove('active');
+            });
+            document.getElementById(`slide-${currentSlideIndex}`).classList.add('active');
+            
+            document.getElementById('prev-btn').disabled = currentSlideIndex === 0;
+            document.getElementById('next-btn').disabled = currentSlideIndex === totalSlides - 1;
+
+            document.getElementById('slide-counter').innerText = `${currentSlideIndex + 1} / ${totalSlides}`;
+            const progress = (currentSlideIndex / (totalSlides - 1)) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+        }
+
+        function nextSlide() {
+            if (currentSlideIndex < totalSlides - 1) {
+                currentSlideIndex++;
+                updateUI();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+                updateUI();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+
+        /* --- 미리보기(Preview) 전용 자바스크립트 로직 --- */
+        
+        // Slide 12 미리보기: 클릭 이벤트 감지
+        document.getElementById("preview-btn-12").addEventListener("click", function() {
+            const msg = document.getElementById("preview-msg-12");
+            msg.style.opacity = 1;
+            setTimeout(() => { msg.style.opacity = 0; }, 2000); // 2초 뒤 다시 숨김
+        });
+
+        // Slide 15 미리보기: 요소 숨기기/나타내기
+        document.getElementById("preview-btn-15").addEventListener("click", function() {
+            const hint = document.getElementById("preview-hint-15");
+            if(hint.classList.contains("hidden")) {
+                hint.classList.remove("hidden");
+                this.innerText = "힌트 숨기기";
+            } else {
+                hint.classList.add("hidden");
+                this.innerText = "힌트 보기";
+            }
+        });
+
+        // Slide 17 미리보기: 상태 변경 (innerText, style)
+        document.getElementById("preview-btn-17").addEventListener("click", function() {
+            const text = document.getElementById("preview-text-17");
+            text.innerText = "정답입니다!";
+            text.style.color = "#2563eb"; // 파란색(Tailwind blue-600)
+            text.classList.remove("text-slate-400");
+        });
+
+        // Slide 18 미리보기: 조건문 분기 (If/Else)
+        document.getElementById("preview-btn-18").addEventListener("click", function() {
+            const score = parseInt(document.getElementById("preview-input-18").value);
+            const resultBox = document.getElementById("preview-result-18");
+            
+            resultBox.classList.remove("bg-slate-100", "bg-green-100", "bg-red-100", "text-slate-500", "text-green-700", "text-red-700", "border-slate-300", "border-green-400", "border-red-400");
+            
+            if (score === 100) {
+                resultBox.innerText = "완벽합니다! (If문 통과)";
+                resultBox.classList.add("bg-green-100", "text-green-700", "border-green-400");
+            } else {
+                resultBox.innerText = "조금 더 노력해봐요. (Else문 통과)";
+                resultBox.classList.add("bg-red-100", "text-red-700", "border-red-400");
+            }
+        });
+
+        // Slide 19 미리보기: 타이머 (setInterval)
+        let degree19 = 0;
+        let timer19 = null;
+        let isRunning19 = true;
+        const earth19 = document.getElementById("preview-earth-19");
+        
+        function startTimer() {
+            timer19 = setInterval(() => {
+                degree19 += 3; // 0.1초마다 3도 증가
+                earth19.style.transform = `rotate(${degree19}deg)`;
+            }, 100);
+        }
+        
+        // 처음 시작
+        startTimer();
+
+        // 정지/시작 버튼 토글
+        document.getElementById("preview-btn-19").addEventListener("click", function() {
+            if (isRunning19) {
+                clearInterval(timer19);
+                this.classList.replace("bg-red-100", "bg-green-100");
+                this.classList.replace("text-red-600", "text-green-600");
+                this.classList.replace("border-red-300", "border-green-300");
+            } else {
+                startTimer();
+                this.classList.replace("bg-green-100", "bg-red-100");
+                this.classList.replace("text-green-600", "text-red-600");
+                this.classList.replace("border-green-300", "border-red-300");
+            }
+            isRunning19 = !isRunning19;
+        });
+
+        // 초기 화면 업데이트
+        updateUI();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+  <html lang="ko">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>
+        바이브 코딩 1차시: 웹앱 기초와 HTML
+      </title>
+      <script src="https://cdn.tailwindcss.com">
+      </script>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+      <style>
+        body { font-family: 'Inter', 'Pretendard', sans-serif; }
+        .slide { display: none; }
+        .slide.active { display: flex; animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* 예쁜 스크롤바 */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
+      </style>
+    </head>
+    <body class="bg-slate-50 text-slate-800 h-screen flex flex-col overflow-hidden">
+      <header class="bg-white shadow-sm z-10 flex-shrink-0">
+        <div class="h-1 w-full bg-slate-200">
+          <div id="progress-bar" class="h-1 bg-blue-600 transition-all duration-300" style="width: 0%;">
+          </div>
+        </div>
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+          <h1 class="text-xl font-bold text-slate-700">
+            디지털 인공지능 윤리: 바이브 코딩 실습
+          </h1>
+          <span id="slide-counter" class="text-sm font-medium text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
+            1 / 22
+          </span>
+        </div>
+      </header>
+      <main class="flex-grow relative overflow-hidden flex items-center justify-center p-6 w-full max-w-6xl mx-auto">
+        <!-- 표지 슬라이드 -->
+          <div class="slide active flex-col items-center justify-center w-full h-full text-center" id="slide-0">
+            <div class="inline-block mb-4 px-4 py-1.5 rounded-full bg-blue-100 text-blue-700 font-semibold text-sm">
+              1차시 수업 자료
+            </div>
+            <h1 class="text-5xl font-extrabold text-slate-900 mb-6 leading-tight">
+              바이브 코딩 시작하기
+              <br>
+              <span class="text-blue-600">
+                & 웹앱(HTML) 기초
+              </span>
+            </h1>
+            <p class="text-xl text-slate-600 mb-10 max-w-2xl mx-auto">
+              생성형 AI와 소통하며 나만의 교육용 웹 프로그램을 만드는 첫걸음입니다.
+            </p>
+            <button onclick="nextSlide()" class="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 text-lg">
+              수업 시작하기 &rarr;
+            </button>
+          </div>
+          <!-- 1 -->
+            <div class="slide w-full h-full flex-col" id="slide-1">
+              <h2 class="text-3xl font-bold text-slate-800 mb-6 flex items-center">
+                <span class="bg-blue-600 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-4 text-xl">
+                  1
+                </span>
+                프롬프트 작성 방법
+              </h2>
+              <div class="flex flex-col gap-6 flex-grow overflow-y-auto pb-4">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500">
+                  <h3 class="text-lg font-bold text-blue-800 mb-2">
+                    1. 설명
+                  </h3>
+                  <p class="text-slate-700 leading-relaxed">
+                    생성형 AI에게 질문할 때, 단순히 결과만 요구하는 것이 아니라
+                    <strong>
+                      '역할, 상황, 목적'
+                    </strong>
+                    등 충분한 맥락(Context)을 대화창(Prompt) 안에 미리 제시하여 AI가 내 의도를 정확히 파악하게 만드는 기법입니다.
+                  </p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500">
+                  <h3 class="text-lg font-bold text-blue-800 mb-2">
+                    2. 인-컨텍스트 러닝 (In-Context Learning)
+                  </h3>
+                  <p class="text-slate-700 leading-relaxed">
+                    생성형 AI는 문맥을 이해합니다. 즉, 대화 기록을 고려해서 답을 제공합니다. 
+                  </p>
+                  <p class="text-slate-700 leading-relaxed">
+                    앞서 채팅 기록을 고려해서 질문-답을 해야 합니다. 즉, 대화 주제가 바뀌면 새로운 채팅을 시작해야 합니다.   
+                  </p>
+                  <p class="text-slate-700 leading-relaxed">
+                    앞서 코드에 대한 설명을 질문했다면, 이에 대한 설명은 생략해도 됩니다.  
+                  </p>                  
+                </div>                
+                <div class="bg-green-50 p-6 rounded-2xl border border-green-100 border-l-4 border-l-green-500">
+                  <h3 class="text-lg font-bold text-green-800 mb-2">
+                    3. 프롬프트 예시
+                  </h3>
+                  <p class="text-slate-700 italic">
+                    "지구의 공전에 대한 시뮬레이션 자료를 html로 만들려고 한다. 지구의 관점에서 보는 것과, 태양의 관점에서 보는 것 만들어 줘."
+                  </p>
+                  <p class="text-slate-700 italic">
+                    "방위를 지구, 태양에 입력해 줘."
+                  </p>
+                  <p class="text-slate-700 leading-relaxed">
+                    두 번째 프롬프트의 경우 지구 공전 시뮬레이션을 말하지 않았지만 첫 번째 프롬프트를 통해 지구 공전임을 알고, 기존 생성한 코드에 수정해 줍니다.  
+                  </p>                  
+                </div>
+              </div>
+            </div>
+            <!-- 2 -->
+              <div class="slide w-full h-full flex-col" id="slide-2">
+                <h2 class="text-3xl font-bold text-slate-800 mb-6 flex items-center">
+                  <span class="bg-blue-600 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-4 text-xl">
+                    2
+                  </span>
+                  프롬프트로 코드 요청하는 방법
+                </h2>
+                <div class="flex flex-col gap-6 flex-grow overflow-y-auto pb-4">
+                  <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500">
+                    <h3 class="text-lg font-bold text-blue-800 mb-2">
+                      1. 설명
+                    </h3>
+                    <p class="text-slate-700 leading-relaxed">
+                      원하는 결과물을 얻기 위해 구조, 디자인, 기능을 분리하여 구체적으로 명령합니다. 오늘 1차시에서는 디자인(CSS)과 기능(JS)을 제외하고
+                      <strong>
+                        오직 구조(HTML)만 요청
+                      </strong>
+                      하는 것에 집중합니다.
+                    </p>
+                  </div>
+                  <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500">
+                    <h3 class="text-lg font-bold text-blue-800 mb-2">
+                      2. HTML을 알고 프롬프트를 작성하면 좋은 점
+                    </h3>
+                    <p class="text-slate-700 leading-relaxed">
+                      HTML은 결과물이 눈에 보입니다. 내가 원하는 구조를 설명할 수 있고, 그 결과물을 확인할 수 있습니다.
+                    </p>
+                    <p class="text-slate-700 leading-relaxed">
+                      HTML에 대한 지식이 알고 있다면 AI에 구체적으로 요청할 수 있고, 수정할 때도 수정할 곳을 구체적으로 요청할 수 있습니다. 
+                    </p>                    
+                  </div>                  
+                  <div class="bg-green-50 p-6 rounded-2xl border border-green-100 border-l-4 border-l-green-500">
+                    <h3 class="text-lg font-bold text-green-800 mb-2">
+                      3. 프롬프트 예시
+                    </h3>
+                    <p class="text-slate-700 italic">
+                      "디지털 시민성 선서문 페이지를 만들어줘. 다른 건 다 빼고 오직 HTML 코드만 사용해. 화면에는 큰 제목 1개, 설명 글 2줄, 학생 이름 입력칸, '서약하기' 버튼이 순서대로 들어가야 해."
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <!-- 3 -->
+                <div class="slide w-full h-full flex-col" id="slide-3">
+                  <h2 class="text-3xl font-bold text-slate-800 mb-6 flex items-center">
+                    <span class="bg-blue-600 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-4 text-xl">
+                      3
+                    </span>
+                    코드 수정 요청 방법 (반복과 개선)
+                  </h2>
+                  <div class="flex flex-col gap-6 flex-grow overflow-y-auto pb-4">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500">
+                      <h3 class="text-lg font-bold text-blue-800 mb-2">
+                        1. 설명
+                      </h3>
+                      <p class="text-slate-700 leading-relaxed">
+                        AI가 처음부터 완벽한 코드를 주지 않을 수 있습니다. 이때 처음부터 다시 요청하지 않고, 이전 대화를 바탕으로
+                        <strong>
+                          "특정 부분만" 콕 집어 수정(추가/삭제/변경)을 요구
+                        </strong>
+                        합니다.
+                      </p>
+                    </div>
+                    <div class="bg-green-50 p-6 rounded-2xl border border-green-100 border-l-4 border-l-green-500">
+                      <h3 class="text-lg font-bold text-green-800 mb-2">
+                        3. 프롬프트 예시
+                      </h3>
+                      <p class="text-slate-700 italic">
+                        "방금 짜준 코드에서 '서약하기' 버튼 위에 '개인정보 보호 수칙에 동의합니다'라는 체크박스를 하나 추가해 줘. 나머지 코드는 그대로 유지해."
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <!-- 4 -->
+                  <div class="slide w-full h-full flex-col" id="slide-4">
+                    <h2 class="text-3xl font-bold text-slate-800 mb-6 flex items-center">
+                      <span class="bg-blue-600 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-4 text-xl">
+                        4
+                      </span>
+                      활용 가능한 생성형 AI 도구 비교
+                    </h2>
+                    <div class="flex flex-col gap-6 flex-grow overflow-y-auto pb-4">
+                      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500">
+                        <h3 class="text-lg font-bold text-blue-800 mb-2">
+                          1. 설명
+                        </h3>
+                        <ul class="list-disc pl-5 space-y-2 text-slate-700">
+                          <li>
+                            <strong>
+                              Microsoft 365 Copilot:
+                            </strong>
+                            기관 계정(교육청, 교대)으로 사용할 수 있으며, gpt5.5, 5.6 사용 가능.
+                          </li>
+                          <li>
+                            <strong>
+                              Claude :
+                            </strong>
+                            코딩 능력(haiku < sonnet < opus)이 우수하며, claude 디자인과 같이 사용 가능.
+                          </li>
+                          <li>
+                            <strong>
+                              Gemini:
+                            </strong>
+                            생성된 HTML 코드를 브라우저에서 바로 다운로드/실행 가능한 환경 제공(초보자 실습에 최적).
+                          </li>
+                        </ul>
+                      </div>
+                  <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500">
+                    <h3 class="text-lg font-bold text-blue-800 mb-2">
+                      2. 특징
+                    </h3>
+                    <p class="text-slate-700 leading-relaxed">
+                      무료/유료 버전에 상관없이 간단한 수준의 HTML 코드는 완성도 높게 제공해줍니다. 
+                    </p>
+                    <p class="text-slate-700 leading-relaxed">
+                      <b>gemini</b>의 경우 코드를 다운로드 받을 수 있어 초보자에게 편하며  
+                    </p>                    
+                    <p class="text-slate-700 leading-relaxed">
+                      <b>Copilot</b>의 경우 윈도우11에 내장되어 있어 접근이 쉽습니다. 
+                    </p>
+                    <p class="text-slate-700 leading-relaxed">
+                      <b>Microsoft 365 Copilot</b>은 기관 계정이 필요하며(무료로 생성), GPT 높은 버전을 사용할 수 있습니다.  
+                    </p>                                        
+                    <p class="text-slate-700 leading-relaxed">
+                      <b>claude</b>는 디자인과 사용하는 경우 높은 품질의 자료를 받을 수 있습니다. 
+                    </p>                    
+                  </div>
+                    </div>
+                  </div>
+                  <!-- 5 -->
+                    <div class="slide w-full h-full flex-col" id="slide-5">
+                      <h2 class="text-3xl font-bold text-slate-800 mb-6 flex items-center">
+                        <span class="bg-blue-600 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-4 text-xl">
+                          5
+                        </span>
+                        웹앱(Web App)이란?
+                      </h2>
+                      <div class="flex flex-col gap-6 flex-grow overflow-y-auto pb-4">
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500">
+                          <h3 class="text-lg font-bold text-blue-800 mb-2">
+                            1. 설명
+                          </h3>
+                          <p class="text-slate-700 leading-relaxed">
+                            웹 브라우저(크롬, 엣지, 사파리 등)만 있으면 기기의 종류(PC, 태블릿, 스마트폰)나 운영체제에 상관없이 인터넷을 통해 바로 실행되는 프로그램입니다.
+                          </p>
+                          <p>
+                            즉, 실행을 위해 추가로 설치해야하는 프로그램이 없습니다. 
+                          </p>                          
+                          <p class="text-slate-700">
+                            <strong>
+                              💡 교사 활용 범위:
+                            </strong>
+                            학생용 윤리 퀴즈, 과학/수학 변인 통제 시뮬레이션, 학급 규칙 동의서, 타이머 등 수업용 미니 도구 제작 가능.
+                          </p>
+                        </div>
+                        
+                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500">
+                    <h3 class="text-lg font-bold text-blue-800 mb-2">
+                      2. 활용 방안
+                    </h3>
+  
+                        <li>로컬 : 내 PC에서 .html 파일 실행(브라우저 이용)</li>
+                        <li>서버 : 특정 PC(또는 서버)에서 .html 파일 실행(브라우저 이용)</li>                   
+
+                                     
+                  </div>
+                    </div>
+                    </div>
+                    <!-- 6 -->
+                      <div class="slide w-full h-full flex-col" id="slide-6">
+                        <h2 class="text-3xl font-bold text-slate-800 mb-6 flex items-center">
+                          <span class="bg-blue-600 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-4 text-xl">
+                            6
+                          </span>
+                          교육 현장에서 웹앱의 장점
+                        </h2>
+                        <div class="flex flex-col gap-6 flex-grow overflow-y-auto pb-4">
+                          <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500">
+                            <h3 class="text-lg font-bold text-blue-800 mb-2">
+                              1. 설명
+                            </h3>
+                            <ul class="list-none space-y-4 text-slate-700">
+                              <li class="flex items-start">
+                                <span class="text-blue-500 mr-2">
+                                  ✔️
+                                </span>
+                                <strong>
+                                  무설치:
+                                </strong>
+                                학생들에게 앱이나 프로그램을 별도로 설치하라고 안내할 필요가 없습니다.
+                              </li>
+                              <li class="flex items-start">
+                                <span class="text-blue-500 mr-2">
+                                  ✔️
+                                </span>
+                                <strong>
+                                  즉각적인 배포:
+                                </strong>
+                                링크(URL) 하나나 QR코드만 주면 전체 학생이 동시에 접속하여 수업을 시작할 수 있습니다.
+                              </li>
+                              <li class="flex items-start">
+                                <span class="text-blue-500 mr-2">
+                                  ✔️
+                                </span>
+                                <strong>
+                                  유지보수:
+                                </strong>
+                                교사가 코드를 조금만 수정해서 다시 올리면 학생들은 새로고침(F5)만으로 업데이트된 버전을 볼 수 있습니다.
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- 7 -->
+                        <div class="slide w-full h-full flex-col" id="slide-7">
+                          <h2 class="text-3xl font-bold text-slate-800 mb-6 flex items-center">
+                            <span class="bg-blue-600 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-4 text-xl">
+                              7
+                            </span>
+                            웹 페이지를 구성하는 3요소
+                          </h2>
+                          <div class="flex flex-col gap-6 flex-grow overflow-y-auto pb-4">
+                            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500">
+                              <h3 class="text-lg font-bold text-blue-800 mb-2">
+                                1. 설명
+                              </h3>
+                              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                                  <h4 class="font-bold text-indigo-700 text-lg mb-1">
+                                    HTML (뼈대)
+                                  </h4>
+                                  <p class="text-sm text-slate-600">
+                                    화면에 어떤 요소(글, 그림, 버튼)가 어디에 들어갈지 구조를 정의합니다.
+                                  </p>
+                                </div>
+                                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                                  <h4 class="font-bold text-pink-600 text-lg mb-1">
+                                    CSS (디자인)
+                                  </h4>
+                                  <p class="text-sm text-slate-600">
+                                    요소의 색상, 크기, 폰트, 배치 등을 아름답게 꾸며줍니다. (2차시)
+                                  </p>
+                                </div>
+                                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                                  <h4 class="font-bold text-amber-600 text-lg mb-1">
+                                    JavaScript (근육)
+                                  </h4>
+                                  <p class="text-sm text-slate-600">
+                                    버튼을 눌렀을 때 팝업이 뜨거나 점수를 계산하는 등 동적인 기능을 담당합니다.
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+        <!-- 8 -->
+        <div class="slide w-full h-full flex-col" id="slide-8">
+            <h2 class="text-3xl font-bold text-slate-800 mb-6 flex items-center">
+                <span class="bg-blue-600 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-4 text-xl">8</span>
+                HTML 기본 구조
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <!-- 왼쪽 열 (1, 2, 3) -->
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500 shrink-0">
+                        <h3 class="text-lg font-bold text-blue-800 mb-2">1. 설명</h3>
+                        <p class="text-slate-700 text-sm">웹 문서를 작성하기 위한 가장 기본적인 틀입니다. <code>&lt;!DOCTYPE html&gt;</code>로 문서 종류를 선언하고, <code>&lt;html&gt;</code> 안에 눈에 안 보이는 정보 <code>&lt;head&gt;</code>와 실제 보이는 내용 <code>&lt;body&gt;</code>를 넣습니다.</p>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-green-400 font-mono leading-relaxed">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;디지털 윤리 수업&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    (이곳에 내용이 들어갑니다)
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+                    </div>
+                    <div class="bg-green-50 p-5 rounded-2xl border border-green-100 border-l-4 border-l-green-500 shrink-0">
+                        <h3 class="text-lg font-bold text-green-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"디지털 윤리 퀴즈를 만들 건데, HTML 기본 구조(head, body)를 갖춰서 코드를 짜줘."</p>
+                    </div>
+                </div>
+                <!-- 오른쪽 열 (미리보기) -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                            실행 미리보기
+                        </span>
+                    </div>
+                    <div class="p-6 flex-grow flex items-center justify-center bg-white text-slate-800 overflow-y-auto">
+                        <div class="border-2 border-dashed border-slate-300 w-full h-full p-4 flex items-center justify-center text-slate-400 text-sm">
+                                (이곳에 내용이 들어갑니다)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 9 -->
+        <div class="slide w-full h-full flex-col" id="slide-9">
+            <h2 class="text-3xl font-bold text-slate-800 mb-6 flex items-center">
+                <span class="bg-blue-600 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-4 text-xl">9</span>
+                시맨틱 구조 나누기 (header, main, footer)
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500 shrink-0">
+                        <h3 class="text-lg font-bold text-blue-800 mb-2">1. 설명</h3>
+                        <p class="text-slate-700 text-sm">화면을 의미에 따라 상단(제목/메뉴), 중단(본문), 하단(저작권/제작자)으로 나누는 태그입니다. AI가 화면을 논리적으로 짜도록 유도합니다.</p>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-green-400 font-mono leading-relaxed">
+&lt;header&gt;
+  &lt;h1&gt;우리학급 디지털 규칙&lt;/h1&gt;
+&lt;/header&gt;
+
+&lt;main&gt;
+  규칙 내용이 들어가는 메인 화면입니다.
+&lt;/main&gt;
+
+&lt;footer&gt;
+  만든이: 홍길동 선생님
+&lt;/footer&gt;</pre>
+                    </div>
+                    <div class="bg-green-50 p-5 rounded-2xl border border-green-100 border-l-4 border-l-green-500 shrink-0">
+                        <h3 class="text-lg font-bold text-green-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"코드를 짤 때 header에는 '디지털 윤리 퀴즈'라는 제목을 넣고, main 영역에 퀴즈 내용을 넣고, footer에는 '제작: OOO 선생님'이라고 영역을 명확히 나눠서 작성해 줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> 실행 미리보기
+                        </span>
+                    </div>
+                    <div class="p-6 flex-grow flex items-center justify-center bg-white overflow-y-auto">
+                        <div class="w-full h-full flex flex-col text-center text-sm border-2 border-slate-300 rounded shadow-sm">
+                            <header class="bg-slate-100 p-3 border-b-2 border-slate-300 font-bold text-lg text-slate-800">우리학급 디지털 규칙</header>
+                            <main class="flex-grow p-4 flex items-center justify-center bg-white text-slate-600">규칙 내용이 들어가는 메인 화면입니다.</main>
+                            <footer class="bg-slate-100 p-2 border-t-2 border-slate-300 text-xs text-slate-500">만든이: 홍길동 선생님</footer>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10 -->
+        <div class="slide w-full h-full flex-col" id="slide-10">
+            <h2 class="text-3xl font-bold text-slate-800 mb-6 flex items-center">
+                <span class="bg-blue-600 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-4 text-xl">10</span>
+                다단 및 구역/섹션 나누기
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500 shrink-0">
+                        <h3 class="text-lg font-bold text-blue-800 mb-2">1. 설명</h3>
+                        <p class="text-slate-700 text-sm">화면을 좌우로 나누거나(다단), 특정 주제별로 덩어리(섹션)를 묶을 때 사용합니다. 나중에 CSS를 입히기 위해 필수적인 뼈대 작업입니다.</p>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-green-400 font-mono leading-relaxed">
+&lt;section id="left-column"&gt;
+  여기는 왼쪽 설명 영역입니다.
+&lt;/section&gt;
+
+&lt;section id="right-column"&gt;
+  여기는 오른쪽 문제 풀이 영역입니다.
+&lt;/section&gt;</pre>
+                    </div>
+                    <div class="bg-green-50 p-5 rounded-2xl border border-green-100 border-l-4 border-l-green-500 shrink-0">
+                        <h3 class="text-lg font-bold text-green-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"메인 화면을 두 개의 구역(섹션)으로 나눠줘. 왼쪽 구역에는 저작권 설명 글을 넣고, 오른쪽 구역에는 관련 퀴즈를 넣을 거야."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> 실행 미리보기
+                        </span>
+                    </div>
+                    <div class="p-6 flex-grow flex items-center justify-center bg-white overflow-y-auto">
+                        <div class="w-full flex h-40 text-center text-sm gap-2">
+                            <section class="flex-1 border-2 border-dashed border-blue-400 bg-blue-50 text-blue-800 p-4 flex items-center justify-center rounded">여기는 왼쪽 설명 영역입니다.</section>
+                            <section class="flex-1 border-2 border-dashed border-green-400 bg-green-50 text-green-800 p-4 flex items-center justify-center rounded">여기는 오른쪽 문제 풀이 영역입니다.</section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 11 -->
+        <div class="slide w-full h-full flex-col" id="slide-11">
+            <h2 class="text-3xl font-bold text-slate-800 mb-6 flex items-center">
+                <span class="bg-blue-600 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-4 text-xl">11</span>
+                제목, 본문, 구역 묶기 (h1~h6, p, div)
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500 shrink-0">
+                        <h3 class="text-lg font-bold text-blue-800 mb-2">1. 설명</h3>
+                        <ul class="list-disc pl-5 text-slate-700 text-sm space-y-1">
+                            <li><code>h1~h6</code>: 제목을 나타내며 숫자가 작을수록 큽니다.</li>
+                            <li><code>p</code>: 일반적인 본문(단락)을 작성합니다.</li>
+                            <li><code>div</code>: 여러 요소를 하나의 상자로 묶어 레이아웃을 잡습니다.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-green-400 font-mono leading-relaxed">
+&lt;div&gt;
+  &lt;h2&gt;1. 사이버 폭력이란?&lt;/h2&gt;
+  &lt;p&gt;사이버 공간에서 타인에게 피해를 주는 행위입니다.&lt;/p&gt;
+&lt;/div&gt;</pre>
+                    </div>
+                    <div class="bg-green-50 p-5 rounded-2xl border border-green-100 border-l-4 border-l-green-500 shrink-0">
+                        <h3 class="text-lg font-bold text-green-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"질문과 답변을 하나의 div 상자로 묶어줘. 질문은 두 번째로 큰 제목(h2)으로 하고, 설명은 일반 본문 단락(p)으로 써줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> 실행 미리보기
+                        </span>
+                    </div>
+                    <div class="p-6 flex-grow flex items-center justify-center bg-white overflow-y-auto">
+                        <div class="w-full max-w-sm border border-indigo-200 bg-indigo-50/30 p-6 rounded-lg text-left shadow-sm">
+                            <h2 class="text-2xl font-bold text-slate-800 mb-3 block">1. 사이버 폭력이란?</h2>
+                            <p class="text-slate-600 leading-relaxed block">사이버 공간에서 타인에게 피해를 주는 행위입니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 12 -->
+        <div class="slide w-full h-full flex-col" id="slide-12">
+            <h2 class="text-3xl font-bold text-slate-800 mb-6 flex items-center">
+                <span class="bg-blue-600 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-4 text-xl">12</span>
+                목록 (ul, ol, li)
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500 shrink-0">
+                        <h3 class="text-lg font-bold text-blue-800 mb-2">1. 설명</h3>
+                        <p class="text-slate-700 text-sm">항목을 나열할 때 사용합니다. <code>ul</code>은 순서가 없는 점(•)으로, <code>ol</code>은 1, 2, 3 같은 숫자로 순서를 매깁니다. 각 항목은 <code>li</code>를 사용합니다.</p>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-green-400 font-mono leading-relaxed">
+&lt;ol&gt;
+  &lt;li&gt;출처 반드시 남기기&lt;/li&gt;
+  &lt;li&gt;비밀번호 공유하지 않기&lt;/li&gt;
+&lt;/ol&gt;</pre>
+                    </div>
+                    <div class="bg-green-50 p-5 rounded-2xl border border-green-100 border-l-4 border-l-green-500 shrink-0">
+                        <h3 class="text-lg font-bold text-green-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"올바른 인터넷 사용 습관 3가지를 번호가 매겨지는 순서 있는 목록(ol)으로 정리해 줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> 실행 미리보기
+                        </span>
+                    </div>
+                    <div class="p-6 flex-grow flex items-center justify-center bg-white overflow-y-auto">
+                        <div class="w-full max-w-sm p-6 border border-slate-200 shadow-sm rounded-lg">
+                            <ol class="list-decimal list-inside text-left space-y-3 text-slate-700 text-lg">
+                                <li>출처 반드시 남기기</li>
+                                <li>비밀번호 공유하지 않기</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 13 -->
+        <div class="slide w-full h-full flex-col" id="slide-13">
+            <h2 class="text-3xl font-bold text-slate-800 mb-6 flex items-center">
+                <span class="bg-blue-600 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-4 text-xl">13</span>
+                이미지와 비디오 (img, video, iframe)
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500 shrink-0">
+                        <h3 class="text-lg font-bold text-blue-800 mb-2">1. 설명</h3>
+                        <p class="text-slate-700 text-sm">화면에 미디어를 띄웁니다. <code>img</code>는 사진, <code>video</code>는 영상 파일, <code>iframe</code>은 외부 사이트 화면을 가져올 때 씁니다.</p>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-green-400 font-mono leading-relaxed">
+&lt;img src="logo.png"&gt;
+&lt;video src="ethics.mp4" controls&gt;&lt;/video&gt;
+&lt;iframe src="https://www.youtube.com/..."&gt;&lt;/iframe&gt;</pre>
+                    </div>
+                    <div class="bg-green-50 p-5 rounded-2xl border border-green-100 border-l-4 border-l-green-500 shrink-0">
+                        <h3 class="text-lg font-bold text-green-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"상단에 학교 마크를 넣을 수 있게 이미지(img) 태그를 하나 넣어주고, 그 밑에는 관련 유튜브 영상을 띄울 수 있게 iframe 자리를 만들어줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> 실행 미리보기
+                        </span>
+                    </div>
+                    <div class="p-6 flex-grow flex items-center justify-center bg-white overflow-y-auto">
+                        <div class="flex flex-col gap-5 items-center w-full">
+                            <div class="w-32 h-16 bg-slate-100 border border-slate-300 flex items-center justify-center text-xs text-slate-500 rounded shadow-sm">
+                                📷 logo.png
+                            </div>
+                            <div class="w-full max-w-[200px] h-28 bg-slate-800 flex flex-col items-center justify-center text-slate-300 relative rounded shadow-sm">
+                                <svg class="w-10 h-10 text-white opacity-80" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                                <span class="text-[10px] absolute bottom-2">ethics.mp4 (video)</span>
+                            </div>
+                            <div class="w-full max-w-[200px] h-20 bg-slate-200 border border-slate-300 flex items-center justify-center text-xs text-slate-600 shadow-inner rounded">
+                                ▶️ 유튜브 영상 (iframe)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 14 -->
+        <div class="slide w-full h-full flex-col" id="slide-14">
+            <h2 class="text-3xl font-bold text-slate-800 mb-6 flex items-center">
+                <span class="bg-blue-600 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-4 text-xl">14</span>
+                링크와 드롭다운 메뉴 (a, select)
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500 shrink-0">
+                        <h3 class="text-lg font-bold text-blue-800 mb-2">1. 설명</h3>
+                        <p class="text-slate-700 text-sm"><code>a</code> 태그는 클릭 시 다른 페이지로 이동하는 링크를 만들고, <code>select</code>는 클릭하면 아래로 펼쳐지는 선택 메뉴를 만듭니다.</p>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-green-400 font-mono leading-relaxed">
+&lt;a href="https://www.edunet.net"&gt;에듀넷 바로가기&lt;/a&gt;
+
+&lt;select&gt;
+  &lt;option&gt;1학년&lt;/option&gt;
+  &lt;option&gt;2학년&lt;/option&gt;
+&lt;/select&gt;</pre>
+                    </div>
+                    <div class="bg-green-50 p-5 rounded-2xl border border-green-100 border-l-4 border-l-green-500 shrink-0">
+                        <h3 class="text-lg font-bold text-green-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"'저작권 위원회'라는 글씨에 해당 홈페이지로 가는 링크(a)를 걸어줘. 그리고 학생의 학년을 선택할 수 있는 드롭다운 메뉴(select)를 추가해 줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> 실행 미리보기
+                        </span>
+                    </div>
+                    <div class="p-6 flex-grow flex items-center justify-center bg-white overflow-y-auto">
+                        <div class="flex flex-col gap-8 items-center border border-slate-200 p-8 rounded-lg shadow-sm">
+                            <a href="#" class="text-blue-600 underline hover:text-blue-800 text-lg">에듀넷 바로가기</a>
+                            
+                            <select class="border border-slate-300 p-2.5 rounded-lg bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer text-slate-700">
+                                <option>1학년</option>
+                                <option>2학년</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 15 -->
+        <div class="slide w-full h-full flex-col" id="slide-15">
+            <h2 class="text-3xl font-bold text-slate-800 mb-6 flex items-center">
+                <span class="bg-blue-600 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-4 text-xl">15</span>
+                텍스트 꾸미기 (strong, b, u, i)
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500 shrink-0">
+                        <h3 class="text-lg font-bold text-blue-800 mb-2">1. 설명</h3>
+                        <p class="text-slate-700 text-sm">글자의 일부분만 강조할 때 씁니다. <code>strong</code> 또는 <code>b</code>는 굵게, <code>u</code>는 밑줄, <code>i</code>는 기울임꼴입니다.</p>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-green-400 font-mono leading-relaxed">
+&lt;p&gt;
+  타인의 작품을 쓸 때는 &lt;strong&gt;출처&lt;/strong&gt;를 밝혀야 합니다. 
+  &lt;u&gt;불법 다운로드&lt;/u&gt;는 안 됩니다.
+&lt;/p&gt;</pre>
+                    </div>
+                    <div class="bg-green-50 p-5 rounded-2xl border border-green-100 border-l-4 border-l-green-500 shrink-0">
+                        <h3 class="text-lg font-bold text-green-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"설명글 중간에 '개인정보'라는 단어는 굵게(strong) 처리하고, '절대 금지'라는 단어에는 밑줄(u)을 쳐줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> 실행 미리보기
+                        </span>
+                    </div>
+                    <div class="p-6 flex-grow flex items-center justify-center bg-white overflow-y-auto">
+                        <div class="border border-slate-200 p-6 rounded-lg shadow-sm max-w-sm">
+                            <p class="text-lg text-slate-700 leading-relaxed block">
+                                타인의 작품을 쓸 때는 <strong class="font-bold text-black">출처</strong>를 밝혀야 합니다. 
+                                <u class="underline decoration-2 underline-offset-4">불법 다운로드</u>는 안 됩니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 16 -->
+        <div class="slide w-full h-full flex-col" id="slide-16">
+            <h2 class="text-3xl font-bold text-slate-800 mb-6 flex items-center">
+                <span class="bg-blue-600 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-4 text-xl">16</span>
+                버튼과 텍스트 입력창 (button, text)
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500 shrink-0">
+                        <h3 class="text-lg font-bold text-blue-800 mb-2">1. 설명</h3>
+                        <p class="text-slate-700 text-sm">클릭을 유도하는 버튼(<code>button</code>)과 짧은 단답이나 이름을 적을 수 있는 글자 입력창(<code>input type="text"</code>)입니다.</p>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-green-400 font-mono leading-relaxed">
+이름: &lt;input type="text"&gt;
+&lt;button&gt;제출하기&lt;/button&gt;</pre>
+                    </div>
+                    <div class="bg-green-50 p-5 rounded-2xl border border-green-100 border-l-4 border-l-green-500 shrink-0">
+                        <h3 class="text-lg font-bold text-green-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"학생이 자기 이름을 적을 수 있는 텍스트 입력창(input type=text)을 하나 만들고, 그 옆에 '제출하기' 버튼을 붙여줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> 실행 미리보기
+                        </span>
+                    </div>
+                    <div class="p-6 flex-grow flex items-center justify-center bg-white overflow-y-auto">
+                        <div class="flex items-center gap-3 p-6 border border-slate-200 shadow-sm rounded-xl bg-slate-50">
+                            <label class="font-medium text-slate-700">이름:</label>
+                            <input type="text" class="border border-slate-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-32" />
+                            <button class="bg-white border border-slate-300 px-4 py-2 rounded-lg hover:bg-slate-100 active:bg-slate-200 font-medium text-slate-700 shadow-sm transition-colors">제출하기</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 17 -->
+        <div class="slide w-full h-full flex-col" id="slide-17">
+            <h2 class="text-3xl font-bold text-slate-800 mb-6 flex items-center">
+                <span class="bg-blue-600 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-4 text-xl">17</span>
+                선택형 입력창 (checkbox, radio)
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500 shrink-0">
+                        <h3 class="text-lg font-bold text-blue-800 mb-2">1. 설명</h3>
+                        <ul class="list-disc pl-5 text-slate-700 text-sm space-y-1">
+                            <li><code>checkbox</code>: 네모 모양으로 여러 개를 동시에 선택할 수 있습니다.</li>
+                            <li><code>radio</code>: 동그라미 모양으로 여러 보기 중 오직 하나만 선택할 때 씁니다.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-green-400 font-mono leading-relaxed">
+&lt;input type="checkbox"&gt; 개인정보 제공 동의
+&lt;br&gt;
+&lt;input type="radio" name="quiz"&gt; O
+&lt;input type="radio" name="quiz"&gt; X</pre>
+                    </div>
+                    <div class="bg-green-50 p-5 rounded-2xl border border-green-100 border-l-4 border-l-green-500 shrink-0">
+                        <h3 class="text-lg font-bold text-green-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"O/X 퀴즈를 만들 거니까, 둘 중 하나만 고를 수 있는 라디오 버튼(radio) 2개를 만들어줘. 그리고 동의 사항을 체크할 수 있는 체크박스(checkbox)도 넣어줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> 실행 미리보기
+                        </span>
+                    </div>
+                    <div class="p-6 flex-grow flex items-center justify-center bg-white overflow-y-auto">
+                        <div class="flex flex-col gap-5 text-left p-6 border border-slate-200 shadow-sm rounded-xl bg-slate-50 w-full max-w-sm">
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="chk" class="w-5 h-5 text-blue-600 rounded border-slate-300 cursor-pointer">
+                                <label for="chk" class="text-slate-700 cursor-pointer select-none">개인정보 제공 동의</label>
+                            </div>
+                            <hr class="border-slate-200">
+                            <div class="flex gap-6">
+                                <label class="flex items-center gap-2 cursor-pointer select-none">
+                                    <input type="radio" name="quiz" class="w-5 h-5 text-blue-600 border-slate-300 cursor-pointer"> 
+                                    <span class="text-lg font-bold text-slate-700">O</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer select-none">
+                                    <input type="radio" name="quiz" class="w-5 h-5 text-blue-600 border-slate-300 cursor-pointer"> 
+                                    <span class="text-lg font-bold text-slate-700">X</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 18 -->
+        <div class="slide w-full h-full flex-col" id="slide-18">
+            <h2 class="text-3xl font-bold text-slate-800 mb-6 flex items-center">
+                <span class="bg-blue-600 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-4 text-xl">18</span>
+                슬라이더와 숫자 입력 (range, number)
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500 shrink-0">
+                        <h3 class="text-lg font-bold text-blue-800 mb-2">1. 설명</h3>
+                        <ul class="list-disc pl-5 text-slate-700 text-sm space-y-1">
+                            <li><code>range</code>: 마우스로 좌우로 끌어서 값을 조절하는 슬라이더입니다.</li>
+                            <li><code>number</code>: 키보드로 숫자만 입력되도록 강제하는 입력창입니다.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-green-400 font-mono leading-relaxed">
+태양의 고도: &lt;input type="range"&gt;
+나이: &lt;input type="number"&gt;</pre>
+                    </div>
+                    <div class="bg-green-50 p-5 rounded-2xl border border-green-100 border-l-4 border-l-green-500 shrink-0">
+                        <h3 class="text-lg font-bold text-green-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"시뮬레이션에서 온도를 마우스로 조절할 수 있도록 슬라이더(range) 바를 하나 넣어줘. 그리고 점수를 입력하는 칸은 숫자만 입력되게(number) 해줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> 실행 미리보기
+                        </span>
+                    </div>
+                    <div class="p-6 flex-grow flex items-center justify-center bg-white overflow-y-auto">
+                        <div class="flex flex-col gap-6 text-left p-6 border border-slate-200 shadow-sm rounded-xl bg-slate-50 w-full max-w-sm">
+                            <div class="flex items-center gap-3">
+                                <label class="font-medium text-slate-700 whitespace-nowrap">태양의 고도:</label>
+                                <input type="range" class="w-full cursor-pointer accent-blue-600">
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <label class="font-medium text-slate-700 whitespace-nowrap">나이:</label>
+                                <input type="number" class="border border-slate-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-24" value="12">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 19 -->
+        <div class="slide w-full h-full flex-col" id="slide-19">
+            <h2 class="text-3xl font-bold text-slate-800 mb-6 flex items-center">
+                <span class="bg-blue-600 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-4 text-xl">19</span>
+                날짜와 색상 선택 (date, color)
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500 shrink-0">
+                        <h3 class="text-lg font-bold text-blue-800 mb-2">1. 설명</h3>
+                        <ul class="list-disc pl-5 text-slate-700 text-sm space-y-1">
+                            <li><code>date</code>: 클릭하면 날짜를 고를 수 있는 달력이 팝업됩니다.</li>
+                            <li><code>color</code>: 클릭하면 색상을 고를 수 있는 팔레트가 나타납니다.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-green-400 font-mono leading-relaxed">
+사건 발생일: &lt;input type="date"&gt;
+원하는 색상: &lt;input type="color"&gt;</pre>
+                    </div>
+                    <div class="bg-green-50 p-5 rounded-2xl border border-green-100 border-l-4 border-l-green-500 shrink-0">
+                        <h3 class="text-lg font-bold text-green-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"역사적인 사건의 날짜를 학생들이 달력에서 직접 고를 수 있게 날짜 선택기(date)를 넣어주고, 글자색을 바꿀 수 있는 색상 선택기(color)도 추가해 줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> 실행 미리보기
+                        </span>
+                    </div>
+                    <div class="p-6 flex-grow flex items-center justify-center bg-white overflow-y-auto">
+                        <div class="flex flex-col gap-6 text-left p-6 border border-slate-200 shadow-sm rounded-xl bg-slate-50 w-full max-w-sm">
+                            <div class="flex items-center gap-3">
+                                <label class="font-medium text-slate-700">사건 발생일:</label>
+                                <input type="date" class="border border-slate-300 p-2 rounded-lg cursor-pointer text-slate-700">
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <label class="font-medium text-slate-700">원하는 색상:</label>
+                                <input type="color" value="#2563eb" class="border border-slate-300 p-1 rounded-lg h-10 w-16 cursor-pointer bg-white">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 20 -->
+        <div class="slide w-full h-full flex-col" id="slide-20">
+            <h2 class="text-3xl font-bold text-slate-800 mb-6 flex items-center">
+                <span class="bg-blue-600 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-4 text-xl">20</span>
+                비밀번호 입력 (password)
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500 shrink-0">
+                        <h3 class="text-lg font-bold text-blue-800 mb-2">1. 설명</h3>
+                        <p class="text-slate-700 text-sm">입력하는 내용을 남이 볼 수 없도록 글자 대신 까만 점(●)으로 가려주는 입력창입니다. 디지털 윤리 중 보안/개인정보 교육에 활용하기 좋습니다.</p>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-green-400 font-mono leading-relaxed">
+비밀번호: &lt;input type="password"&gt;</pre>
+                    </div>
+                    <div class="bg-green-50 p-5 rounded-2xl border border-green-100 border-l-4 border-l-green-500 shrink-0">
+                        <h3 class="text-lg font-bold text-green-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"안전한 비밀번호 만들기 실습을 할 거야. 학생들이 입력할 때 글자가 가려지도록 비밀번호 입력칸(password)을 하나 만들어줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> 실행 미리보기
+                        </span>
+                    </div>
+                    <div class="p-6 flex-grow flex items-center justify-center bg-white overflow-y-auto">
+                        <div class="flex items-center gap-3 p-6 border border-slate-200 shadow-sm rounded-xl bg-slate-50">
+                            <label class="font-medium text-slate-700">비밀번호:</label>
+                            <input type="password" value="mysecretpassword" class="border border-slate-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 tracking-widest text-lg w-40">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 21 -->
+        <div class="slide w-full h-full flex-col" id="slide-21">
+            <h2 class="text-3xl font-bold text-slate-800 mb-6 flex items-center">
+                <span class="bg-blue-600 text-white w-10 h-10 flex items-center justify-center rounded-lg mr-4 text-xl">21</span>
+                입력창 디테일 속성 (placeholder, value)
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 flex-grow overflow-hidden pb-4">
+                <div class="flex flex-col gap-4 overflow-y-auto pr-2 pb-2">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-blue-500 shrink-0">
+                        <h3 class="text-lg font-bold text-blue-800 mb-2">1. 설명</h3>
+                        <ul class="list-disc pl-5 text-slate-700 text-sm space-y-1">
+                            <li><code>placeholder</code>: 빈칸에 희미하게 적혀 있는 '안내/예시 문구'입니다. 글자를 치면 사라집니다.</li>
+                            <li><code>value</code>: 처음부터 빈칸에 실제 문자가 채워져 있는 '기본값'입니다.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-700 text-sm shrink-0 overflow-x-auto">
+                        <h3 class="text-lg font-bold text-slate-300 mb-2">2. 예시 코드</h3>
+<pre class="text-green-400 font-mono leading-relaxed">
+이름: &lt;input type="text" placeholder="예: 홍길동"&gt;
+학교명: &lt;input type="text" value="우리초등학교"&gt;</pre>
+                    </div>
+                    <div class="bg-green-50 p-5 rounded-2xl border border-green-100 border-l-4 border-l-green-500 shrink-0">
+                        <h3 class="text-lg font-bold text-green-800 mb-2">3. 프롬프트 예시</h3>
+                        <p class="text-slate-700 italic text-sm">"이름 입력칸에는 회색 글씨로 '예: 홍길동'이라는 안내 문구(placeholder)가 보이게 해주고, 소속 학교 입력칸에는 처음부터 '인공지능대학원'이라는 글씨가 채워져 있도록(value) 코드를 짜줘."</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
+                    <div class="bg-slate-100 border-b border-slate-200 px-4 py-2 flex items-center shrink-0">
+                        <span class="text-sm font-bold text-slate-600 flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> 실행 미리보기
+                        </span>
+                    </div>
+                    <div class="p-6 flex-grow flex items-center justify-center bg-white overflow-y-auto">
+                        <div class="flex flex-col gap-5 text-left p-6 border border-slate-200 shadow-sm rounded-xl bg-slate-50 w-full max-w-sm">
+                            <div class="flex items-center gap-3">
+                                <label class="font-medium text-slate-700 w-16 text-right">이름:</label>
+                                <input type="text" placeholder="예: 홍길동" class="border border-slate-300 p-2 rounded-lg placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <label class="font-medium text-slate-700 w-16 text-right">학교명:</label>
+                                <input type="text" value="우리초등학교" class="border border-slate-300 p-2 rounded-lg text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+
+
+
+
+                              
+                                                  <footer class="bg-white border-t border-slate-200 p-4 flex-shrink-0">
+                                                    <div class="max-w-6xl mx-auto flex justify-between items-center">
+                                                      <button onclick="prevSlide()" id="prev-btn" class="px-5 py-2.5 rounded-lg font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                                        &larr; 이전
+                                                      </button>
+                                                      <div class="text-sm text-slate-500">
+                                                        키보드
+                                                        <kbd class="px-2 py-1 bg-slate-100 border border-slate-300 rounded mx-1">
+                                                          ←
+                                                        </kbd>
+                                                        <kbd class="px-2 py-1 bg-slate-100 border border-slate-300 rounded mx-1">
+                                                          →
+                                                        </kbd>
+                                                        로 이동 가능
+                                                      </div>
+                                                      <button onclick="nextSlide()" id="next-btn" class="px-5 py-2.5 rounded-lg font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors">
+                                                        다음 &rarr;
+                                                      </button>
+                                                    </div>
+                                                  </footer>
+                                                  <script>
+                                                    let currentSlideIndex = 0;
+        const totalSlides = 22; // 표지 포함 0~21
+
+        function updateUI() {
+            // 모든 슬라이드 숨기기
+            document.querySelectorAll('.slide').forEach(slide => {
+                slide.classList.remove('active');
+            });
+            // 현재 슬라이드 보이기
+            document.getElementById(`slide-${currentSlideIndex}`).classList.add('active');
+            
+            // 버튼 상태 업데이트
+            document.getElementById('prev-btn').disabled = currentSlideIndex === 0;
+            document.getElementById('next-btn').disabled = currentSlideIndex === totalSlides - 1;
+
+            // 카운터 및 프로그레스 바 업데이트
+            document.getElementById('slide-counter').innerText = `${currentSlideIndex + 1} / ${totalSlides}`;
+            const progress = ((currentSlideIndex) / (totalSlides - 1)) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+        }
+
+        function nextSlide() {
+            if (currentSlideIndex
+                                                    < totalSlides - 1) {
+                currentSlideIndex++;
+                updateUI();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlideIndex >
+                                                      0) {
+                currentSlideIndex--;
+                updateUI();
+            }
+        }
+
+        // 키보드 이벤트 리스너 추가
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+
+        // 초기화
+        updateUI();
+                                                    </script>
+                                                  </body>
+                                                </html>
