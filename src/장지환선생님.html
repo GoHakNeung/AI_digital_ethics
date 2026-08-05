@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 윤리 딜레마 투표 및 서약서</title>
+    <style>
+        /* 기본 리셋 및 폰트 */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Pretendard', -apple-system, sans-serif; background-color: #f4f7fa; color: #2c3e50; height: 100vh; overflow: hidden; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        
+        /* 공통 컨테이너: 화면에 꽉 차되 넘치지 않게 조절 */
+        .container { background-color: #ffffff; width: 100%; max-width: 1200px; height: 95vh; border-radius: 16px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); padding: 30px; display: flex; flex-direction: column; overflow: hidden; position: relative;}
+        
+        h1.main-title { color: #1a56db; margin-bottom: 10px; font-size: 24px; text-align: center; flex-shrink: 0;}
+        p.description { text-align: center; margin-bottom: 20px; font-size: 16px; color: #5c6c7c; flex-shrink: 0;}
+
+        /* 화면 전환 처리 */
+        .section { display: none; flex: 1; flex-direction: column; overflow: hidden; }
+        .section.active { display: flex; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* 1. 딜레마 퀴즈 섹션 중앙 정렬 */
+        .quiz-wrapper { margin: auto; max-width: 800px; width: 100%; text-align: center; }
+        .cards-container { display: flex; gap: 20px; justify-content: center; margin-bottom: 20px; }
+        .choice-card { flex: 1; padding: 30px 20px; background: #ffffff; border: 2px solid #e2e8f0; border-radius: 16px; cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 200px; }
+        .choice-card h2 { font-size: 20px; color: #1a56db; margin-bottom: 10px; pointer-events: none; }
+        .choice-card p { font-size: 15px; color: #334155; pointer-events: none; word-break: keep-all; }
+        .choice-card:nth-child(1):hover { transform: rotate(-2deg) scale(1.02); border-color: #1a56db; background-color: #f8fafc; }
+        .choice-card:nth-child(2):hover { transform: rotate(2deg) scale(1.02); border-color: #ef4444; background-color: #fff1f2; }
+        .choice-card:nth-child(2) h2 { color: #ef4444; }
+
+        /* 까닭(이유) 입력창 오버레이 */
+        #reason-box { display: none; margin-top: 20px; padding: 20px; background: #e0e7ff; border-radius: 12px; animation: fadeIn 0.3s; }
+        #reason-box h3 { color: #3730a3; margin-bottom: 10px; font-size: 18px; }
+        #reason-box input { width: 100%; padding: 12px; border: 2px solid #a5b4fc; border-radius: 8px; font-size: 16px; margin-bottom: 10px; outline: none; }
+        #reason-box input:focus { border-color: #4f46e5; }
+        .btn-next { padding: 12px 30px; background: #4f46e5; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: bold; }
+
+        /* 2. 서약서 섹션 */
+        .pledge-wrapper { margin: auto; max-width: 700px; width: 100%; overflow-y: auto; padding: 10px; }
+        .pledge-list { margin-bottom: 20px; }
+        .pledge-item { display: flex; align-items: flex-start; margin-bottom: 10px; padding: 12px; background-color: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; }
+        .pledge-item input[type="checkbox"] { margin-top: 4px; margin-right: 15px; width: 20px; height: 20px; cursor: pointer; accent-color: #1a56db; }
+        .pledge-item label { font-size: 15px; cursor: pointer; flex: 1; font-weight: 500; line-height: 1.4; }
+        .signature-box { display: flex; flex-direction: column; gap: 10px; }
+        .signature-box input[type="text"] { padding: 15px; font-size: 16px; border: 2px solid #cbd5e1; border-radius: 8px; text-align: center; font-weight: bold; }
+        .btn-submit { padding: 15px; font-size: 18px; font-weight: bold; background: #1a56db; color: white; border: none; border-radius: 8px; cursor: pointer; }
+        .btn-submit:disabled { background: #a0b6e8; cursor: not-allowed; }
+
+        /* 3. 스크롤 없는 한 화면 대시보드 레이아웃 */
+        .dash-layout { display: flex; flex: 1; gap: 20px; overflow: hidden; margin-bottom: 15px; }
+        
+        /* 좌측: 딜레마 주제 리스트 */
+        .dash-left { flex: 1; max-width: 300px; display: flex; flex-direction: column; gap: 8px; overflow-y: auto; padding-right: 5px; }
+        .topic-btn { padding: 12px 15px; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; text-align: left; cursor: pointer; font-size: 14px; font-weight: bold; color: #475569; transition: 0.2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .topic-btn:hover { background: #e2e8f0; }
+        .topic-btn.active { background: #1a56db; color: white; border-color: #1a56db; }
+
+        /* 우측: 클릭한 주제 상세(통계 + 까닭) */
+        .dash-right { flex: 2; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0; display: flex; flex-direction: column; overflow: hidden; }
+        .dash-right-header { padding: 20px; background: white; border-bottom: 1px solid #e2e8f0; }
+        .dash-right-header h2 { font-size: 18px; color: #1e293b; margin-bottom: 15px; }
+        
+        /* 그래프 막대 */
+        .bar-container { display: flex; align-items: center; margin-bottom: 8px; }
+        .bar-label { width: 50px; font-weight: bold; font-size: 13px; }
+        .bar-track { flex: 1; background: #e2e8f0; height: 20px; border-radius: 10px; overflow: hidden; margin: 0 10px; display: flex; }
+        .bar-fill { height: 100%; display: flex; align-items: center; padding-left: 10px; color: white; font-size: 11px; font-weight: bold; transition: width 0.5s; }
+        .bar-fill.blue { background: #1a56db; }
+        .bar-fill.red { background: #ef4444; }
+        .bar-count { width: 40px; font-weight: bold; text-align: right; font-size: 13px;}
+
+        /* 까닭(이유) 보여주는 영역 (2단 배열) */
+        .reasons-container { display: flex; flex: 1; gap: 15px; padding: 20px; overflow-y: auto; }
+        .reason-col { flex: 1; background: white; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; display: flex; flex-direction: column; }
+        .reason-col h4 { margin-bottom: 10px; font-size: 14px; text-align: center; padding-bottom: 5px; border-bottom: 2px solid; }
+        .reason-col.blue h4 { color: #1a56db; border-color: #1a56db; }
+        .reason-col.red h4 { color: #ef4444; border-color: #ef4444; }
+        .reason-list { list-style: none; overflow-y: auto; flex: 1; font-size: 13px; color: #475569; }
+        .reason-list li { background: #f1f5f9; padding: 8px; margin-bottom: 8px; border-radius: 6px; line-height: 1.4; word-break: break-word;}
+
+        /* 하단: 서약자 명단 및 컨트롤 버튼 */
+        .dash-bottom { flex-shrink: 0; padding: 15px; background: white; border: 1px solid #e2e8f0; border-radius: 12px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+        .names-area { flex: 1; display: flex; flex-wrap: wrap; gap: 8px; overflow-y: auto; max-height: 60px; }
+        .name-tag { background: #e0e7ff; color: #3730a3; padding: 4px 12px; border-radius: 12px; font-size: 13px; font-weight: bold; }
+        .btn-group { display: flex; gap: 10px; flex-shrink: 0; }
+        .btn-group button { padding: 10px 15px; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: bold; color: white; }
+        .btn-reset { background: #94a3b8; }
+        .btn-home { background: #1a56db; }
+        
+        /* 스크롤바 디자인 */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 1. 딜레마 퀴즈 섹션 -->
+        <div id="quiz-section" class="section active">
+            <h1 class="main-title">AI 윤리 딜레마</h1>
+            <div class="quiz-wrapper">
+                <div style="font-size: 14px; font-weight: bold; color: #94a3b8; margin-bottom: 10px;" id="question-counter">질문 1 / 10</div>
+                <h2 id="question-title" style="margin-bottom: 10px;">상황 제목</h2>
+                <p id="question-desc" class="description" style="margin-bottom: 30px;">상황 설명이 여기에 표시됩니다.</p>
+                
+                <div class="cards-container" id="choice-cards">
+                    <div class="choice-card" onclick="selectOption('A')">
+                        <h2>선택지 A</h2>
+                        <p id="text-a">내용 A</p>
+                    </div>
+                    <div class="choice-card" onclick="selectOption('B')">
+                        <h2>선택지 B</h2>
+                        <p id="text-b">내용 B</p>
+                    </div>
+                </div>
+
+                <!-- 이유 입력창 (선택 후 등장) -->
+                <div id="reason-box">
+                    <h3>방금 선택을 하신 까닭(이유)은 무엇인가요?</h3>
+                    <input type="text" id="reason-input" placeholder="간단히 이유를 적어주세요 (생략 가능)" onkeypress="if(event.keyCode==13) saveReasonAndNext()">
+                    <button class="btn-next" onclick="saveReasonAndNext()">입력 완료 (다음)</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. 서약서 섹션 -->
+        <div id="pledge-section" class="section">
+            <h1 class="main-title">디지털·AI 시민 윤리 서약서</h1>
+            <div class="pledge-wrapper">
+                <p class="description">올바른 디지털 시민이 되기 위해 아래 항목을 모두 체크해 주세요.</p>
+                
+                <div class="pledge-list">
+                    <div class="pledge-item"><input type="checkbox" class="pledge-checkbox"><label>나는 AI가 생성한 정보를 스스로 팩트 체크하겠습니다.</label></div>
+                    <div class="pledge-item"><input type="checkbox" class="pledge-checkbox"><label>나는 타인의 데이터로 딥페이크를 무단 제작/유포하지 않겠습니다.</label></div>
+                    <div class="pledge-item"><input type="checkbox" class="pledge-checkbox"><label>나는 과제나 창작 시 AI 도움을 받았다면 출처를 밝히겠습니다.</label></div>
+                    <div class="pledge-item"><input type="checkbox" class="pledge-checkbox"><label>나는 디지털 공간에서 타인의 개인정보를 함부로 수집/악용하지 않겠습니다.</label></div>
+                    <div class="pledge-item"><input type="checkbox" class="pledge-checkbox"><label>나는 AI 기술을 비판적이고 편견 없는 시각으로 활용하겠습니다.</label></div>
+                </div>
+
+                <div class="signature-box">
+                    <input type="text" id="signer-name" placeholder="이름을 입력하세요 (예: 장지환)" disabled>
+                    <button class="btn-submit" id="btn-sign" disabled onclick="submitPledge()">서약 완료 및 결과 보기</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. 대시보드 섹션 (스크롤 없는 꽉 찬 레이아웃) -->
+        <div id="dashboard-section" class="section">
+            <h1 class="main-title">📊 통합 대시보드 <span style="font-size: 16px; color: #64748b;">(총 <span id="total-users" style="color:#1a56db;">0</span>명 참여)</span></h1>
+            
+            <div class="dash-layout">
+                <!-- 좌측 주제 리스트 -->
+                <div class="dash-left" id="topic-list">
+                    <!-- JS로 버튼 생성됨 -->
+                </div>
+                
+                <!-- 우측 상세 뷰 (그래프 + 까닭) -->
+                <div class="dash-right">
+                    <div class="dash-right-header">
+                        <h2 id="detail-title">주제를 선택해주세요</h2>
+                        <!-- 통계 바 -->
+                        <div class="bar-container">
+                            <div class="bar-label" style="color:#1a56db;">A 선택</div>
+                            <div class="bar-track">
+                                <div class="bar-fill blue" id="detail-bar-a" style="width: 0%">0%</div>
+                            </div>
+                            <div class="bar-count" id="detail-count-a">0명</div>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-label" style="color:#ef4444;">B 선택</div>
+                            <div class="bar-track">
+                                <div class="bar-fill red" id="detail-bar-b" style="width: 0%">0%</div>
+                            </div>
+                            <div class="bar-count" id="detail-count-b">0명</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 선택 까닭 목록 -->
+                    <div class="reasons-container">
+                        <div class="reason-col blue">
+                            <h4>A를 선택한 까닭</h4>
+                            <ul class="reason-list" id="reasons-list-a"></ul>
+                        </div>
+                        <div class="reason-col red">
+                            <h4>B를 선택한 까닭</h4>
+                            <ul class="reason-list" id="reasons-list-b"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 하단 명단 및 버튼 -->
+            <div class="dash-bottom">
+                <div style="font-size: 14px; font-weight: bold; color: #475569; flex-shrink: 0;">📜 서약자:</div>
+                <div class="names-area" id="name-tags-container"></div>
+                <div class="btn-group">
+                    <button class="btn-reset" onclick="resetData()">기록 초기화</button>
+                    <button class="btn-home" onclick="goHome()">다음 학생 투표하기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 질문 데이터 10개
+        const questions = [
+            { title: "상황 1: 자율주행차", desc: "고장난 자율주행차. 방향을 틀면 보행자 3명이 살지만 탑승자(나)가 위험, 직진하면 탑승자가 살지만 보행자가 위험합니다.", a: "틀어서 보행자를 살린다.", b: "직진해서 나를 보호한다." },
+            { title: "상황 2: AI 창작물 저작권", desc: "AI 그림이 미술 대회 1등을 했습니다. 상금의 진짜 주인은 누구일까요?", a: "프롬프트를 쓴 '사용자'", b: "데이터 원본인 '화가들'" },
+            { title: "상황 3: CCTV 안면인식", desc: "범죄율 0%를 위해 도시의 모든 CCTV에 AI 안면인식 기술을 도입하려 합니다.", a: "안전을 위해 도입한다.", b: "사생활 보호를 위해 반대한다." },
+            { title: "상황 4: AI 대필 과제", desc: "학생이 챗GPT로 완벽한 에세이를 냈습니다. 규정은 아직 없는 상태입니다.", a: "AI 활용도 능력이니 인정한다.", b: "스스로 안 썼으니 0점 처리한다." },
+            { title: "상황 5: 고인 딥페이크", desc: "세상을 떠난 가족을 딥페이크로 복원해 대화하는 서비스가 나왔습니다.", a: "가족의 슬픔 치유를 위해 찬성", b: "존엄성 훼손과 현실 도피 우려로 반대" },
+            { title: "상황 6: AI 챗봇 유대감", desc: "외로운 아이가 현실 친구 대신 AI 챗봇에게만 감정적으로 의지합니다.", a: "정서 안정을 주므로 권장한다.", b: "현실 사회성을 위해 제한한다." },
+            { title: "상황 7: AI 채용 편향성", desc: "AI 면접관이 특정 집단에 불리한 평가를 낼 가능성이 있습니다.", a: "그래도 사람보다 객관적이니 쓴다.", b: "차별 위험이 있으니 사람이 직접 쓴다." },
+            { title: "상황 8: 무단 데이터 학습", desc: "AI 기업이 인터넷의 개인 글/사진을 무단으로 모아 학습시켰습니다.", a: "기술 발전을 위해 허용해야 한다.", b: "개인 권리 침해이므로 금지해야 한다." },
+            { title: "상황 9: 의료 AI 오진", desc: "99% 정확도의 AI가 1% 확률로 오진해 환자가 피해를 입었습니다. 누구 책임일까요?", a: "최종 결정한 '의사' 책임", b: "AI를 만든 '개발사' 책임" },
+            { title: "상황 10: 초인공지능 통제", desc: "초인공지능(AGI)이 환경을 살리려 인간 경제 활동을 강제 제한하려 합니다.", a: "지구를 위해 AI 통제 수용", b: "인간 결정권이 우선이니 정지시킴" }
+        ];
+
+        let currentQuestion = 0;
+        let selectedTemp = ''; // A 또는 B 임시 저장
+
+        // 데이터 구조: { a: 카운트, b: 카운트, reasonsA: ['이유1', '이유2'], reasonsB: ['이유1'] }
+        let voteData = JSON.parse(localStorage.getItem('aiDilemmaAdvancedData'));
+        let pledgeNames = JSON.parse(localStorage.getItem('aiDilemmaNames')) || [];
+        
+        if (!voteData || voteData.length !== questions.length) {
+            voteData = Array.from({ length: questions.length }, () => ({ a: 0, b: 0, reasonsA: [], reasonsB: [] }));
+            localStorage.setItem('aiDilemmaAdvancedData', JSON.stringify(voteData));
+        }
+
+        // --- 1. 퀴즈 진행 로직 ---
+        function loadQuestion() {
+            if (currentQuestion < questions.length) {
+                document.getElementById('question-counter').innerText = `상황 ${currentQuestion + 1} / ${questions.length}`;
+                document.getElementById('question-title').innerText = questions[currentQuestion].title;
+                document.getElementById('question-desc').innerText = questions[currentQuestion].desc;
+                document.getElementById('text-a').innerText = questions[currentQuestion].a;
+                document.getElementById('text-b').innerText = questions[currentQuestion].b;
+                
+                // UI 초기화
+                document.getElementById('choice-cards').style.display = 'flex';
+                document.getElementById('reason-box').style.display = 'none';
+                document.getElementById('reason-input').value = '';
+            } else {
+                document.getElementById('quiz-section').classList.remove('active');
+                document.getElementById('pledge-section').classList.add('active');
+            }
+        }
+
+        // A/B 선택 시 까닭 묻기 
+        function selectOption(choice) {
+            selectedTemp = choice;
+            document.getElementById('choice-cards').style.display = 'none'; // 선택지 숨김
+            document.getElementById('reason-box').style.display = 'block'; // 입력창 보임
+            document.getElementById('reason-input').focus();
+        }
+
+        // 이유 저장 후 다음으로
+        function saveReasonAndNext() {
+            let reasonText = document.getElementById('reason-input').value.trim();
+            if(!reasonText) reasonText = "이유 작성 안 함"; // 미작성 처리
+
+            if(selectedTemp === 'A') {
+                voteData[currentQuestion].a++;
+                voteData[currentQuestion].reasonsA.push(reasonText);
+            } else {
+                voteData[currentQuestion].b++;
+                voteData[currentQuestion].reasonsB.push(reasonText);
+            }
+            
+            localStorage.setItem('aiDilemmaAdvancedData', JSON.stringify(voteData));
+            currentQuestion++;
+            loadQuestion();
+        }
+
+        // --- 2. 서약서 로직 ---
+        const checkboxes = document.querySelectorAll('.pledge-checkbox');
+        const nameInput = document.getElementById('signer-name');
+        const signBtn = document.getElementById('btn-sign');
+
+        function checkPledgeStatus() {
+            const isAllChecked = document.querySelectorAll('.pledge-checkbox:checked').length === checkboxes.length;
+            const isNameEntered = nameInput.value.trim().length > 0;
+            nameInput.disabled = !isAllChecked;
+            if(!isAllChecked) nameInput.value = '';
+            signBtn.disabled = !(isAllChecked && isNameEntered);
+        }
+
+        checkboxes.forEach(cb => cb.addEventListener('change', checkPledgeStatus));
+        nameInput.addEventListener('input', checkPledgeStatus);
+
+        function submitPledge() {
+            const userName = nameInput.value.trim();
+            if(userName) {
+                pledgeNames.push(userName);
+                localStorage.setItem('aiDilemmaNames', JSON.stringify(pledgeNames));
+            }
+            showDashboard();
+        }
+
+        // --- 3. 대시보드 로직 ---
+        function showDashboard() {
+            document.getElementById('pledge-section').classList.remove('active');
+            document.getElementById('dashboard-section').classList.add('active');
+            document.getElementById('total-users').innerText = pledgeNames.length;
+
+            renderTopicList();
+            renderPledgeNames();
+            // 기본으로 첫 번째 딜레마 상세 보여주기
+            showDetail(0); 
+        }
+
+        // 좌측 리스트 렌더링
+        function renderTopicList() {
+            const listDiv = document.getElementById('topic-list');
+            listDiv.innerHTML = '';
+            questions.forEach((q, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'topic-btn';
+                btn.innerText = `${index + 1}. ${q.title}`;
+                btn.onclick = () => showDetail(index);
+                listDiv.appendChild(btn);
+            });
+        }
+
+        // 우측 디테일(통계 및 까닭) 업데이트
+        function showDetail(index) {
+            // 버튼 활성화 스타일
+            document.querySelectorAll('.topic-btn').forEach((btn, i) => {
+                btn.classList.toggle('active', i === index);
+            });
+
+            const q = questions[index];
+            const data = voteData[index];
+            const total = data.a + data.b;
+            const pctA = total === 0 ? 0 : Math.round((data.a / total) * 100);
+            const pctB = total === 0 ? 0 : Math.round((data.b / total) * 100);
+
+            document.getElementById('detail-title').innerText = `${index + 1}. ${q.title}`;
+            
+            // 그래프 업데이트
+            document.getElementById('detail-bar-a').style.width = pctA + '%';
+            document.getElementById('detail-bar-a').innerText = pctA + '%';
+            document.getElementById('detail-count-a').innerText = data.a + '명';
+            
+            document.getElementById('detail-bar-b').style.width = pctB + '%';
+            document.getElementById('detail-bar-b').innerText = pctB + '%';
+            document.getElementById('detail-count-b').innerText = data.b + '명';
+
+            // 이유 목록 업데이트
+            const listA = document.getElementById('reasons-list-a');
+            listA.innerHTML = '';
+            if(data.reasonsA.length === 0) listA.innerHTML = '<li>선택한 친구가 없습니다.</li>';
+            data.reasonsA.forEach(reason => { listA.innerHTML += `<li>${reason}</li>`; });
+
+            const listB = document.getElementById('reasons-list-b');
+            listB.innerHTML = '';
+            if(data.reasonsB.length === 0) listB.innerHTML = '<li>선택한 친구가 없습니다.</li>';
+            data.reasonsB.forEach(reason => { listB.innerHTML += `<li>${reason}</li>`; });
+        }
+
+        // 하단 서약자 명단 렌더링
+        function renderPledgeNames() {
+            const container = document.getElementById('name-tags-container');
+            container.innerHTML = '';
+            pledgeNames.forEach(name => {
+                container.insertAdjacentHTML('beforeend', `<span class="name-tag">🧑‍💻 ${name}</span>`);
+            });
+        }
+
+        // 다음 사람 투표
+        function goHome() {
+            currentQuestion = 0;
+            checkboxes.forEach(cb => cb.checked = false);
+            nameInput.value = '';
+            nameInput.disabled = true;
+            signBtn.disabled = true;
+
+            document.getElementById('dashboard-section').classList.remove('active');
+            document.getElementById('quiz-section').classList.add('active');
+            loadQuestion();
+        }
+
+        // 전체 기록 초기화
+        function resetData() {
+            if(confirm("모든 투표 기록과 작성한 까닭, 명단을 지우시겠습니까?")) {
+                voteData = Array.from({ length: questions.length }, () => ({ a: 0, b: 0, reasonsA: [], reasonsB: [] }));
+                pledgeNames = [];
+                localStorage.setItem('aiDilemmaAdvancedData', JSON.stringify(voteData));
+                localStorage.setItem('aiDilemmaNames', JSON.stringify(pledgeNames));
+                showDashboard(); 
+            }
+        }
+
+        // 초기 시작
+        loadQuestion();
+    </script>
+</body>
+</html>
